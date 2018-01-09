@@ -1,74 +1,63 @@
 package org.usfirst.frc.team4146.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.SampleRobot;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
-public class Robot extends IterativeRobot {
-	RobotDrive myRobot = new RobotDrive(0, 1);
-	Joystick stick = new Joystick(0);
-	Timer timer = new Timer();
-
+public class Robot extends SampleRobot {
+	
+	public Robot() {
+		RobotMap.ROBOT = this;
+	}
+	
 	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
+	 * Runs once when the robot is powered on and called when you are basically guaranteed that
+	 * all WPILIBJ stuff will work.
 	 */
 	@Override
 	public void robotInit() {
+		RobotMap.init(); // Instantiates and Declares things to be used from RobotMap.
+		RobotMap.gyro.reset();
 	}
 
 	/**
 	 * This function is run once each time the robot enters autonomous mode
 	 */
 	@Override
-	public void autonomousInit() {
-		timer.reset();
-		timer.start();
-	}
-
-	/**
-	 * This function is called periodically during autonomous
-	 */
-	@Override
-	public void autonomousPeriodic() {
-		// Drive for 2 seconds
-		if (timer.get() < 2.0) {
-			myRobot.drive(-0.5, 0.0); // drive forwards half speed
-		} else {
-			myRobot.drive(0.0, 0.0); // stop robot
-		}
-	}
-
-	/**
-	 * This function is called once each time the robot enters tele-operated
-	 * mode
-	 */
-	@Override
-	public void teleopInit() {
+	public void autonomous() {
+		
 	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	@Override
-	public void teleopPeriodic() {
-		myRobot.arcadeDrive(stick);
+	public void operatorControl() {
+		Timer timer = new Timer();
+		double dt = 0.0;
+		double spin;
+		double move;
+		
+		while (isOperatorControl() && isEnabled()) {
+			dt = timer.getDT();
+			
+			// Start of Drive Code (in testing phase)
+			move = RobotMap.driveController.getDeadbandLeftYAxis();
+			spin = -RobotMap.driveController.getDeadbandRightXAxis();
+			
+			Dashboard.send("Move", move);
+			Dashboard.send("Spin", spin);
+			
+			RobotMap.drive.arcadeDrive(move, spin);
+			
+			// End of Drive Code
+			timer.update();
+		}
 	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	@Override
-	public void testPeriodic() {
-		LiveWindow.run();
+	public void test() {
+		
 	}
 }
