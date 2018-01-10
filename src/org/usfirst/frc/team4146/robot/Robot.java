@@ -80,7 +80,7 @@ public class Robot extends SampleRobot {
 				break;
 	
 			case "Testing 1":
-				RobotMap.auto.placeGear();
+				RobotMap.auto.move(10, 15);
 				break;
 	
 			case "Testing 2":
@@ -115,9 +115,10 @@ public class Robot extends SampleRobot {
 		double move;
 		
 		HeadingPID heading2 = new HeadingPID();
+		MovePID movePID = new MovePID();
 		while (isOperatorControl() && isEnabled()) {
 			dt = timer.getDT();
-			heading2.update(dt);
+			//heading2.update(dt);
 			
 			// Start of Subsystem Updates
 			RobotMap.Climber.update();
@@ -132,10 +133,12 @@ public class Robot extends SampleRobot {
 			// Start of Drive Code (in testing phase)
 			move = RobotMap.driveController.getDeadbandLeftYAxis();
 			spin = -RobotMap.driveController.getDeadbandRightXAxis();
-			if (RobotMap.driveController.getButtonBack()) {
-				spin = heading2.get();
-				Dashboard.send("Experimental Spin", heading2.get());
-			}
+//			if (RobotMap.driveController.getButtonBack()) {
+//				movePID.update(dt);
+//				move = movePID.get();
+//				//spin = heading2.get();
+//				//Dashboard.send("Experimental Spin", heading2.get());
+//			}
 			RobotMap.drive.arcadeDrive(move, spin);
 			Dashboard.send("Spin", spin);
 			Dashboard.send("Heading Spin Error", RobotMap.Heading.headingPID.get_error());
@@ -143,6 +146,12 @@ public class Robot extends SampleRobot {
 			Dashboard.send("Gyro Angle", RobotMap.gyro.getAngle());
 			// End of Drive Code
 			timer.update();
+			
+//			if(RobotMap.driveController.getButtonBack()){
+//				RobotMap.driveController.rumble(1.0);
+//			} else {
+//				RobotMap.driveController.rumble(0.0);
+//			}
 		}
 	}
 

@@ -48,35 +48,81 @@ public class Autonomous {
 		System.out.println("Finished Turning in: " + timeElapsed);
 	}
 	
-	public void move(double distance, double timeOut) throws InterruptedException{
+//	public void move(double distance, double timeOut) throws InterruptedException {
 //		RobotMap.gyro.reset();
+//		double timeElapsed = 0.0;
+//		timer.reset();
+//		RobotMap.MoveDistance.resetEncoders();
+//		RobotMap.MoveDistance.moveDistancePID.set_setpoint(distance);
+//		RobotMap.MoveDistance.moveDistancePID.set_integral_sum(0);
+//		RobotMap.MoveDistance.moveDistancePID.fill_error(100);
+//		RobotMap.MoveDistance.moveDistancePID.set_error_range(200);
+//		//RobotMap.MoveDistance.setLockMode();
+//		RobotMap.Heading.headingPID.set_setpoint(RobotMap.gyro.getAngle());
+//		RobotMap.Heading.headingPID.set_integral_sum(0);
+//		RobotMap.Heading.headingPID.fill_error(100);
+//		RobotMap.Heading.setLockMode();
+//		
+//		int i = 0;
+//		
+//		while(RobotMap.ROBOT.isEnabled() && RobotMap.MoveDistance.isNotInError(timeOut, timeElapsed)){
+//			RobotMap.GearAssembly.update();
+//			timer.update();
+//			dt = timer.getDT();
+//			RobotMap.MoveDistance.update(dt);
+//			RobotMap.Heading.update(dt);
+//			double move = PID.clamp(RobotMap.MoveDistance.get(), RobotMap.MAX_MOVE_SPEED);
+//			double spin = PID.clamp(RobotMap.Heading.get(), RobotMap.MAX_TURN_SPEED);
+//			timeElapsed += dt;
+//			RobotMap.drive.arcadeDrive(move, -spin);
+//			Dashboard.send("Move Distance Error", RobotMap.MoveDistance.moveDistancePID.get_error());
+//			Dashboard.send("Move Distance PID Out", RobotMap.MoveDistance.moveDistancePID.get());
+//			Dashboard.send("Left Drive Encoder", RobotMap.leftDriveEncoder.getRaw());
+//			Dashboard.send("Right Drive Encoder", RobotMap.rightDriveEncoder.getRaw());
+//			
+//			if(i > 30){
+//				//System.out.println((RobotMap.leftDriveEncoder.get() + RobotMap.rightDriveEncoder.get())/2.0);
+//				//Dashboard.send("Move Distance Error", RobotMap.MoveDistance.moveDistancePID.get_error());
+//				i = 0;
+//			}
+//			i++;
+//			Timer.waitMilli();
+//		}
+//		RobotMap.drive.arcadeDrive(0.0, 0.0);
+//		//Thread.sleep(10000);
+//		System.out.println("Move error: " + RobotMap.MoveDistance.moveDistancePID.get_error());
+//		System.out.println("Done moving in: " + timeElapsed);
+//	}
+	
+	public void move(double distance, double timeOut) throws InterruptedException {
+		//RobotMap.gyro.reset();
 		double timeElapsed = 0.0;
 		timer.reset();
-		RobotMap.MoveDistance.resetEncoders();
-		RobotMap.MoveDistance.moveDistancePID.set_setpoint(distance);
-		RobotMap.MoveDistance.moveDistancePID.set_integral_sum(0);
-		RobotMap.MoveDistance.moveDistancePID.fill_error(100);
-		RobotMap.MoveDistance.moveDistancePID.set_error_range(200);
+		RobotMap.MovePID.resetEncoders();
+		RobotMap.MovePID.set_setpoint(distance);
+		RobotMap.MovePID.set_integral_sum(0);
+		RobotMap.MovePID.fill_error(100);
+		RobotMap.MovePID.set_error_range(200);
 		//RobotMap.MoveDistance.setLockMode();
-		RobotMap.Heading.headingPID.set_setpoint(RobotMap.gyro.getAngle());
-		RobotMap.Heading.headingPID.set_integral_sum(0);
-		RobotMap.Heading.headingPID.fill_error(100);
-		RobotMap.Heading.setLockMode();
+//		RobotMap.Heading.headingPID.set_setpoint(RobotMap.gyro.getAngle());
+//		RobotMap.Heading.headingPID.set_integral_sum(0);
+//		RobotMap.Heading.headingPID.fill_error(100);
+//		RobotMap.Heading.setLockMode();
 		
 		int i = 0;
 		
-		while(RobotMap.ROBOT.isEnabled() && RobotMap.MoveDistance.isNotInError(timeOut, timeElapsed)){
+		while(RobotMap.ROBOT.isEnabled() && RobotMap.MovePID.isNotInError(timeOut, timeElapsed)){
 			RobotMap.GearAssembly.update();
 			timer.update();
 			dt = timer.getDT();
-			RobotMap.MoveDistance.update(dt);
+			RobotMap.MovePID.update(dt);
 			RobotMap.Heading.update(dt);
-			double move = PID.clamp(RobotMap.MoveDistance.get(), RobotMap.MAX_MOVE_SPEED);
-			double spin = PID.clamp(RobotMap.Heading.get(), RobotMap.MAX_TURN_SPEED);
+			double move = PID.clamp(RobotMap.MovePID.get(), RobotMap.MAX_MOVE_SPEED);
+			double spin = 0;//PID.clamp(RobotMap.Heading.get(), RobotMap.MAX_TURN_SPEED);
 			timeElapsed += dt;
 			RobotMap.drive.arcadeDrive(move, -spin);
-			Dashboard.send("Move Distance Error", RobotMap.MoveDistance.moveDistancePID.get_error());
-			Dashboard.send("Move Distance PID Out", RobotMap.MoveDistance.moveDistancePID.get());
+			Dashboard.send("Move Distance Error", RobotMap.MovePID.get_error());
+			Dashboard.send("Move Distance PID Out", RobotMap.MovePID.get());
 			Dashboard.send("Left Drive Encoder", RobotMap.leftDriveEncoder.getRaw());
 			Dashboard.send("Right Drive Encoder", RobotMap.rightDriveEncoder.getRaw());
 			
@@ -90,7 +136,7 @@ public class Autonomous {
 		}
 		RobotMap.drive.arcadeDrive(0.0, 0.0);
 		//Thread.sleep(10000);
-		System.out.println("Move error: " + RobotMap.MoveDistance.moveDistancePID.get_error());
+		System.out.println("Move error: " + RobotMap.MovePID.get_error());
 		System.out.println("Done moving in: " + timeElapsed);
 	}
 	

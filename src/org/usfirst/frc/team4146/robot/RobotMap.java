@@ -22,8 +22,8 @@ public class RobotMap {
 	
 	public static Robot ROBOT;
 	/*Shooter parameters*/
-	public static final double SHOOTER_RPM_TOLERANCE = 10.0; //was 50 //10.0
-	public static final double SHOOTER_RPM_SETPOINT  = -2700.0;// In competition set it to: -2700.0
+	public static final double SHOOTER_RPM_TOLERANCE = 100.0; //was 50 //10.0
+	public static final double SHOOTER_RPM_SETPOINT  = -2500.0;// In competition set it to: -2700.0
 	public static final double SHOOTER_INTAKE_SPEED  = -0.8;
 	public static final double VIBRATOR_SPEED = 0.8;
 	
@@ -121,10 +121,11 @@ public class RobotMap {
 	public static ShooterAssembly ShooterAssembly;
 	
 	// Heading Declaration
-	public static Heading Heading;
+	public static HeadingPID Heading;
 	
 	// Move Distance Declaration
 	public static MoveDistance MoveDistance;
+	public static MovePID MovePID;
 	
 	// Sendable Chooser Declaration
 	public static SendableChooser chooser; //Sendable chooser allows us to choose the autonomous from smartdashboard
@@ -221,6 +222,7 @@ public class RobotMap {
     	
     	// Move Distance Initialization
     	MoveDistance = new MoveDistance();
+    	MovePID = new MovePID();
     	
     	// Autonomous Initiilization
     	auto = new Autonomous();

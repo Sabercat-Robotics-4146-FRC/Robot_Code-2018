@@ -270,11 +270,16 @@ public class Controller {
 	 * Rumble Code!!! (this code is written on the Programming Laptop.)
 	 */
 	
-//	public void rumble(float l, float r){
-//		joy.setRumble( l, r);
-//		joy.setRumble( l, r)
-//	}
-//	
+	public void rumble(RumbleType side, double r){
+		joy.setRumble(side, r);
+		joy.setRumble(side, r);
+	}
+	
+	public void rumble(double r){
+		joy.setRumble(RumbleType.kLeftRumble, r);
+		joy.setRumble(RumbleType.kRightRumble, r);
+	}
+	
 	/**
 	 * Used just in case we need the raw joystick.
 	 *

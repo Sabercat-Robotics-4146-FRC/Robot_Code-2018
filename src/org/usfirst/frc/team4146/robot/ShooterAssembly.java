@@ -96,6 +96,7 @@ public class ShooterAssembly {
     			} else {
     				RobotMap.shooterIntake.set(0.0);
     			}
+    			Dashboard.send("Errorzzz", Math.abs(RobotMap.masterShooter.getSpeed() - RobotMap.masterShooter.getSetpoint()));
 				break;
 			case SICEM:
 				RobotMap.ballIntake.set(-1.0);
