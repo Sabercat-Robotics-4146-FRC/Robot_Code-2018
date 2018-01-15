@@ -27,7 +27,7 @@ public class Robot extends SampleRobot {
 	}
 
 	/**
-	 * This function is called periodically during operator control
+	 * This function is run once each time the robot enters operator control mode
 	 */
 	@Override
 	public void operatorControl() {
@@ -43,18 +43,19 @@ public class Robot extends SampleRobot {
 			move = RobotMap.driveController.getDeadbandLeftYAxis();
 			spin = -RobotMap.driveController.getDeadbandRightXAxis();
 			
+			RobotMap.drive.arcadeDrive(move, spin);
+			// End of Drive Code
+			
+			// Sending things to Dashboard
 			Dashboard.send("Move", move);
 			Dashboard.send("Spin", spin);
 			
-			RobotMap.drive.arcadeDrive(move, spin);
-			
-			// End of Drive Code
 			timer.update();
 		}
 	}
 
 	/**
-	 * This function is called periodically during test mode
+	 * This function is run once each time the robot enters test mode
 	 */
 	@Override
 	public void test() {

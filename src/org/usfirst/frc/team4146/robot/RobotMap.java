@@ -16,7 +16,7 @@ public class RobotMap {
 	//////Declarations //////
 	public static Controller driveController;
 	
-	// Moter Controller Declaration
+	// Motor Controller Declaration
 	public static CANTalon frontLeft;
 	public static CANTalon rearLeft;
 	public static CANTalon frontRight;
@@ -28,11 +28,12 @@ public class RobotMap {
 	// Network Table Declaration
 	public static NetworkTable networkTable;
 	
-	// Robot Drive Declaration
-	public static RobotDrive drive;
-	
 	// Sendable Chooser Declaration
 	public static SendableChooser chooser; //Sendable chooser allows us to choose the autonomous from smartdashboard
+	
+	////Sub-System Declarations////
+	// Robot Drive Declaration
+	public static RobotDrive drive;
 	
 	// Autonomous Declaration
 	public static Autonomous auto;
@@ -49,6 +50,11 @@ public class RobotMap {
     	frontRight = new CANTalon(2);
     	rearRight = new CANTalon(3);
     	
+    	frontLeft.setSafetyEnabled(false);
+    	rearLeft.setSafetyEnabled(false);
+    	frontRight.setSafetyEnabled(false);
+    	rearRight.setSafetyEnabled(false);
+    	
 		// Navx Gyro Initialization
     	gyro = new AHRS(SPI.Port.kMXP);
     	
@@ -56,18 +62,19 @@ public class RobotMap {
     	networkTable = NetworkTable.getTable("SmartDashboard");
     	Dashboard.setNetworkTable(networkTable);
     	
-    	// RobotDrive Initialization
-    	drive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
-    	drive.setSafetyEnabled(false);
-    	
-    	// Autonomous Initiilization
-    	auto = new Autonomous();
-    	
     	// Sendable Chooser Initialization and Setup
     	chooser = new SendableChooser();
     	
     	chooser.addDefault("Do Nothing", "Do Nothing");
     	
     	SmartDashboard.putData("Auto mode", chooser);
+    	
+    	//// Sub-System Initilization ////
+    	// RobotDrive Initialization
+    	drive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
+    	drive.setSafetyEnabled(false);
+    	
+    	// Autonomous Initiilization
+    	auto = new Autonomous();
 	}
 }
