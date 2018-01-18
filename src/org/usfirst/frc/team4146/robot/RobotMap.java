@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4146.robot;
 
-import com.ctre.CANTalon;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -17,10 +18,10 @@ public class RobotMap {
 	public static Controller driveController;
 	
 	// Motor Controller Declaration
-	public static CANTalon frontLeft;
-	public static CANTalon rearLeft;
-	public static CANTalon frontRight;
-	public static CANTalon rearRight;
+	public static TalonSRX frontLeft;
+	public static TalonSRX rearLeft;
+	public static TalonSRX frontRight;
+	public static TalonSRX rearRight;
 	
 	// Navax Gyro Declaration
 	public static AHRS gyro;
@@ -45,12 +46,12 @@ public class RobotMap {
     	driveController = new Controller(0);
     	
     	// Motor Controllers Initialization
-    	frontLeft = new CANTalon(0);
-    	rearLeft = new CANTalon(1);
-    	frontRight = new CANTalon(2);
-    	rearRight = new CANTalon(3);
+    	frontLeft = new TalonSRX(0);
+    	rearLeft = new TalonSRX(1);
+    	frontRight = new TalonSRX(2);
+    	rearRight = new TalonSRX(3);
     	
-    	frontLeft.setSafetyEnabled(false);
+    	frontLeft.saf
     	rearLeft.setSafetyEnabled(false);
     	frontRight.setSafetyEnabled(false);
     	rearRight.setSafetyEnabled(false);
