@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4146.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.SampleRobot;
 
 public class Robot extends SampleRobot {
@@ -23,6 +25,7 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void autonomous() {
+		//RobotMap.gameData = 
 		
 	}
 
@@ -33,23 +36,12 @@ public class Robot extends SampleRobot {
 	public void operatorControl() {
 		Timer timer = new Timer();
 		double dt = 0.0;
-		double spin;
-		double move;
 		
 		while (isOperatorControl() && isEnabled()) {
 			dt = timer.getDT();
-			
-			// Start of Drive Code (in testing phase)
-			move = RobotMap.driveController.getDeadbandLeftYAxis();
-			spin = -RobotMap.driveController.getDeadbandRightXAxis();
-			
-			RobotMap.drive.arcadeDrive(move, spin);
-			// End of Drive Code
-			
-			// Sending things to Dashboard
-			Dashboard.send("Move", move);
-			Dashboard.send("Spin", spin);
-			
+			RobotMap.drive.update(dt);
+			RobotMap.intake.update(dt);
+			RobotMap.lifter.update(dt);
 			timer.update();
 		}
 	}
