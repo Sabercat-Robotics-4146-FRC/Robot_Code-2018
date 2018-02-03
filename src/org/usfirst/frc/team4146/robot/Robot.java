@@ -2,6 +2,7 @@ package org.usfirst.frc.team4146.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SampleRobot;
 
 public class Robot extends SampleRobot {
@@ -25,8 +26,44 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void autonomous() {
-		//RobotMap.gameData = 
+		String autoSelected = (String)RobotMap.chooser.getSelected();
+		System.out.println(autoSelected);
 		
+		RobotMap.gameData = DriverStation.getInstance().getGameSpecificMessage();
+		System.out.println("Game Data: " + RobotMap.gameData);
+		
+		boolean isLeft = RobotMap.gameData.charAt(0) == 'L';
+		
+		switch(autoSelected){
+			case "Left":
+				if(isLeft) {
+					RobotMap.auto.leftLeftAutonomous();
+				} else {
+					RobotMap.auto.leftRightAutonomous();
+				}
+				break;
+			case "Middle":
+				if(isLeft) {
+					RobotMap.auto.middleLeftAutonomous();
+				} else {
+					RobotMap.auto.middleRightAutonomous();
+				}
+				break;
+			case "Right":
+				if(isLeft) {
+					RobotMap.auto.rightLeftAutonomous();
+				} else {
+					RobotMap.auto.rightRightAutonomous();
+				}
+				break;
+			case "Cross Baseline":
+				RobotMap.auto.crossBaseline();
+				break;
+			case "Do Nothing":
+				System.out.println("");
+				break;
+			
+		}
 	}
 
 	/**
@@ -43,6 +80,7 @@ public class Robot extends SampleRobot {
 			RobotMap.intake.update(dt);
 			RobotMap.lifter.update(dt);
 			timer.update();
+			
 		}
 	}
 

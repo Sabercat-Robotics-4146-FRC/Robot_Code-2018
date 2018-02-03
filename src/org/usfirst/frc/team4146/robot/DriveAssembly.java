@@ -10,9 +10,12 @@ public class DriveAssembly {
 	public void update(double dt){
 		// Setting base movement variables
 		move = RobotMap.driveController.getDeadbandLeftYAxis();
-		spin = -RobotMap.driveController.getDeadbandRightXAxis();
+		spin = RobotMap.driveController.getDeadbandRightXAxis();
 		
-		RobotMap.differentialDrive.arcadeDrive(move, spin);
+		// Manual mode is when we use the joystick to move the lifter with no drive train movement
+		if(!RobotMap.manualMode){ 
+			RobotMap.differentialDrive.arcadeDrive(move, spin);
+		}
 		
 		// Sending things to Dashboard
 		Dashboard.send("Move", move);
