@@ -9,41 +9,53 @@ public class LifterAssembly {
 		DOWN
 	}
 	
-	LifterPositionEnum lifterPosition = LifterPositionEnum.DOWN;
+	enum LifterModeEnum{
+		AUTO_LIFT,
+		MANUAL_LIFT
+	}
 	
-	private double controllerInput = 0.0; // Used for manual mode input.
+	LifterPositionEnum lifterPosition = LifterPositionEnum.DOWN;
+	LifterModeEnum lifterMode = LifterModeEnum.AUTO_LIFT;
+	
+	private double triggerInput = 0.0; // Used for manual mode input.
 	
 	public LifterAssembly(){
 		
 	}
 	
-	public void update(double dt){
-		// Checking buttons and setting enums.
-		if(RobotMap.driveController.getButtonY()){
-			lifterPosition = LifterPositionEnum.SCALE;
-		} else if(RobotMap.driveController.getButtonB()){
-			lifterPosition = LifterPositionEnum.SWITCH;
-		} else if(RobotMap.driveController.getButtonA()){
-			lifterPosition = LifterPositionEnum.DOWN;
+	public void update(double dt) {
+		// Checks for what mode to have
+		if(RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getLeftTriggerBool()){
+			lifterMode = LifterModeEnum.MANUAL_LIFT;
+		} else {
+			lifterMode = LifterModeEnum.AUTO_LIFT;
 		}
-
-		// Checks if back button for manual stuff or does regular stuff
-		if(RobotMap.driveController.getButtonBack()){
-			RobotMap.manualMode = true;
+		
+		// Does motor settings depending upon manual mode or no.
+		if(lifterMode == LifterModeEnum.MANUAL_LIFT){
+			// Getting trigger Sum
+			triggerInput = getTriggerSum();
 			
-			controllerInput = RobotMap.driveController.getDeadbandRightYAxis();
 			// If the lifter goes to top limit switch and is trying to go up set lifter to 0.0
-			if(RobotMap.topLimitSwitch.get() && controllerInput > 0.0){
-				controllerInput = 0.0;
+			if(RobotMap.topLimitSwitch.get() && triggerInput > 0.0){
+				triggerInput = 0.0;
 			}
 			// If the lifter goes to bottom limit switch and is trying to go down set lifter to 0.0
-			if(RobotMap.bottomLimitSwitch.get() && controllerInput < 0.0){
-				controllerInput = 0.0;
+			if(RobotMap.bottomLimitSwitch.get() && triggerInput < 0.0){
+				triggerInput = 0.0;
 			}
 			
-			RobotMap.lifterFrontLeft.set(ControlMode.PercentOutput, controllerInput);
+			RobotMap.lifterFrontLeft.set(ControlMode.PercentOutput, triggerInput);
 		} else {
-			RobotMap.manualMode = false;
+			// Checking buttons and setting enums.
+			if(RobotMap.driveController.getButtonY()){
+				lifterPosition = LifterPositionEnum.SCALE;
+			} else if(RobotMap.driveController.getButtonB()){
+				lifterPosition = LifterPositionEnum.SWITCH;
+			} else if(RobotMap.driveController.getButtonA()){
+				lifterPosition = LifterPositionEnum.DOWN;
+			}
+			
 			switch(lifterPosition){
 			case SCALE:
 				RobotMap.lifterFrontLeft.set(ControlMode.Position, 0); // Set this to the Scale height
@@ -71,6 +83,15 @@ public class LifterAssembly {
 //	if(!RobotMap.driveController.getButtonA()){
 //		button_flag = false;
 //	}
+	}
+	
+	
+	/** 
+	 * Returns the sum of the two triggers where the left is - and the left + so that the left
+	 * returns negative and the right returns positive, added together.
+	 */ 
+	private double getTriggerSum(){
+		return (-RobotMap.driveController.getLeftTrigger() + RobotMap.driveController.getRightTrigger());
 	}
 
 }

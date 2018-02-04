@@ -20,12 +20,33 @@ public class RobotMap {
 	public static Robot ROBOT;
 	
 	//////Constants//////
+	// Bezier curve constants
+	public static final double MOVE_P0 = 0.48;
+	public static final double MOVE_P1 = 0.21;
+	public static final double MOVE_P2 = 0.15;
+	public static final double MOVE_P3 = 0.61;
+	
+	public static final double SPIN_P0 = 0.48;
+	public static final double SPIN_P1 = 0.21;
+	public static final double SPIN_P2 = 0.15;
+	public static final double SPIN_P3 = 0.61;
+	
+	// Lifter Constants
+	public static final double LIFTER_kP = 0.1;
+	public static final double LIFTER_kI = 0.0;
+	public static final double LIFTER_kD = 0.0;
+	
+	// Move Constants
+	public static final double MOVE_kP = 0.1;
+	public static final double MOVE_kI = 0.0;
+	public static final double MOVE_kD = 0.0;
 	
 	//////Variables//////
-	public static boolean manualMode = false;
+	
 	
 	//////Declarations //////
 	public static Controller driveController;
+	//public static Controller lifterController;
 	
 	// Motor Controller Declarations
 	public static WPI_TalonSRX leftTop;
@@ -78,6 +99,7 @@ public class RobotMap {
 		
 		// Controllers Initialization
     	driveController = new Controller(0);
+    	//lifterController = new Controller(1);
     	
     	// Motor Controllers Initialization
     	// Main Drive Controllers
@@ -97,6 +119,14 @@ public class RobotMap {
     	leftBottom.follow(leftTop);
     	rightBottom.follow(rightTop);
     	
+    	leftTop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+    	leftTop.configAllowableClosedloopError(0, 0, 10);
+    	
+    	leftTop.config_kF(0, 0.0, 10);
+    	leftTop.config_kP(0, MOVE_kP, 10);
+    	leftTop.config_kI(0, MOVE_kI, 10);
+    	leftTop.config_kD(0, MOVE_kD, 10);
+    	
     	// Intake Controllers Initialization
     	intakeTilt = new TalonSRX(5);
     	intakeRoller = new TalonSRX(6);
@@ -107,14 +137,19 @@ public class RobotMap {
     	lifterFrontRight = new TalonSRX(9);
     	lifterBackRight = new TalonSRX(10);
     	
-    	lifterFrontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
-    	
     	lifterBackLeft.follow(lifterFrontLeft);
     	lifterFrontRight.follow(lifterFrontLeft);
     	lifterBackRight.follow(lifterFrontLeft);
-    	
     	lifterFrontRight.setInverted(true);
     	lifterBackRight.setInverted(true);
+    	
+    	lifterFrontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+    	lifterFrontLeft.configAllowableClosedloopError(0, 0, 10);
+    	
+    	lifterFrontLeft.config_kF(0, 0.0, 10);
+    	lifterFrontLeft.config_kP(0, LIFTER_kP, 10);
+    	lifterFrontLeft.config_kI(0, LIFTER_kI, 10);
+    	lifterFrontLeft.config_kD(0, LIFTER_kD, 10);
     	
     	
 //    	rearLeft.follow(frontLeft);

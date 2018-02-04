@@ -13,9 +13,7 @@ public class DriveAssembly {
 		spin = RobotMap.driveController.getDeadbandRightXAxis();
 		
 		// Manual mode is when we use the joystick to move the lifter with no drive train movement
-		if(!RobotMap.manualMode){ 
-			RobotMap.differentialDrive.arcadeDrive(move, spin);
-		}
+		RobotMap.differentialDrive.arcadeDrive(move, spin);
 		
 		// Sending things to Dashboard
 		Dashboard.send("Move", move);

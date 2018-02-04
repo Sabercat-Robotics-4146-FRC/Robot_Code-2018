@@ -27,32 +27,38 @@ public class Robot extends SampleRobot {
 	@Override
 	public void autonomous() {
 		String autoSelected = (String)RobotMap.chooser.getSelected();
-		System.out.println(autoSelected);
+		System.out.println("SMB Data: " + autoSelected);
 		
 		RobotMap.gameData = DriverStation.getInstance().getGameSpecificMessage();
 		System.out.println("Game Data: " + RobotMap.gameData);
 		
-		boolean isLeft = RobotMap.gameData.charAt(0) == 'L';
+		boolean isSwitchLeft = RobotMap.gameData.charAt(0) == 'L';
 		
 		switch(autoSelected){
 			case "Left":
-				if(isLeft) {
+				if(isSwitchLeft) {
+					System.out.println("Running Left Left Auto.");
 					RobotMap.auto.leftLeftAutonomous();
 				} else {
+					System.out.println("Running Left Right Auto.");
 					RobotMap.auto.leftRightAutonomous();
 				}
 				break;
 			case "Middle":
-				if(isLeft) {
+				if(isSwitchLeft) {
+					System.out.println("Running Middle Left Auto.");
 					RobotMap.auto.middleLeftAutonomous();
 				} else {
+					System.out.println("Running Middle Right Auto.");
 					RobotMap.auto.middleRightAutonomous();
 				}
 				break;
 			case "Right":
-				if(isLeft) {
+				if(isSwitchLeft) {
+					System.out.println("Running Right Left Auto.");
 					RobotMap.auto.rightLeftAutonomous();
 				} else {
+					System.out.println("Running Right Right Auto.");
 					RobotMap.auto.rightRightAutonomous();
 				}
 				break;
@@ -60,7 +66,7 @@ public class Robot extends SampleRobot {
 				RobotMap.auto.crossBaseline();
 				break;
 			case "Do Nothing":
-				System.out.println("");
+				System.out.println("Doing nothing.... :'(");
 				break;
 			
 		}

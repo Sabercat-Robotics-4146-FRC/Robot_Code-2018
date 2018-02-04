@@ -117,7 +117,7 @@ public class Controller {
 	 * 
 	 * @return a boolean value of whether the left trigger button is pressed
 	 */
-	public boolean getLeftTrigger() {
+	public boolean getLeftTriggerBool() {
 		return joy.getRawAxis(leftTrigger) > 0;
 	}
 	
@@ -126,8 +126,28 @@ public class Controller {
 	 * 
 	 * @return a boolean value of whether the right trigger button is pressed
 	 */
-	public boolean getRightTrigger() {
+	public boolean getRightTriggerBool() {
 		return joy.getRawAxis(rightTrigger) > 0;
+	}
+	
+	/**
+	 * Returns the value at which the left trigger is being pushed on the controller.
+	 * <p>
+	 * 
+	 * 
+	 * @return a double value of the left trigger button
+	 */
+	public double getLeftTrigger() {
+		return joy.getRawAxis(leftTrigger);
+	}
+	
+	/**
+	 * Returns the value at which the right trigger is being pushed on the controller.
+	 * 
+	 * @return a double value of the right trigger button
+	 */
+	public double getRightTrigger() {
+		return joy.getRawAxis(rightTrigger);
 	}
 	
 	/**
@@ -266,8 +286,17 @@ public class Controller {
 		}
 	}
 	
+	public double getBezierCurveLeftYAxis() {
+		return bezierFunction(getDeadbandLeftYAxis(), RobotMap.MOVE_P0, RobotMap.MOVE_P1, RobotMap.MOVE_P2, RobotMap.MOVE_P3);
+	}
+	
+	private double bezierFunction(double x, double p0, double p1, double p2, double p3) {
+		return Math.pow((1-x), 3) * p0 + 3 * Math.pow((1-x), 2) * x * p1
+				+ 3 * (1-x) * Math.pow(x, 2) * p2 + Math.pow(x, 3) * p3;
+	}
+	
 	/**
-	 * Rumble Code!!! (this code is written on the Programming Laptop.)
+	 * Rumble Code!!!
 	 */
 	
 	public void rumble(RumbleType side, double r){
