@@ -2,31 +2,64 @@ package org.usfirst.frc.team4146.robot;
 
 public class Autonomous {
 
-	public void leftLeftAutonomous() {
+	// BLUE AUTO
+	// <color> <Robot Position> <Switch Position> 
+	public void blueLeftLeftAutonomous() {
 		
 	}
 
-	public void leftRightAutonomous() {
+	public void blueLeftRightAutonomous() {
 		
 	}
 
-	public void middleLeftAutonomous() {
+	public void blueMiddleLeftAutonomous() {
 		
 	}
 
-	public void middleRightAutonomous() {
+	public void blueMiddleRightAutonomous() {
 		
 	}
 
-	public void rightLeftAutonomous() {
+	public void blueRightLeftAutonomous() {
 		
 	}
 
-	public void rightRightAutonomous() {
+	public void blueRightRightAutonomous() {
 		
 	}
 
-	public void crossBaseline() {
+	public void blueCrossBaseline() {
+		
+	}
+	
+	
+	
+	
+	public void redLeftLeftAutonomous() {
+		
+	}
+
+	public void redLeftRightAutonomous() {
+		
+	}
+
+	public void redMiddleLeftAutonomous() {
+		
+	}
+
+	public void redMiddleRightAutonomous() {
+		
+	}
+
+	public void redRightLeftAutonomous() {
+		
+	}
+
+	public void redRightRightAutonomous() {
+		
+	}
+
+	public void redCrossBaseline() {
 		
 	}
 
