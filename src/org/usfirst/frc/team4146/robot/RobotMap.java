@@ -74,6 +74,7 @@ public class RobotMap {
 	
 	// Sendable Chooser Declaration
 	public static SendableChooser chooser; //Sendable chooser allows us to choose the autonomous from smartdashboard
+	public static SendableChooser colorChooser;
 	
 	// Game Data Declaration
 	public static String gameData;
@@ -179,13 +180,21 @@ public class RobotMap {
     	// Sendable Chooser Initialization and Setup
     	chooser = new SendableChooser();
     	
+    	chooser.addDefault("Do Nothing", "Do Nothing");
     	chooser.addObject("Cross Baseline", "Cross Baseline");
     	chooser.addObject("Left", "Left");
     	chooser.addObject("Middle", "Middle");
     	chooser.addObject("Right", "Right");
-    	chooser.addDefault("Do Nothing", "Do Nothing");
     	
     	SmartDashboard.putData("Auto mode", chooser);
+    	
+    	
+    	colorChooser = new SendableChooser();
+    	
+    	colorChooser.addDefault("Red", "Red");
+    	colorChooser.addObject("Blue", "Blue");
+    	
+    	SmartDashboard.putData("Color", colorChooser);
     	
     	// Differential Drive Initialization
     	differentialDrive = new DifferentialDrive(leftTop, rightTop);  // (frontLeft, rearLeft, frontRight, rearRight);

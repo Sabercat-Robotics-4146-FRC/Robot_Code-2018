@@ -22,53 +22,98 @@ public class Robot extends SampleRobot {
 	}
 
 	/**
-	 * This function is run once each time the robot enters autonomous mode
+	 * This function is run once each time the robot enters autonomous mode.
+	 * This autonomous method mostly deals with choosing the auto to execute.
 	 */
 	@Override
 	public void autonomous() {
+		String colorSelected = (String)RobotMap.colorChooser.getSelected();
+		System.out.println("Color Data: " + colorSelected);
+		
 		String autoSelected = (String)RobotMap.chooser.getSelected();
-		System.out.println("SMB Data: " + autoSelected);
+		System.out.println("Base Chooser Data: " + autoSelected);
 		
 		RobotMap.gameData = DriverStation.getInstance().getGameSpecificMessage();
 		System.out.println("Game Data: " + RobotMap.gameData);
 		
 		boolean isSwitchLeft = RobotMap.gameData.charAt(0) == 'L';
 		
-		switch(autoSelected){
-			case "Left":
-				if(isSwitchLeft) {
-					System.out.println("Running Left Left Auto.");
-					RobotMap.auto.leftLeftAutonomous();
-				} else {
-					System.out.println("Running Left Right Auto.");
-					RobotMap.auto.leftRightAutonomous();
-				}
-				break;
-			case "Middle":
-				if(isSwitchLeft) {
-					System.out.println("Running Middle Left Auto.");
-					RobotMap.auto.middleLeftAutonomous();
-				} else {
-					System.out.println("Running Middle Right Auto.");
-					RobotMap.auto.middleRightAutonomous();
-				}
-				break;
-			case "Right":
-				if(isSwitchLeft) {
-					System.out.println("Running Right Left Auto.");
-					RobotMap.auto.rightLeftAutonomous();
-				} else {
-					System.out.println("Running Right Right Auto.");
-					RobotMap.auto.rightRightAutonomous();
-				}
-				break;
-			case "Cross Baseline":
-				RobotMap.auto.crossBaseline();
-				break;
-			case "Do Nothing":
-				System.out.println("Doing nothing.... :'(");
-				break;
-			
+		// <color><Robot Position><Switch Position>Autonomous
+		
+		if(colorSelected.equals("Red")){
+			switch(autoSelected){
+				case "Left":
+					if(isSwitchLeft) {
+						System.out.println("Running Red Left Left Auto.");
+						RobotMap.auto.redLeftLeftAutonomous();
+					} else {
+						System.out.println("Running Red Left Right Auto.");
+						RobotMap.auto.redLeftRightAutonomous();
+					}
+					break;
+				case "Middle":
+					if(isSwitchLeft) {
+						System.out.println("Running Red Middle Left Auto.");
+						RobotMap.auto.redMiddleLeftAutonomous();
+					} else {
+						System.out.println("Running Red Middle Right Auto.");
+						RobotMap.auto.redMiddleRightAutonomous();
+					}
+					break;
+				case "Right":
+					if(isSwitchLeft) {
+						System.out.println("Running Red Right Left Auto.");
+						RobotMap.auto.redRightLeftAutonomous();
+					} else {
+						System.out.println("Running Red Right Right Auto.");
+						RobotMap.auto.redRightRightAutonomous();
+					}
+					break;
+				case "Cross Baseline":
+					System.out.println("Running Red Cross Baseline Auto.");
+					RobotMap.auto.redCrossBaseline();
+					break;
+				case "Do Nothing":
+					System.out.println("Doing nothing.... :'(");
+					break;
+			}
+		} else if(colorSelected.equals("Blue")){
+			switch(autoSelected){
+				case "Left":
+					if(isSwitchLeft) {
+						System.out.println("Running Blue Left Left Auto.");
+						RobotMap.auto.blueLeftLeftAutonomous();
+					} else {
+						System.out.println("Running Blue Left Right Auto.");
+						RobotMap.auto.blueLeftRightAutonomous();
+					}
+					break;
+				case "Middle":
+					if(isSwitchLeft) {
+						System.out.println("Running Blue Middle Left Auto.");
+						RobotMap.auto.blueMiddleLeftAutonomous();
+					} else {
+						System.out.println("Running Blue Middle Right Auto.");
+						RobotMap.auto.blueMiddleRightAutonomous();
+					}
+					break;
+				case "Right":
+					if(isSwitchLeft) {
+						System.out.println("Running Blue Right Left Auto.");
+						RobotMap.auto.blueRightLeftAutonomous();
+					} else {
+						System.out.println("Running Blue Right Right Auto.");
+						RobotMap.auto.blueRightRightAutonomous();
+					}
+					break;
+				case "Cross Baseline":
+					System.out.println("Running Blue Cross Baseline Auto.");
+					RobotMap.auto.blueCrossBaseline();
+					break;
+				case "Do Nothing":
+					System.out.println("Doing nothing.... :'(");
+					break;
+			}
 		}
 	}
 

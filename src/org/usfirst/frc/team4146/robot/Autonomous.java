@@ -2,8 +2,9 @@ package org.usfirst.frc.team4146.robot;
 
 public class Autonomous {
 
-	// BLUE AUTO
-	// <color> <Robot Position> <Switch Position> 
+	// <color><Robot Position><Switch Position>Autonomous
+	
+	///////// BLUE AUTOS!! /////////
 	public void blueLeftLeftAutonomous() {
 		
 	}
@@ -32,9 +33,7 @@ public class Autonomous {
 		
 	}
 	
-	
-	
-	
+	///////// RED AUTOS!! /////////
 	public void redLeftLeftAutonomous() {
 		
 	}
