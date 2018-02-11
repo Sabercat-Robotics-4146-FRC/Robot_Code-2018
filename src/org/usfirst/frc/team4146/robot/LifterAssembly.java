@@ -25,7 +25,7 @@ public class LifterAssembly {
 	
 	public void update(double dt) {
 		// Checks for what mode to have
-		if(RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getLeftTriggerBool()){
+		if(RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getRightTriggerBool()){
 			lifterMode = LifterModeEnum.MANUAL_LIFT;
 		} else {
 			lifterMode = LifterModeEnum.AUTO_LIFT;

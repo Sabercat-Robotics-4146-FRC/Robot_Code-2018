@@ -38,6 +38,16 @@ public class Robot extends SampleRobot {
 		
 		boolean isSwitchLeft = RobotMap.gameData.charAt(0) == 'L';
 		
+		// This is for checking to see if FMS is sending a "corrupted" String.
+		/*
+		for(int i = 0; i < 3; i++){
+			if(!RobotMap.gameData.substring(i, i + 1).equals("L") || !RobotMap.gameData.substring(i, i + 1).equals("R")){
+				autoSelected = "Cross Baseline";
+				break;
+			}
+		}
+		*/
+		
 		// <color><Robot Position><Switch Position>Autonomous
 		
 		if(colorSelected.equals("Red")){
@@ -53,7 +63,7 @@ public class Robot extends SampleRobot {
 					break;
 				case "Middle":
 					if(isSwitchLeft) {
-						System.out.println("Running Red Middle Left Auto.");
+						System.out.println/**/("Running Red Middle Left Auto.");
 						RobotMap.auto.redMiddleLeftAutonomous();
 					} else {
 						System.out.println("Running Red Middle Right Auto.");
