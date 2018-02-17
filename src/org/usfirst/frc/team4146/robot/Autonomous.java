@@ -62,7 +62,7 @@ public class Autonomous {
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH), 0.0);
 		turn(90, 0.0);
 		// Check to see if having the Power Cube length messes up the robot
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH, 0.0);
+		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH, 0.0); 
 	}
 
 	public void blueMiddleLeftAutonomous() {
@@ -81,13 +81,13 @@ public class Autonomous {
 		move(B_PC_ZONE_LENGTH, 0.0);
 	}
 
-	public void blueRightLeftAutonomous() {
+	public void blueRightRightAutonomous() {
 		move(B_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH, 0.0);
 		turn(-90, 0.0);
 		move(B_RIGHT_WALL_TO_SWITCH - (B_RIGHT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH), 0.0);
 	}
 
-	public void blueRightRightAutonomous() {
+	public void blueRightLeftAutonomous() {
 		// 3 is "wiggle room"
 		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) , 0.0);
 		turn(-90, 0.0);
@@ -116,7 +116,7 @@ public class Autonomous {
 		move((R_LEFT_WALL_TO_SWITCH - R_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH), 0.0);
 		turn(90, 0.0);
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH, 0.0);
+		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH, 0.0); 
 	}
 
 	public void redMiddleLeftAutonomous() {
@@ -135,13 +135,13 @@ public class Autonomous {
 		move(R_PC_ZONE_LENGTH, 0.0);
 	}
 
-	public void redRightLeftAutonomous() {
+	public void redRightRightAutonomous() {
 		move(R_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH, 0.0);
 		turn(-90, 0.0);
 		move(R_RIGHT_WALL_TO_SWITCH - (R_RIGHT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH), 0.0);
 	}
 
-	public void redRightRightAutonomous() {
+	public void redRightLeftAutonomous() {
 		// 3 is "wiggle room"
 		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) , 0.0);
 		turn(-90, 0.0);

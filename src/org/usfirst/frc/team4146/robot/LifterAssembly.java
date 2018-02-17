@@ -36,16 +36,17 @@ public class LifterAssembly {
 			// Getting trigger Sum
 			triggerInput = getTriggerSum();
 			
-			// If the lifter goes to top limit switch and is trying to go up set lifter to 0.0
-			if(RobotMap.topLimitSwitch.get() && triggerInput > 0.0){
-				triggerInput = 0.0;
-			}
+			// We dont have an upper limit switch
+//			// If the lifter goes to top limit switch and is trying to go up set lifter to 0.0
+//			if(RobotMap.topLimitSwitch.get() && triggerInput > 0.0){
+//				triggerInput = 0.0;
+//			}
 			// If the lifter goes to bottom limit switch and is trying to go down set lifter to 0.0
 			if(RobotMap.bottomLimitSwitch.get() && triggerInput < 0.0){
 				triggerInput = 0.0;
 			}
 			
-			RobotMap.lifterFrontLeft.set(ControlMode.PercentOutput, triggerInput);
+			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, triggerInput);
 		} else {
 			// Checking buttons and setting enums.
 			if(RobotMap.driveController.getButtonY()){
@@ -58,13 +59,13 @@ public class LifterAssembly {
 			
 			switch(lifterPosition){
 			case SCALE:
-				RobotMap.lifterFrontLeft.set(ControlMode.Position, 0); // Set this to the Scale height
+				RobotMap.lifterBackLeft.set(ControlMode.Position, 0); // Set this to the Scale height
 				break;
 			case SWITCH:
-				RobotMap.lifterFrontLeft.set(ControlMode.Position, 0); // Set this to the Switch height
+				RobotMap.lifterBackLeft.set(ControlMode.Position, 0); // Set this to the Switch height
 				break;
 			case DOWN:
-				RobotMap.lifterFrontLeft.set(ControlMode.Position, 0); // Set this to the Down height
+				RobotMap.lifterBackLeft.set(ControlMode.Position, 0); // Set this to the Down height
 				break;
 			default:
 				System.out.println("Holy shit we're defaulting in LifterPosition!");

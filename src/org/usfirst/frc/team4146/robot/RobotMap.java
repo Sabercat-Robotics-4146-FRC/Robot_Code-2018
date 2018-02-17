@@ -120,13 +120,13 @@ public class RobotMap {
     	leftBottom.follow(leftTop);
     	rightBottom.follow(rightTop);
     	
-    	leftTop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-    	leftTop.configAllowableClosedloopError(0, 0, 10);
+//    	leftTop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+//    	leftTop.configAllowableClosedloopError(0, 0, 10);
     	
-    	leftTop.config_kF(0, 0.0, 10);
-    	leftTop.config_kP(0, MOVE_kP, 10);
-    	leftTop.config_kI(0, MOVE_kI, 10);
-    	leftTop.config_kD(0, MOVE_kD, 10);
+//    	leftTop.config_kF(0, 0.0, 10);
+//    	leftTop.config_kP(0, MOVE_kP, 10);
+//    	leftTop.config_kI(0, MOVE_kI, 10);
+//    	leftTop.config_kD(0, MOVE_kD, 10);
     	
     	// Intake Controllers Initialization
     	intakeTilt = new TalonSRX(5);
@@ -138,19 +138,19 @@ public class RobotMap {
     	lifterFrontRight = new TalonSRX(9);
     	lifterBackRight = new TalonSRX(10);
     	
-    	lifterBackLeft.follow(lifterFrontLeft);
-    	lifterFrontRight.follow(lifterFrontLeft);
-    	lifterBackRight.follow(lifterFrontLeft);
+    	lifterBackLeft.follow(lifterBackLeft);
+    	lifterFrontRight.follow(lifterBackLeft);
+    	lifterBackRight.follow(lifterBackLeft);
     	lifterFrontRight.setInverted(true);
     	lifterBackRight.setInverted(true);
     	
-    	lifterFrontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
-    	lifterFrontLeft.configAllowableClosedloopError(0, 0, 10);
+    	lifterBackLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+    	lifterBackLeft.configAllowableClosedloopError(0, 0, 10);
     	
-    	lifterFrontLeft.config_kF(0, 0.0, 10);
-    	lifterFrontLeft.config_kP(0, LIFTER_kP, 10);
-    	lifterFrontLeft.config_kI(0, LIFTER_kI, 10);
-    	lifterFrontLeft.config_kD(0, LIFTER_kD, 10);
+    	lifterBackLeft.config_kF(0, 0.0, 10);
+    	lifterBackLeft.config_kP(0, LIFTER_kP, 10);
+    	lifterBackLeft.config_kI(0, LIFTER_kI, 10);
+    	lifterBackLeft.config_kD(0, LIFTER_kD, 10);
     	
     	
 //    	rearLeft.follow(frontLeft);

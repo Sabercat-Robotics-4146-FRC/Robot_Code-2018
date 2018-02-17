@@ -135,11 +135,16 @@ public class Robot extends SampleRobot {
 		Timer timer = new Timer();
 		double dt = 0.0;
 		
+		int i = 0;
+		
 		while (isOperatorControl() && isEnabled()) {
 			dt = timer.getDT();
 			RobotMap.drive.update(dt);
-			RobotMap.intake.update(dt);
-			RobotMap.lifter.update(dt);
+//			RobotMap.intake.update(dt);
+//			RobotMap.lifter.update(dt);
+			
+			Dashboard.send("LiferPos", RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition());
+			
 			timer.update();
 			
 		}
