@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -20,7 +21,6 @@ public class RobotMap {
 	public static Robot ROBOT;
 	
 	//////Constants//////
-	// Bezier curve constants
 	public static final double MOVE_P0 = 0.48;
 	public static final double MOVE_P1 = 0.21;
 	public static final double MOVE_P2 = 0.15;
@@ -35,6 +35,10 @@ public class RobotMap {
 	public static final double LIFTER_kP = 0.1;
 	public static final double LIFTER_kI = 0.0;
 	public static final double LIFTER_kD = 0.0;
+	
+	// Intake Constants
+	public static final double TILT_UP_LIMIT = -0.44;
+	public static final double TILT_DOWN_LIMIT = -0.99;
 	
 	// Move Constants
 	public static final double MOVE_kP = 0.1;
@@ -63,8 +67,11 @@ public class RobotMap {
 	public static TalonSRX lifterBackRight;
 	
 	// Limit Switch Declarations
-	public static DigitalInput topLimitSwitch;
+//	public static DigitalInput topLimitSwitch; // Not a thing
 	public static DigitalInput bottomLimitSwitch;
+	
+	// Potentiometer Declarations
+	public static AnalogPotentiometer tiltPot;
 	
 	// Navax Gyro Declaration
 	public static AHRS gyro;
@@ -138,13 +145,14 @@ public class RobotMap {
     	lifterFrontRight = new TalonSRX(9);
     	lifterBackRight = new TalonSRX(10);
     	
-    	lifterBackLeft.follow(lifterBackLeft);
+    	lifterFrontLeft.follow(lifterBackLeft);
     	lifterFrontRight.follow(lifterBackLeft);
     	lifterBackRight.follow(lifterBackLeft);
+    	
     	lifterFrontRight.setInverted(true);
     	lifterBackRight.setInverted(true);
     	
-    	lifterBackLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+    	lifterBackLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     	lifterBackLeft.configAllowableClosedloopError(0, 0, 10);
     	
     	lifterBackLeft.config_kF(0, 0.0, 10);
@@ -167,8 +175,11 @@ public class RobotMap {
 //    	frontLeft.configClosedloopRamp(1.0, 0);
     	
     	// Limit Switch Initialization
-    	topLimitSwitch = new DigitalInput(0);
-    	bottomLimitSwitch = new DigitalInput(1);
+//    	topLimitSwitch = new DigitalInput(0); // Not a thing.
+    	bottomLimitSwitch = new DigitalInput(0);
+    	
+    	// Potentiometer Initilization
+    	tiltPot = new AnalogPotentiometer(3);
     	
 		// Navx Gyro Initialization
     	gyro = new AHRS(SPI.Port.kMXP);

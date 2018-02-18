@@ -24,4 +24,9 @@ public class Dashboard {
 	public static void publishImage() {
 		
 	}
+
+	public static void send(String fieldName, String string) {
+		networktable.putString(fieldName, string);
+		
+	}
 }

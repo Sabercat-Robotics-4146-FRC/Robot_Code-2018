@@ -3,14 +3,14 @@ package org.usfirst.frc.team4146.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class IntakeAssembly {
-	enum IntakeintakeTilt{
+	enum IntakeTiltEnum{
 		TILTED_UP,
 		TILTED_DOWN
 	}
 	
 	private boolean tiltFlag = false;
 	
-	IntakeintakeTilt intakeTilt = IntakeintakeTilt.TILTED_UP;
+	IntakeTiltEnum intakeTiltEnum = IntakeTiltEnum.TILTED_UP;
 	
 	public IntakeAssembly(){
 		
@@ -21,22 +21,32 @@ public class IntakeAssembly {
 		if(RobotMap.driveController.getRightBumper() && !tiltFlag){
 			tiltFlag = true;
 			
-			if(intakeTilt == IntakeintakeTilt.TILTED_UP){
-				intakeTilt = IntakeintakeTilt.TILTED_DOWN;
+			if(intakeTiltEnum == IntakeTiltEnum.TILTED_UP){
+				intakeTiltEnum = IntakeTiltEnum.TILTED_DOWN;
 			} else {
-				intakeTilt = IntakeintakeTilt.TILTED_UP;
+				intakeTiltEnum = IntakeTiltEnum.TILTED_UP;
 			}
 		}
 		if(!RobotMap.driveController.getRightBumper()){
 			tiltFlag = false;
 		}
 		
-		switch(intakeTilt){
+		switch(intakeTiltEnum){
 			case TILTED_UP:
-				RobotMap.intakeTilt.set(ControlMode.Position, 0); // We gotta set this!!
+				// Pot value is inverted so make up value be bigger.
+				if(-RobotMap.tiltPot.get() < RobotMap.TILT_UP_LIMIT){
+					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.2);
+				} else {
+					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.0);
+				}
 				break;
 			case TILTED_DOWN:
-				RobotMap.intakeTilt.set(ControlMode.Position, 0); // We gotta set this!!
+				// Pot value is inverted so make up value be bigger.
+				if(-RobotMap.tiltPot.get() >= RobotMap.TILT_DOWN_LIMIT){
+					RobotMap.intakeTilt.set(ControlMode.PercentOutput, -0.4);
+				} else {
+					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.0);
+				}
 				break;
 			default:
 				System.out.println("Holy shit we're defalting in intakeTilt!");
@@ -45,9 +55,12 @@ public class IntakeAssembly {
 		
 		// Controlling roller speed
 		if(RobotMap.driveController.getLeftBumper()){
-			RobotMap.intakeRoller.set(ControlMode.PercentOutput, -0.6);
+			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 1.0);
 		} else {
 			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.0);
 		}
+		
+		// Dashboard Sendings
+		Dashboard.send("Pot Value", -RobotMap.tiltPot.get());
 	}
 }
