@@ -32,13 +32,14 @@ public class RobotMap {
 	public static final double SPIN_P3 = 0.61;
 	
 	// Lifter Constants
-	public static final double LIFTER_kP = 0.1;
+	public static final double LIFTER_kP = 0.01;
 	public static final double LIFTER_kI = 0.0;
 	public static final double LIFTER_kD = 0.0;
 	
 	// Intake Constants
-	public static final double TILT_UP_LIMIT = -0.44;
-	public static final double TILT_DOWN_LIMIT = -0.99;
+	public static final double TILT_UP_LIMIT = 0.14; 
+	public static final double TILT_DOWN_LIMIT = 0.79; 
+	public static final double TILT_MID = 0.36; 
 	
 	// Move Constants
 	public static final double MOVE_kP = 0.1;
@@ -155,10 +156,10 @@ public class RobotMap {
     	lifterBackLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     	lifterBackLeft.configAllowableClosedloopError(0, 0, 10);
     	
-    	lifterBackLeft.config_kF(0, 0.0, 10);
-    	lifterBackLeft.config_kP(0, LIFTER_kP, 10);
-    	lifterBackLeft.config_kI(0, LIFTER_kI, 10);
-    	lifterBackLeft.config_kD(0, LIFTER_kD, 10);
+//    	lifterBackLeft.config_kF(0, 0.0, 10);
+//    	lifterBackLeft.config_kP(0, LIFTER_kP, 10);
+//    	lifterBackLeft.config_kI(0, LIFTER_kI, 10);
+//    	lifterBackLeft.config_kD(0, LIFTER_kD, 10);
     	
     	
 //    	rearLeft.follow(frontLeft);

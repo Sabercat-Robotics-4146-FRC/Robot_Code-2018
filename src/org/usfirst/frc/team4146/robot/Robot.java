@@ -136,12 +136,26 @@ public class Robot extends SampleRobot {
 		double dt = 0.0;
 		
 		int i = 0;
-		
 		while (isOperatorControl() && isEnabled()) {
 			dt = timer.getDT();
 			RobotMap.drive.update(dt);
 			RobotMap.intake.update(dt);
 			RobotMap.lifter.update(dt);
+			
+//			if(RobotMap.driveController.getLeftBumper()){
+//				RobotMap.intakeTilt.set(ControlMode.PercentOutput, 1.0);
+//			} else if(RobotMap.driveController.getRightBumper()){
+//				RobotMap.intakeTilt.set(ControlMode.PercentOutput, -1.0);
+//			} else {
+//				RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.0);
+//			}
+//			
+//			if(RobotMap.driveController.getButtonStart()){
+//				RobotMap.intakeRoller.set(ControlMode.PercentOutput, 1.0);
+//			} else {
+//				RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.0);
+//			}
+			
 			timer.update();
 			
 		}

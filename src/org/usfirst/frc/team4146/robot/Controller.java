@@ -186,6 +186,24 @@ public class Controller {
 		return joy.getRawButton(rightStickPress);
 	}
 	
+	/**
+	 * Returns the POV value on the controller.
+	 * 
+	 * @return an int of degrees (right is 90, top left is 315).
+	 */
+	public int getDPad() {
+		return joy.getPOV(0);
+	}
+	
+	/**
+	 * Returns the POV value on the controller in a boolean.
+	 * 
+	 * @return a boolean true if DPad is pressed.
+	 */
+	public boolean getDPadBool() {
+		return joy.getPOV(0) != -1;
+	}
+	
 	//Non-Deadbanded Axes:
 	
 	/**

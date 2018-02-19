@@ -3,16 +3,29 @@ package org.usfirst.frc.team4146.robot;
 public class DriveAssembly {
 	double move, spin;
 	boolean rampFlag = true;
-	
+	Heading testHeading;
 	public DriveAssembly() {
-		
+		testHeading = new Heading();
+		testHeading.headingController.setSetpoint(45);
 	}
 	
 	public void update(double dt){
+		
+		
 		// Setting base movement variables
 		move = RobotMap.driveController.getDeadbandLeftYAxis();
 		spin = RobotMap.driveController.getDeadbandRightXAxis();
 		
+		Dashboard.send("PID TEST HEADING", testHeading.headingController.get());
+		Dashboard.send("HEADING MIN", testHeading.headingController.getValue());
+		Dashboard.send("FUSED", RobotMap.gyro.getAngle());
+		
+		testHeading.headingController.update(dt);
+		if (RobotMap.driveController.getButtonX()){
+			spin = testHeading.headingController.get();
+		}
+		Dashboard.send("Heading Error",testHeading.headingController.getError());
+		Dashboard.send("Heading Out",testHeading.headingController.get());
 		RobotMap.differentialDrive.arcadeDrive(move, spin);
 		
 		// Sending things to Dashboard

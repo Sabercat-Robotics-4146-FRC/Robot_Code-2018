@@ -11,7 +11,8 @@ public class LifterAssembly {
 	
 	enum LifterModeEnum{
 		AUTO_LIFT,
-		MANUAL_LIFT
+		MANUAL_LIFT,
+		IDLE
 	}
 	
 	LifterPositionEnum autoLifterPosition = LifterPositionEnum.DOWN;
@@ -19,46 +20,66 @@ public class LifterAssembly {
 	
 	private double triggerInput = 0.0; // Used for manual mode input.
 	
-	private boolean limitSwitchPressed = false;
+	private boolean limitSwitchPressedFlag = false;
+	
+	private double tareEncoderTick;
 	
 	public LifterAssembly(){
 		
 	}
 	
 	public void update(double dt) {
-		// Reset encoder
-		if(RobotMap.bottomLimitSwitch.get() && !limitSwitchPressed){
+		// Reset encoder at bottom
+		if(RobotMap.bottomLimitSwitch.get() && !limitSwitchPressedFlag){
 			System.out.println("Resetting lift encoder!");
-			RobotMap.lifterBackLeft.setSelectedSensorPosition(0, 0, 10);
-			limitSwitchPressed = true;
+			lifterMode = LifterModeEnum.MANUAL_LIFT;
+			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, 0.0);
+			tareEncoderTick = RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition();
+			//RobotMap.lifterBackLeft.setSelectedSensorPosition(0, 0, 10); // No work....
+			limitSwitchPressedFlag = true;
 		}
 		if(!RobotMap.bottomLimitSwitch.get()){
-			limitSwitchPressed = false;
+			limitSwitchPressedFlag = false;
+		}
+		
+		if(lifterMode == LifterModeEnum.AUTO_LIFT && autoLifterPosition == LifterPositionEnum.DOWN){
+			double loweringSpeed = -0.4;
+			if(RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition() < tareEncoderTick + 30000){
+				loweringSpeed = -0.05;
+			}
+			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, loweringSpeed);
 		}
 		
 		// Checks for what mode to have
-		if(RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getRightTriggerBool()){
+		if(RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getRightTriggerBool() || RobotMap.driveController.getDPadBool() || RobotMap.driveController.getButtonStart()){
 			lifterMode = LifterModeEnum.MANUAL_LIFT;
-		} else {
+		} else if(RobotMap.driveController.getButtonA() || RobotMap.driveController.getButtonB() || RobotMap.driveController.getButtonY()){
 			lifterMode = LifterModeEnum.AUTO_LIFT;
 		}
 		
-		// Does motor settings depending upon if manual mode or not.
-		if(lifterMode == LifterModeEnum.MANUAL_LIFT){
-			triggerInput = getTriggerSum();
-			
-			// If the lifter goes to bottom limit switch and is trying to go down set lifter to 0.0
-			if(RobotMap.bottomLimitSwitch.get() && triggerInput < 0.0){
-				triggerInput = 0.0;
-			}
-			
-			// If the lifter goes to top soft stop set lifter to 0.0.
-			if(RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition() >= 138200.0){
+		// Checks mode and sets motors.
+		if(lifterMode == LifterModeEnum.MANUAL_LIFT) {
+//			RobotMap.driveController.getDPad() > 90 && RobotMap.driveController.getDPad() < 270
+			if(RobotMap.driveController.getButtonStart()){
+				triggerInput = -1.0;
+			} else if(RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getRightTriggerBool()) {
+				triggerInput = getTriggerSum();
+				
+				// If the lifter goes to bottom limit switch and is trying to go down set lifter to 0.0
+				if(RobotMap.bottomLimitSwitch.get() && triggerInput < 0.0){
+					triggerInput = 0.0;
+				}
+				
+				// If the lifter goes to top soft stop and is trying to go up set lifter to 0.0.
+				if(RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition() >= tareEncoderTick + (130920-2496) && triggerInput > 0.0){
+					triggerInput = 0.0;
+				}
+			} else {
 				triggerInput = 0.0;
 			}
 			
 			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, triggerInput);
-		} else {
+		} else if(lifterMode == LifterModeEnum.AUTO_LIFT){
 			// Checking buttons, setting enums and updating motors.
 			// The motor updating is in here so that it only updates of you press a button.
 			if(RobotMap.driveController.getButtonY()){
@@ -71,13 +92,17 @@ public class LifterAssembly {
 				autoLifterPosition = LifterPositionEnum.DOWN;
 				updateAutoHeight();
 			}
+		} else {
+			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, 0.0);
 		}
 		
 		// Dashboard Sendings
-		Dashboard.send("Lifter Position", RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition());
+		Dashboard.send("Raw Lifter Position", RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition());
+		Dashboard.send("Tared Lifter Position", tareEncoderTick);
 		Dashboard.send("Bottom Limit Switch", RobotMap.bottomLimitSwitch.get());
 		Dashboard.send("Lifter Position Enum", autoLifterPosition.toString());
 		Dashboard.send("Lifter Mode Enum", lifterMode.toString());
+		Dashboard.send("Lifter Error", RobotMap.lifterBackLeft.getClosedLoopError(0));
 		
 		// This gives you how many (arbitrary units) "ticks" the motor has gone
 //		System.out.println(RobotMap.frontLeft.getSensorCollection().getPulseWidthPosition());
@@ -92,16 +117,28 @@ public class LifterAssembly {
 //	}
 	}
 	
+	/* ||
+	 * ||              SCALE = tareEncoderTick + (130920-2496)
+	 * ||     
+	 * ||
+	 * ||              SWITCH = tareEncoderTick + (64212-2496)
+	 * ||  
+	 * ||           O
+	 * ||_________0    ZERO = tareEncoderTick (2496)
+	 * ||     |
+	 * ||     |___
+	 */
 	public void updateAutoHeight(){
 		switch(autoLifterPosition){
 		case SCALE:
-			RobotMap.lifterBackLeft.set(ControlMode.Position, 130920); // Set this to the Scale height
+			RobotMap.lifterBackLeft.set(ControlMode.Position, tareEncoderTick + (130920-2496)); // Set this to the Scale height
 			break;
 		case SWITCH:
-			RobotMap.lifterBackLeft.set(ControlMode.Position, 64212); // Set this to the Switch height
+			RobotMap.lifterBackLeft.set(ControlMode.Position, tareEncoderTick + (64212-2496)); // Set this to the Switch height
 			break;
 		case DOWN:
-			RobotMap.lifterBackLeft.set(ControlMode.Position, 2496); // Set this to the Down height
+//			RobotMap.lifterBackLeft.set(ControlMode.Position, tareEncoderTick); // Set this to the Down height
+//			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, loweringSpeed);
 			break;
 		default:
 			System.out.println("Holy shit we're defaulting in LifterPosition!");
@@ -114,7 +151,7 @@ public class LifterAssembly {
 	 * returns negative and the right returns positive, added together.
 	 */ 
 	private double getTriggerSum(){
-		return ((-RobotMap.driveController.getLeftTrigger() / 3) + RobotMap.driveController.getRightTrigger());
+		return ((-RobotMap.driveController.getLeftTrigger()) + RobotMap.driveController.getRightTrigger());
 	}
 
 }
