@@ -3,7 +3,7 @@ package org.usfirst.frc.team4146.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class LifterAssembly {
-	enum LifterPositionEnum{
+	public enum LifterPositionEnum{
 		SCALE,
 		SWITCH,
 		DOWN
@@ -12,7 +12,6 @@ public class LifterAssembly {
 	enum LifterModeEnum{
 		AUTO_LIFT,
 		MANUAL_LIFT,
-		IDLE
 	}
 	
 	LifterPositionEnum autoLifterPosition = LifterPositionEnum.DOWN;
@@ -92,8 +91,6 @@ public class LifterAssembly {
 				autoLifterPosition = LifterPositionEnum.DOWN;
 				updateAutoHeight();
 			}
-		} else {
-			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, 0.0);
 		}
 		
 		// Dashboard Sendings

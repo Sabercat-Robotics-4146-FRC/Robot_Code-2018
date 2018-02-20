@@ -60,7 +60,6 @@ public class IntakeAssembly {
 				}
 				break;
 			case TILTED_MID:
-				Dashboard.send("Tilt PID Out", -tiltPID.get());
 				RobotMap.intakeTilt.set(ControlMode.PercentOutput, -tiltPID.get());
 				break;
 			default:
@@ -79,6 +78,7 @@ public class IntakeAssembly {
 		
 		// Dashboard Sendings
 		Dashboard.send("Pot Value", RobotMap.tiltPot.get());
+		Dashboard.send("Tilt PID Out", -tiltPID.get());
 		
 	}
 }

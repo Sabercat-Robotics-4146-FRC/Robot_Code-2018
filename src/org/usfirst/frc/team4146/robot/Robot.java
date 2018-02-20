@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4146.robot;
 
+import org.usfirst.frc.team4146.robot.LifterAssembly.LifterModeEnum;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.DriverStation;

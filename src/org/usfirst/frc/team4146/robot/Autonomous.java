@@ -1,5 +1,9 @@
 package org.usfirst.frc.team4146.robot;
 
+import org.usfirst.frc.team4146.robot.IntakeAssembly.IntakeTiltEnum;
+import org.usfirst.frc.team4146.robot.LifterAssembly.LifterModeEnum;
+import org.usfirst.frc.team4146.robot.LifterAssembly.LifterPositionEnum;
+
 public class Autonomous {
 
 	////Autonomous Constants////
@@ -162,6 +166,16 @@ public class Autonomous {
 	
 	public void turn(double angle, double timeout) {
 		
+	}
+	
+	public void changeLiftState(LifterPositionEnum state){
+		RobotMap.lifter.lifterMode = LifterModeEnum.AUTO_LIFT;
+		RobotMap.lifter.autoLifterPosition = state;
+		RobotMap.lifter.update(dt);
+	}
+	
+	public void changeIntakeTiltState(IntakeTiltEnum state){
+		RobotMap.intake.intakeTiltEnum = state;
 	}
 
 }

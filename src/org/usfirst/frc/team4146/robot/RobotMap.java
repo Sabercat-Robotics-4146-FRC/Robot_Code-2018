@@ -8,6 +8,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Spark;
@@ -70,6 +71,10 @@ public class RobotMap {
 	// Limit Switch Declarations
 //	public static DigitalInput topLimitSwitch; // Not a thing
 	public static DigitalInput bottomLimitSwitch;
+	
+	// Encoder Declarations
+	public static Encoder leftDriveEncoder;
+	public static Encoder rightDriveEncoder;
 	
 	// Potentiometer Declarations
 	public static AnalogPotentiometer tiltPot;
@@ -178,6 +183,9 @@ public class RobotMap {
     	// Limit Switch Initialization
 //    	topLimitSwitch = new DigitalInput(0); // Not a thing.
     	bottomLimitSwitch = new DigitalInput(0);
+    	
+    	leftDriveEncoder = new Encoder(1, 2, false);
+    	rightDriveEncoder = new Encoder(3, 4, true);
     	
     	// Potentiometer Initilization
     	tiltPot = new AnalogPotentiometer(3);
