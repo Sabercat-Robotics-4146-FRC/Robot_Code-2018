@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4146.robot.PID;
 
+import org.usfirst.frc.team4146.robot.Dashboard;
 
 /**
 * General purpose PID loop.
@@ -76,14 +77,17 @@ public abstract class PID {
   private void computePID(double dt){
     error =  computeError();// compute system error
 
-    derivative = (prevError - error) / dt; // computer derivative
+    derivative = (error - prevError) / dt; // computer derivative
+    
     prevError = error;
 
 		if(Math.abs(error) < iRange)
 		{
 			integral += (1/Ki) * error * dt;
 		}
-
+		Dashboard.send("D value", Kd * derivative);
+	    Dashboard.send("P value", Kp * error);
+	    Dashboard.send("I value", integral);
 		output = ( Kp * error ) + ( integral ) + ( Kd * derivative  );
   }
 

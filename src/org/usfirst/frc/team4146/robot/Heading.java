@@ -20,14 +20,17 @@ public class Heading {
 	    headingController.flush();
 
 
-	    while (headingController.getTimeInTolerance() < 1.0) {
+	    while (headingController.getTimeInTolerance() < 1.0 && RobotMap.ROBOT.isAutonomous() && RobotMap.ROBOT.isEnabled()) {
 	      dt = autoHeadingTimer.getDT();
 
 	      headingController.update(dt);
 	      RobotMap.differentialDrive.arcadeDrive(0.0, headingController.get());
+	      
+	      Dashboard.send("Gyro", RobotMap.gyro.getFusedHeading());
 
 	      autoHeadingTimer.update();
 	    }
+	    System.out.println("Done Turning!");
 	  }
 
 	  public void turnToRelative(double relativeAngle) {

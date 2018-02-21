@@ -29,6 +29,12 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void autonomous() {
+		
+		//RobotMap.heading.tareHeadingRelative();
+		
+		RobotMap.auto.move(12*12);
+		
+		
 		String colorSelected = (String)RobotMap.colorChooser.getSelected();
 		System.out.println("Color Data: " + colorSelected);
 		
@@ -143,6 +149,7 @@ public class Robot extends SampleRobot {
 			RobotMap.drive.update(dt);
 			RobotMap.intake.update(dt);
 			RobotMap.lifter.update(dt);
+			
 			
 //			if(RobotMap.driveController.getLeftBumper()){
 //				RobotMap.intakeTilt.set(ControlMode.PercentOutput, 1.0);

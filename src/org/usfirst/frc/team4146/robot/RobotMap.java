@@ -22,20 +22,20 @@ public class RobotMap {
 	public static Robot ROBOT;
 	
 	//////Constants//////
-	public static final double MOVE_P0 = 0.48;
-	public static final double MOVE_P1 = 0.21;
-	public static final double MOVE_P2 = 0.15;
-	public static final double MOVE_P3 = 0.61;
-	
-	public static final double SPIN_P0 = 0.48;
-	public static final double SPIN_P1 = 0.21;
-	public static final double SPIN_P2 = 0.15;
-	public static final double SPIN_P3 = 0.61;
+//	public static final double MOVE_P0 = 0.48;
+//	public static final double MOVE_P1 = 0.21;
+//	public static final double MOVE_P2 = 0.15;
+//	public static final double MOVE_P3 = 0.61;
+//	
+//	public static final double SPIN_P0 = 0.48;
+//	public static final double SPIN_P1 = 0.21;
+//	public static final double SPIN_P2 = 0.15;
+//	public static final double SPIN_P3 = 0.61;
 	
 	// Lifter Constants
-	public static final double LIFTER_kP = 0.01;
+	public static final double LIFTER_kP = 0.015;
 	public static final double LIFTER_kI = 0.0;
-	public static final double LIFTER_kD = 0.0;
+	public static final double LIFTER_kD = 1.5;
 	
 	// Intake Constants
 	public static final double TILT_UP_LIMIT = 0.14; 
@@ -43,9 +43,14 @@ public class RobotMap {
 	public static final double TILT_MID = 0.36; 
 	
 	// Move Constants
-	public static final double MOVE_kP = 0.1;
+	public static final double MOVE_kP = 0.021;
 	public static final double MOVE_kI = 0.0;
-	public static final double MOVE_kD = 0.0;
+	public static final double MOVE_kD = 0.0002;
+	
+	// Heading Constants
+	public static final double HEADING_kP = 0.1;
+	public static final double HEADING_kI = 0.0;
+	public static final double HEADING_kD = 0.001;
 	
 	//////Variables//////
 	
@@ -108,6 +113,11 @@ public class RobotMap {
 	// Autonomous Declaration
 	public static Autonomous auto;
 	
+	// Heading Declaration
+	public static Heading heading;
+	
+	// Move Distance Declaration
+	public static MoveDistance moveDistance;
 	
 	public static void init() { // This is to be called in robitInit and instantiates stuff.
 		
@@ -161,10 +171,10 @@ public class RobotMap {
     	lifterBackLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     	lifterBackLeft.configAllowableClosedloopError(0, 0, 10);
     	
-//    	lifterBackLeft.config_kF(0, 0.0, 10);
-//    	lifterBackLeft.config_kP(0, LIFTER_kP, 10);
-//    	lifterBackLeft.config_kI(0, LIFTER_kI, 10);
-//    	lifterBackLeft.config_kD(0, LIFTER_kD, 10);
+    	lifterBackLeft.config_kF(0, 0.0, 10);
+    	lifterBackLeft.config_kP(0, LIFTER_kP, 10);
+    	lifterBackLeft.config_kI(0, LIFTER_kI, 10);
+    	lifterBackLeft.config_kD(0, LIFTER_kD, 10);
     	
     	
 //    	rearLeft.follow(frontLeft);
@@ -184,8 +194,11 @@ public class RobotMap {
 //    	topLimitSwitch = new DigitalInput(0); // Not a thing.
     	bottomLimitSwitch = new DigitalInput(0);
     	
-    	leftDriveEncoder = new Encoder(1, 2, false);
-    	rightDriveEncoder = new Encoder(3, 4, true);
+    	leftDriveEncoder = new Encoder(1, 2, false, Encoder.EncodingType.k4X);
+    	rightDriveEncoder = new Encoder(3, 4, true, Encoder.EncodingType.k4X);
+    	
+    	RobotMap.rightDriveEncoder.setDistancePerPulse((6.0 * Math.PI) / 256.0);
+    	RobotMap.leftDriveEncoder.setDistancePerPulse((6.0 * Math.PI) / 256.0);
     	
     	// Potentiometer Initilization
     	tiltPot = new AnalogPotentiometer(3);
@@ -232,5 +245,11 @@ public class RobotMap {
     	
     	// Autonomous Initialization
     	auto = new Autonomous();
+    	
+    	// Heading Initialization
+    	heading = new Heading();
+    	
+    	// Move Distance Initialization
+    	moveDistance = new MoveDistance();
 	}
 }

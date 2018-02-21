@@ -304,14 +304,14 @@ public class Controller {
 		}
 	}
 	
-	public double getBezierCurveLeftYAxis() {
-		return bezierFunction(getDeadbandLeftYAxis(), RobotMap.MOVE_P0, RobotMap.MOVE_P1, RobotMap.MOVE_P2, RobotMap.MOVE_P3);
-	}
-	
-	private double bezierFunction(double x, double p0, double p1, double p2, double p3) {
-		return Math.pow((1-x), 3) * p0 + 3 * Math.pow((1-x), 2) * x * p1
-				+ 3 * (1-x) * Math.pow(x, 2) * p2 + Math.pow(x, 3) * p3;
-	}
+//	public double getBezierCurveLeftYAxis() {
+//		return bezierFunction(getDeadbandLeftYAxis(), RobotMap.MOVE_P0, RobotMap.MOVE_P1, RobotMap.MOVE_P2, RobotMap.MOVE_P3);
+//	}
+//	
+//	private double bezierFunction(double x, double p0, double p1, double p2, double p3) {
+//		return Math.pow((1-x), 3) * p0 + 3 * Math.pow((1-x), 2) * x * p1
+//				+ 3 * (1-x) * Math.pow(x, 2) * p2 + Math.pow(x, 3) * p3;
+//	}
 	
 	/**
 	 * Rumble Code!!!
