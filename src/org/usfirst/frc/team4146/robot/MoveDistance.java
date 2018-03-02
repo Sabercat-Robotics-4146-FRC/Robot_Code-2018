@@ -27,6 +27,10 @@ public class MoveDistance {
 
 		while (moveDistanceController.getTimeInTolerance() < 1.0 && RobotMap.ROBOT.isAutonomous() && RobotMap.ROBOT.isEnabled()) {
 			dt = autoMoveDistanceTimer.getDT();
+			
+			if(RobotMap.ROBOT.isAutonomous()){
+				RobotMap.intake.update(dt);
+			}
 
 			moveDistanceController.update(dt);
 			RobotMap.differentialDrive.arcadeDrive(moveDistanceController.get(), 0.0);

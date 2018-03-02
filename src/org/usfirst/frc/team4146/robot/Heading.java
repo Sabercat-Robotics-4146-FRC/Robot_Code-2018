@@ -12,25 +12,29 @@ public class Heading {
 	  }
 	  
 	  public void turnToAbsolute(double absoluteAngle) {
-	    Timer autoHeadingTimer = new Timer();
-			double dt = 0.0;
+		  Timer autoHeadingTimer = new Timer();
+		  double dt = 0.0;
+		  
+		  // Start the heading controller
+		  headingController.setSetpoint(absoluteAngle);
+		  headingController.flush();
+		  
+		  
+		  while (headingController.getTimeInTolerance() < 1.0 && RobotMap.ROBOT.isAutonomous() && RobotMap.ROBOT.isEnabled()) {
+			  dt = autoHeadingTimer.getDT();
+			  
+			  if(RobotMap.ROBOT.isAutonomous()){
+				  RobotMap.intake.update(dt);
+			  }
 
-	    // Start the heading controller
-	    headingController.setSetpoint(absoluteAngle);
-	    headingController.flush();
-
-
-	    while (headingController.getTimeInTolerance() < 1.0 && RobotMap.ROBOT.isAutonomous() && RobotMap.ROBOT.isEnabled()) {
-	      dt = autoHeadingTimer.getDT();
-
-	      headingController.update(dt);
-	      RobotMap.differentialDrive.arcadeDrive(0.0, headingController.get());
-	      
-	      Dashboard.send("Gyro", RobotMap.gyro.getFusedHeading());
-
-	      autoHeadingTimer.update();
-	    }
-	    System.out.println("Done Turning!");
+			  headingController.update(dt);
+			  RobotMap.differentialDrive.arcadeDrive(0.0, headingController.get());
+			  
+			  Dashboard.send("Gyro", RobotMap.gyro.getFusedHeading());
+			  
+			  autoHeadingTimer.update();
+		  }
+		  System.out.println("Done Turning!");
 	  }
 
 	  public void turnToRelative(double relativeAngle) {

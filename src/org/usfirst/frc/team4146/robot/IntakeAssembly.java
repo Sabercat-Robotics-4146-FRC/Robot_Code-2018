@@ -15,7 +15,7 @@ public class IntakeAssembly {
 	
 	private boolean tiltFlag = false;
 	
-	IntakeTiltEnum intakeTiltEnum = IntakeTiltEnum.TILTED_UP;
+	IntakeTiltEnum intakeTiltPosition = IntakeTiltEnum.TILTED_UP;
 	
 	public IntakeAssembly(){
 		tiltPID = new TiltPID();
@@ -28,10 +28,10 @@ public class IntakeAssembly {
 		if(RobotMap.driveController.getRightBumper() && !tiltFlag){
 			tiltFlag = true;
 			
-			if(intakeTiltEnum == IntakeTiltEnum.TILTED_UP){
-				intakeTiltEnum = IntakeTiltEnum.TILTED_DOWN;
+			if(intakeTiltPosition == IntakeTiltEnum.TILTED_UP){
+				intakeTiltPosition = IntakeTiltEnum.TILTED_DOWN;
 			} else {
-				intakeTiltEnum = IntakeTiltEnum.TILTED_UP;
+				intakeTiltPosition = IntakeTiltEnum.TILTED_UP;
 			}
 		}
 		if(!RobotMap.driveController.getRightBumper()){
@@ -39,10 +39,10 @@ public class IntakeAssembly {
 		}
 		
 		// enable tilt mid PID state
-		if (RobotMap.driveController.getButtonX() && intakeTiltEnum != IntakeTiltEnum.TILTED_MID) {
-			intakeTiltEnum = IntakeTiltEnum.TILTED_MID;
+		if (RobotMap.driveController.getButtonX() && intakeTiltPosition != IntakeTiltEnum.TILTED_MID) {
+			intakeTiltPosition = IntakeTiltEnum.TILTED_MID;
 		}
-		switch(intakeTiltEnum){
+		switch(intakeTiltPosition){
 			case TILTED_UP:
 				// Pot value is inverted so make up value be bigger.
 				if(RobotMap.tiltPot.get() >= RobotMap.TILT_UP_LIMIT){

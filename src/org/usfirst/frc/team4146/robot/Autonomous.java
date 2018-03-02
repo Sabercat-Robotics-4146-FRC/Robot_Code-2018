@@ -53,8 +53,10 @@ public class Autonomous {
 	
 	///////// BLUE AUTOS!! /////////
 	public void blueLeftLeftAutonomous() {
+		changeLiftState(LifterPositionEnum.SWITCH);
 		move(B_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
 		turn(90);
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_);
 		move(B_LEFT_WALL_TO_SWITCH - (B_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
 	}
 
@@ -62,7 +64,7 @@ public class Autonomous {
 		// 3 is "wiggle room"
 		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(90);
-		move((B_LEFT_WALL_TO_SWITCH - B_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
+		move((B_LEFT_WALL_TO_SWITCH - B_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH)
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(90);
 		// Check to see if having the Power Cube length messes up the robot
@@ -157,6 +159,7 @@ public class Autonomous {
 
 	public void redCrossBaseline() {
 		move(R_AS_TO_AUTO_LINE); 
+		changeLiftState(LifterPositionEnum.DOWN);
 	}
 	
 	////Methods for Autonomous////
@@ -171,11 +174,12 @@ public class Autonomous {
 	public void changeLiftState(LifterPositionEnum state){
 		RobotMap.lifter.lifterMode = LifterModeEnum.AUTO_LIFT;
 		RobotMap.lifter.autoLifterPosition = state;
-		//RobotMap.lifter.update(dt);
+		RobotMap.lifter.update(0.0); // 0.0 cuz we don't actually use dt
 	}
 	
 	public void changeIntakeTiltState(IntakeTiltEnum state){
-		RobotMap.intake.intakeTiltEnum = state;
+		RobotMap.intake.intakeTiltPosition = state;
+		//RobotMap.intake.update(0.0); // Save for updates in heading and moveDisance to do since we have no dt here and we need it.....
 	}
 
 }

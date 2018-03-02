@@ -38,8 +38,8 @@ public class RobotMap {
 	public static final double LIFTER_kD = 1.5;
 	
 	// Intake Constants
-	public static final double TILT_UP_LIMIT = 0.14; 
-	public static final double TILT_DOWN_LIMIT = 0.79; 
+	public static final double TILT_UP_LIMIT = 0.14;
+	public static final double TILT_DOWN_LIMIT = 0.79;
 	public static final double TILT_MID = 0.36; 
 	
 	// Move Constants
