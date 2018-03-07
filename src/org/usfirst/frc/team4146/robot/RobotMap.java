@@ -39,7 +39,7 @@ public class RobotMap {
 	
 	// Intake Constants
 	public static final double TILT_UP_LIMIT = 0.14;
-	public static final double TILT_DOWN_LIMIT = 0.79;
+	public static final double TILT_DOWN_LIMIT = 0.75; // was 0.79 on robot 1
 	public static final double TILT_MID = 0.36; 
 	
 	// Move Constants
@@ -57,7 +57,7 @@ public class RobotMap {
 	
 	//////Declarations //////
 	public static Controller driveController;
-	//public static Controller lifterController;
+	public static Controller lifterController;
 	
 	// Motor Controller Declarations
 	public static WPI_TalonSRX leftTop;
@@ -123,7 +123,7 @@ public class RobotMap {
 		
 		// Controllers Initialization
     	driveController = new Controller(0);
-    	//lifterController = new Controller(1);
+    	lifterController = new Controller(1);
     	
     	// Motor Controllers Initialization
     	// Main Drive Controllers
@@ -201,7 +201,7 @@ public class RobotMap {
     	RobotMap.leftDriveEncoder.setDistancePerPulse((6.0 * Math.PI) / 256.0);
     	
     	// Potentiometer Initilization
-    	tiltPot = new AnalogPotentiometer(3);
+    	tiltPot = new AnalogPotentiometer(0); // Change to 3 for Robot 1.
     	
 		// Navx Gyro Initialization
     	gyro = new AHRS(SPI.Port.kMXP);

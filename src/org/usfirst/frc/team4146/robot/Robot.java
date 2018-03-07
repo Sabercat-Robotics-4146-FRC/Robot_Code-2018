@@ -2,6 +2,13 @@ package org.usfirst.frc.team4146.robot;
 
 import org.usfirst.frc.team4146.robot.LifterAssembly.LifterModeEnum;
 
+/*
+ * ---Things to change for competition Robot---
+ * - Change pot port from 0 to 3
+ * - Put back down stopper for limit switch.
+ * 
+ */
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -32,7 +39,7 @@ public class Robot extends SampleRobot {
 		
 		//RobotMap.heading.tareHeadingRelative();
 		
-		RobotMap.auto.move(12*12);
+		//RobotMap.auto.move(12*12);
 		
 		
 		String colorSelected = (String)RobotMap.colorChooser.getSelected();

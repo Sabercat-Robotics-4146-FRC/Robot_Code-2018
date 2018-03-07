@@ -14,25 +14,25 @@ public class Autonomous {
 	public static final double HALF_ROBOT_WIDTH = ROBOT_WIDTH/2;
 	
 	// Switch size
-	public static final double SWITCH_WIDTH = 0.0;
-	public static final double SWITCH_LENGTH = 0.0;
+	public static final double SWITCH_WIDTH = 12.0; // these need to be measured and changed
+	public static final double SWITCH_LENGTH = 4.0; // change
 	public static final double HALF_SWITCH_LENGTH = SWITCH_LENGTH/2;
-	public static final double SWITCH_PLATE_WIDTH = 0.0;
+	public static final double SWITCH_PLATE_WIDTH = 3.0; // change
 	public static final double HALF_SWITCH_PLATE_WIDTH = SWITCH_PLATE_WIDTH/2;
 	
 	// Power Cube
 	public static final double POWER_CUBE = 13.0;
 	
 	///Red Auto Constants///
-	public static final double R_LEFT_WALL_TO_SWITCH = 0.0;
-	public static final double R_RIGHT_WALL_TO_SWITCH = 0.0;
-	public static final double R_LEFT_PORTAL_WIDTH = 0.0;
-	public static final double R_RIGHT_PORTAL_WIDTH = 0.0;
-	public static final double R_AS_TO_SWITCH = 0.0;
-	public static final double R_EZ_WIDTH = 0.0;
-	public static final double R_PC_ZONE_LENGTH = 0.0;
-	public static final double R_RIGHT_WALL_TO_EZ = 0.0;
-	public static final double R_AS_TO_PLATFORM = 0.0;
+	public static final double R_LEFT_WALL_TO_SWITCH = 7.5;
+	public static final double R_RIGHT_WALL_TO_SWITCH = 7.5;
+	public static final double R_LEFT_PORTAL_WIDTH = 3.0;
+	public static final double R_RIGHT_PORTAL_WIDTH = 3.0;
+	public static final double R_AS_TO_SWITCH = 14.0;
+	public static final double R_EZ_WIDTH = 4.0;
+	public static final double R_PC_ZONE_LENGTH = 3.6;
+	public static final double R_RIGHT_WALL_TO_EZ = 15.0;
+	public static final double R_AS_TO_PLATFORM = 18.0;
 	
 	public static final double R_AS_TO_AUTO_LINE = 10.0;
 	
@@ -56,7 +56,7 @@ public class Autonomous {
 		changeLiftState(LifterPositionEnum.SWITCH);
 		move(B_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
 		turn(90);
-		changeIntakeTiltState(IntakeTiltEnum.TILTED_);
+		// TODO changeIntakeTiltState(IntakeTiltEnum.TILTED_-);
 		move(B_LEFT_WALL_TO_SWITCH - (B_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
 	}
 
@@ -110,7 +110,8 @@ public class Autonomous {
 	
 	///////// RED AUTOS!! /////////
 	public void redLeftLeftAutonomous() {
-		move(R_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
+		move(1);
+		//move(R_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
 		turn(90);
 		move(R_LEFT_WALL_TO_SWITCH - (R_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
 	}
@@ -159,7 +160,6 @@ public class Autonomous {
 
 	public void redCrossBaseline() {
 		move(R_AS_TO_AUTO_LINE); 
-		changeLiftState(LifterPositionEnum.DOWN);
 	}
 	
 	////Methods for Autonomous////
