@@ -52,6 +52,11 @@ public class RobotMap {
 	public static final double HEADING_kI = 0.0;
 	public static final double HEADING_kD = 0.001;
 	
+	// Heading Lock Constants
+	public static final double LOCK_HEADING_kP = 0.0;
+	public static final double LOCK_HEADING_kI = 0.0;
+	public static final double LOCK_HEADING_kD = 0.0;
+	
 	//////Variables//////
 	
 	

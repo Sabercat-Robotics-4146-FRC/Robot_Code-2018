@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Autonomous {
 
-	////Autonomous Constants////
+	////Autonomous Constants//// THESE NUMBERS ARE IN FEET!!!!!!
 	// Robot size
 	public static final double ROBOT_LENGTH = 39.0/12;
 	public static final double HALF_ROBOT_LENGTH = ROBOT_LENGTH/2;
@@ -55,28 +55,26 @@ public class Autonomous {
 	
 	///////// BLUE AUTOS!! /////////
 	public void blueLeftLeftAutonomous() {
-		changeLiftState(LifterPositionEnum.SWITCH);
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
 		turn(90);
-		// TODO changeIntakeTiltState(IntakeTiltEnum.TILTED_-);
 		move(B_LEFT_WALL_TO_SWITCH - (B_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
-		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		//Thread.sleep(2000);
-		
 	}
 
 	public void blueLeftRightAutonomous() {
-		// 3 is "wiggle room"
-		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		// 0.25 ft is "wiggle room"
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 0.25 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(90);
 		move((B_LEFT_WALL_TO_SWITCH - B_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH)
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(90);
 		// Check to see if having the Power Cube length messes up the robot
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH); 
+		move((POWER_CUBE + 0.25 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH); 
 	}
 
 	public void blueMiddleLeftAutonomous() {
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH - B_PC_ZONE_LENGTH - ROBOT_LENGTH);
 		turn(-90);
 		move(B_EZ_WIDTH + HALF_ROBOT_WIDTH);
@@ -85,6 +83,7 @@ public class Autonomous {
 	}
 
 	public void blueMiddleRightAutonomous() {
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH - B_PC_ZONE_LENGTH - ROBOT_LENGTH);
 		turn(90);
 		move(B_RIGHT_WALL_TO_EZ - B_RIGHT_WALL_TO_SWITCH - HALF_ROBOT_WIDTH - HALF_SWITCH_PLATE_WIDTH);
@@ -93,19 +92,21 @@ public class Autonomous {
 	}
 
 	public void blueRightRightAutonomous() {
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
 		turn(-90);
 		move(B_RIGHT_WALL_TO_SWITCH - (B_RIGHT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
 	}
 
 	public void blueRightLeftAutonomous() {
-		// 3 is "wiggle room"
-		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		// 0.25 is "wiggle room"
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 0.25 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(-90);
 		move((B_RIGHT_WALL_TO_SWITCH - B_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(-90);
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH);
+		move((POWER_CUBE + 0.25 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH);
 		
 	}
 
@@ -116,27 +117,26 @@ public class Autonomous {
 	///////// RED AUTOS!! /////////
 	public void redLeftLeftAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		move(1);
-		//move(R_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
-		//turn(90);
-		//move(R_LEFT_WALL_TO_SWITCH - (R_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
-		waitTime(2000);
-		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		move(R_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
+		turn(90);
+		move(R_LEFT_WALL_TO_SWITCH - (R_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
 		waitTime(2000);
 		rollOut();
 	}
 
 	public void redLeftRightAutonomous() {
-		// 3 is "wiggle room"
-		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		// 0.25 is "wiggle room"
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 0.25 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(90);
 		move((R_LEFT_WALL_TO_SWITCH - R_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(90);
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH); 
+		move((POWER_CUBE + 0.25 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH); 
 	}
 
 	public void redMiddleLeftAutonomous() {
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(R_AS_TO_SWITCH - R_PC_ZONE_LENGTH - ROBOT_LENGTH);
 		turn(-90);
 		move(R_EZ_WIDTH + HALF_ROBOT_WIDTH);
@@ -145,6 +145,7 @@ public class Autonomous {
 	}
 
 	public void redMiddleRightAutonomous() {
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(R_AS_TO_SWITCH - R_PC_ZONE_LENGTH - ROBOT_LENGTH);
 		turn(90);
 		move(R_RIGHT_WALL_TO_EZ - R_RIGHT_WALL_TO_SWITCH - HALF_ROBOT_WIDTH - HALF_SWITCH_PLATE_WIDTH);
@@ -153,19 +154,21 @@ public class Autonomous {
 	}
 
 	public void redRightRightAutonomous() {
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(R_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
 		turn(-90);
 		move(R_RIGHT_WALL_TO_SWITCH - (R_RIGHT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
 	}
 
 	public void redRightLeftAutonomous() {
-		// 3 is "wiggle room"
-		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		// 0.25 is "wiggle room"
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 0.25 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(-90);
 		move((R_RIGHT_WALL_TO_SWITCH - R_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(-90);
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH);
+		move((POWER_CUBE + 0.25 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH);
 	}
 
 	public void redCrossBaseline() {
@@ -208,6 +211,10 @@ public class Autonomous {
 			System.out.println("Exception in RollOut....");
 		}
 		RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.0);
+	}
+	
+	public double inchesToFeet(double inches){
+		return inches/12;
 	}
 
 }
