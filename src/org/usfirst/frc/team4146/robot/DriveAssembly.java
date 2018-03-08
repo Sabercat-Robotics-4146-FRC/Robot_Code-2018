@@ -1,20 +1,25 @@
 package org.usfirst.frc.team4146.robot;
+import org.usfirst.frc.team4146.robot.PID.*;
 
 public class DriveAssembly {
 	double move, spin;
 	boolean rampFlag = true;
-	
+	VisionPID vision;
 	public DriveAssembly() {
-
+		vision = new VisionPID();
 	}
 	
 	public void update(double dt){
 		
-		
+		vision.update(dt);
 		// Setting base movement variables
 		move = RobotMap.driveController.getDeadbandLeftYAxis();
 		spin = RobotMap.driveController.getDeadbandRightXAxis();
 		
+		if (RobotMap.driveController.getRightStickPress()) {
+			//vision lock
+			spin = vision.get();
+		}
 		// Applies a ramp to the drive train if the lifter is up
 		if (!RobotMap.bottomLimitSwitch.get() && rampFlag) {
 			rampFlag = false;

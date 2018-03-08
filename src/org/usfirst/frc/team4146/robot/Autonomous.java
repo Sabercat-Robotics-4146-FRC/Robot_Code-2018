@@ -4,13 +4,15 @@ import org.usfirst.frc.team4146.robot.IntakeAssembly.IntakeTiltEnum;
 import org.usfirst.frc.team4146.robot.LifterAssembly.LifterModeEnum;
 import org.usfirst.frc.team4146.robot.LifterAssembly.LifterPositionEnum;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 public class Autonomous {
 
 	////Autonomous Constants////
 	// Robot size
-	public static final double ROBOT_LENGTH = 39.0;
+	public static final double ROBOT_LENGTH = 39.0/12;
 	public static final double HALF_ROBOT_LENGTH = ROBOT_LENGTH/2;
-	public static final double ROBOT_WIDTH = 33.5;
+	public static final double ROBOT_WIDTH = 33.5/12;
 	public static final double HALF_ROBOT_WIDTH = ROBOT_WIDTH/2;
 	
 	// Switch size
@@ -58,6 +60,9 @@ public class Autonomous {
 		turn(90);
 		// TODO changeIntakeTiltState(IntakeTiltEnum.TILTED_-);
 		move(B_LEFT_WALL_TO_SWITCH - (B_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		//Thread.sleep(2000);
+		
 	}
 
 	public void blueLeftRightAutonomous() {
@@ -110,10 +115,15 @@ public class Autonomous {
 	
 	///////// RED AUTOS!! /////////
 	public void redLeftLeftAutonomous() {
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(1);
 		//move(R_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
-		turn(90);
-		move(R_LEFT_WALL_TO_SWITCH - (R_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
+		//turn(90);
+		//move(R_LEFT_WALL_TO_SWITCH - (R_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
+		waitTime(2000);
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		waitTime(2000);
+		rollOut();
 	}
 
 	public void redLeftRightAutonomous() {
@@ -180,6 +190,24 @@ public class Autonomous {
 	public void changeIntakeTiltState(IntakeTiltEnum state){
 		RobotMap.intake.intakeTiltPosition = state;
 		//RobotMap.intake.update(0.0); // Save for updates in heading and moveDisance to do since we have no dt here and we need it.....
+	}
+	
+	public void waitTime(long time){
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			System.out.println("Exception in waitTime....");
+		}
+	}
+	
+	public void rollOut() {
+		RobotMap.intakeRoller.set(ControlMode.PercentOutput, -1.0);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			System.out.println("Exception in RollOut....");
+		}
+		RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.0);
 	}
 
 }

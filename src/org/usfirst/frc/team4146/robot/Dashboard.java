@@ -9,7 +9,9 @@ public class Dashboard {
 	public static void setNetworkTable(NetworkTable n) {
 		networktable = n;
 	}
-	
+	public static double getDouble(String name) {
+		return networktable.getDouble(name, 0);
+	}
 	public static void send(String fieldName, double value) {
 		networktable.putNumber(fieldName, value);
 	}
