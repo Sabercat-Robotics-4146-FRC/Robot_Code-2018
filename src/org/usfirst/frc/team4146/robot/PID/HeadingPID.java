@@ -1,9 +1,10 @@
 package org.usfirst.frc.team4146.robot.PID;
 
+import org.usfirst.frc.team4146.robot.Dashboard;
 import org.usfirst.frc.team4146.robot.RobotMap;
 
 public class HeadingPID extends PID {
-	static double NAXV_UPDATE_RATE = 60; //Htz
+	static double NAXV_UPDATE_RATE = 4; //Htz
 	static double HEADING_BREAK_TOLERANCE = 1.5; //degrees
 
 	public HeadingPID(){
@@ -11,6 +12,9 @@ public class HeadingPID extends PID {
 		setPID(RobotMap.HEADING_kP, RobotMap.HEADING_kI, RobotMap.HEADING_kD);
 	}
 	public double getValue() {
+		Dashboard.send("Fused Heading", RobotMap.gyro.getFusedHeading());
+		Dashboard.send("Heading Error", this.getError());
+		Dashboard.send("Heading Get", this.get());
 		return RobotMap.gyro.getFusedHeading(); // ROBOT MAP THIS PLEASE. ADD UNWRAP CODE
 	}
 	public double computeError() {

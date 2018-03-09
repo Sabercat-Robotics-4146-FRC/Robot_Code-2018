@@ -34,7 +34,7 @@ public class DriveAssembly {
 //			RobotMap.rightTop.configOpenloopRamp(0, 0);
 //		}
 		
-		move = !RobotMap.bottomLimitSwitch.get() ? move * 0.6 : move;
+		move = !RobotMap.bottomLimitSwitch.get() ? move * 0.75 : move;
 		
 		RobotMap.differentialDrive.arcadeDrive(move, spin);
 		

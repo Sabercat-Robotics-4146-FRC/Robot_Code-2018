@@ -40,6 +40,8 @@ public class Robot extends SampleRobot {
 		
 		//RobotMap.auto.move(12*12);
 		
+		String switchSelected = (String)RobotMap.colorChooser.getSelected();
+		System.out.println("Switch Data: " + switchSelected);
 		
 		String colorSelected = (String)RobotMap.colorChooser.getSelected();
 		System.out.println("Color Data: " + colorSelected);

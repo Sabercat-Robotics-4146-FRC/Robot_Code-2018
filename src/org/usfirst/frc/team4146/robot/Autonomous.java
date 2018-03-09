@@ -182,8 +182,9 @@ public class Autonomous {
 
 	public void redCrossBaseline() {
 		//move(10.188);
-		move(8 * 12);
-		//move(R_AS_TO_AUTO_LINE);
+		//move(3 * 12);
+		move(R_AS_TO_AUTO_LINE);
+		//turn(90);
 	}
 	
 	////Methods for Autonomous////

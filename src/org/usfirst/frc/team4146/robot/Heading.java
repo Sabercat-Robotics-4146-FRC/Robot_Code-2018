@@ -23,17 +23,17 @@ public class Heading {
 		  while (headingController.getTimeInTolerance() < 1.0 && RobotMap.ROBOT.isAutonomous() && RobotMap.ROBOT.isEnabled()) {
 			  dt = autoHeadingTimer.getDT();
 			  
-			  if(RobotMap.ROBOT.isAutonomous()){
-				  RobotMap.intake.update(dt);
-			  }
+			  
+			  RobotMap.intake.update(dt);
 
 			  headingController.update(dt);
-			  RobotMap.differentialDrive.arcadeDrive(0.0, headingController.get());
+			  RobotMap.differentialDrive.arcadeDrive(0.0, MoveDistance.clamp(headingController.get(), 0.7));
 			  
 			  Dashboard.send("Gyro", RobotMap.gyro.getFusedHeading());
 			  
 			  autoHeadingTimer.update();
 		  }
+		  RobotMap.differentialDrive.arcadeDrive(0.0, 0.0);
 		  System.out.println("Done Turning!");
 	  }
 

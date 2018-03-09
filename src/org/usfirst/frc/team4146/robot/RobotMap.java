@@ -49,10 +49,14 @@ public class RobotMap {
 	public static final double MOVE_kI = 10;
 	public static final double MOVE_kD = 0.0;//0.0002;
 	
+	public static final double SMALL_MOVE_kP = 0.035;
+	public static final double SMALL_MOVE_kI = 8.5;
+	public static final double SMALL_MOVE_kD = 0.0;
+	
 	// Heading Constants
-	public static final double HEADING_kP = 0.1;
+	public static final double HEADING_kP = 0.012;
 	public static final double HEADING_kI = 0.0;
-	public static final double HEADING_kD = 0.001;
+	public static final double HEADING_kD = 0.0;
 	
 	// Heading Lock Constants
 	public static final double HEADING_LOCK_kP = 0.0;
@@ -106,6 +110,7 @@ public class RobotMap {
 	// Sendable Chooser Declaration
 	public static SendableChooser chooser; //Sendable chooser allows us to choose the autonomous from smartdashboard
 	public static SendableChooser colorChooser;
+	public static SendableChooser switchChooser;
 	
 	// Game Data Declaration
 	public static String gameData;
@@ -253,11 +258,18 @@ public class RobotMap {
     	
     	SmartDashboard.putData("Color", colorChooser);
     	
+    	
+    	switchChooser = new SendableChooser();
+    	
+    	switchChooser.addDefault("No Switch", "No Switch");
+    	switchChooser.addObject("Left Switch", "Left Switch");
+    	switchChooser.addObject("Right Switch", "Right Switch");
+    	
     	// Differential Drive Initialization
     	differentialDrive = new DifferentialDrive(leftTop, rightTop);  // (frontLeft, rearLeft, frontRight, rearRight);
     	differentialDrive.setSafetyEnabled(false);
     	
-    	//// Sub-System Initilization //// 
+    	//// Sub-System Initilization ////
     	// Drive Assembly Initialization
     	drive = new DriveAssembly();
     	
