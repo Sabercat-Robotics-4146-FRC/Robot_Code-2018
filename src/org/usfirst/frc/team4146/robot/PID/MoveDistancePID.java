@@ -1,10 +1,10 @@
 package org.usfirst.frc.team4146.robot.PID;
 
 import org.usfirst.frc.team4146.robot.RobotMap;
-
+import org.usfirst.frc.team4146.robot.Dashboard;
 public class MoveDistancePID extends PID {
 	static double ENCODER_UPDATE_RATE = 200; //Htz
-	static double MOVE_DISTANCE_BREAK_TOLERANCE = 0.5; //inches
+	static double MOVE_DISTANCE_BREAK_TOLERANCE = 5; //inches
 	
 	public MoveDistancePID(){
 		super(ENCODER_UPDATE_RATE, MOVE_DISTANCE_BREAK_TOLERANCE);
@@ -12,7 +12,9 @@ public class MoveDistancePID extends PID {
 	}
 	
 	public double getValue() {
-		return (RobotMap.leftDriveEncoder.getDistance() + RobotMap.rightDriveEncoder.getDistance()) / 2;
+		Dashboard.send("encoder value dist left", RobotMap.leftDriveEncoder.getDistance());
+		Dashboard.send("encoder value dist right", RobotMap.rightDriveEncoder.getDistance());
+		return RobotMap.leftDriveEncoder.getDistance();
 		//return RobotMap.rightDriveEncoder.getDistance();
 	}
 }

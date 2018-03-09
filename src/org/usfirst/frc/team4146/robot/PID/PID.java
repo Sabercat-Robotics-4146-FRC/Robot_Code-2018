@@ -18,7 +18,7 @@ public abstract class PID {
 
   protected double derivative;
 
-	protected double setpoint;
+	public double setpoint;
 	protected double output;
 
   // integral data
@@ -41,7 +41,7 @@ public abstract class PID {
     this.sampleRate = sampleRate;
     this.errorTolerance = errorTolerance;
 	}
-  abstract double getValue();
+  public abstract double getValue();
 
   public void flush(){ // flushes any earlier values for controller
     output = 0;
@@ -70,6 +70,9 @@ public abstract class PID {
 
   public double getTimeInTolerance() {
     return (1/sampleRate) * nIterationsInTolerance;
+  }
+  public void reset(){
+	  nIterationsInTolerance = 0;
   }
   protected double computeError() {
     return setpoint - getValue();

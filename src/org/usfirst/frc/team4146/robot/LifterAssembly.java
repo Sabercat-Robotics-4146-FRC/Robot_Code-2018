@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4146.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import org.usfirst.frc.team4146.robot.IntakeAssembly.IntakeTiltEnum;
 
 public class LifterAssembly {
 	public enum LifterPositionEnum{
@@ -14,12 +15,20 @@ public class LifterAssembly {
 		MANUAL_LIFT,
 	}
 	
+	enum LifterLockEnum{
+		LOCKED,
+		UNLOCKED
+	}
+	
 	LifterPositionEnum autoLifterPosition = LifterPositionEnum.DOWN;
 	LifterModeEnum lifterMode = LifterModeEnum.AUTO_LIFT;
+	LifterLockEnum lockMode = LifterLockEnum.UNLOCKED;
 	
 	private double triggerInput = 0.0; // Used for manual mode input.
 	
 	private boolean limitSwitchPressedFlag = false;
+	
+	private boolean lockFlag = false;
 	
 	private double tareEncoderTick;
 	
@@ -50,18 +59,19 @@ public class LifterAssembly {
 		}
 		
 		// Checks for what mode to have
-		if(RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getRightTriggerBool() || RobotMap.driveController.getDPadBool() || RobotMap.driveController.getButtonStart()){
+		if(RobotMap.lifterController.getLeftTriggerBool() || RobotMap.lifterController.getRightTriggerBool() 
+				|| RobotMap.driveController.getButtonStart() || RobotMap.driveController.getButtonBack() ){
 			lifterMode = LifterModeEnum.MANUAL_LIFT;
-		} else if(RobotMap.driveController.getButtonA() || RobotMap.driveController.getButtonB() || RobotMap.driveController.getButtonY()){
+		} else if(RobotMap.driveController.getButtonY() || RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getRightTriggerBool()){
 			lifterMode = LifterModeEnum.AUTO_LIFT;
 		}
 		
 		// Checks mode and sets motors.
 		if(lifterMode == LifterModeEnum.MANUAL_LIFT) {
 //			RobotMap.driveController.getDPad() > 90 && RobotMap.driveController.getDPad() < 270
-			if(RobotMap.driveController.getButtonStart()){
-				triggerInput = -1.0;
-			} else if(RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getRightTriggerBool()) {
+//			if(RobotMap.driveController.getButtonStart()){
+//				triggerInput = -1.0;
+			if(RobotMap.lifterController.getLeftTriggerBool() || RobotMap.lifterController.getRightTriggerBool()) {
 				triggerInput = getTriggerSum();
 				
 				// If the lifter goes to bottom limit switch and is trying to go down set lifter to 0.0
@@ -73,6 +83,10 @@ public class LifterAssembly {
 				if(RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition() >= tareEncoderTick + (130920-2496) && triggerInput > 0.0){
 					triggerInput = 0.0;
 				}
+			} else if(RobotMap.driveController.getButtonStart()){
+				triggerInput = 0.2;
+			} else if(RobotMap.driveController.getButtonBack()){
+				triggerInput = -0.1;
 			} else {
 				triggerInput = 0.0;
 			}
@@ -84,13 +98,36 @@ public class LifterAssembly {
 			if(RobotMap.driveController.getButtonY()){
 				autoLifterPosition = LifterPositionEnum.SCALE;
 				updateAutoHeight();
-			} else if(RobotMap.driveController.getButtonB()){
-				autoLifterPosition = LifterPositionEnum.SWITCH;
+			} else if(RobotMap.driveController.getLeftTriggerBool()){
+				RobotMap.intake.intakeTiltPosition = IntakeTiltEnum.TILTED_MID;
+				autoLifterPosition = LifterPositionEnum.SCALE;
 				updateAutoHeight();
-			} else if(RobotMap.driveController.getButtonA()){
+			} else if(RobotMap.driveController.getRightTriggerBool()){
+				RobotMap.intake.intakeTiltPosition = IntakeTiltEnum.TILTED_UP;
 				autoLifterPosition = LifterPositionEnum.DOWN;
 				updateAutoHeight();
 			}
+		}
+		
+		// Locking Servo Stuff
+		
+		if(RobotMap.lifterController.getButtonB() && !lockFlag){
+			lockFlag = true;
+			if(lockMode == LifterLockEnum.LOCKED){
+				lockMode = LifterLockEnum.UNLOCKED;
+			} else {
+				lockMode = LifterLockEnum.LOCKED;
+			}
+			System.out.println(lockMode == LifterLockEnum.LOCKED ? "locked": "unlocked");
+		}
+		if(!RobotMap.lifterController.getButtonB()){
+			lockFlag = false;
+		}
+		
+		if(lockMode.equals(LifterLockEnum.LOCKED)){
+			RobotMap.liftLocker.set(RobotMap.LIFTER_LOCKED_POSITION);
+		} else if(lockMode.equals(LifterLockEnum.UNLOCKED)){
+			RobotMap.liftLocker.set(RobotMap.LIFTER_UNLOCKED_POSITION);
 		}
 		
 		// Dashboard Sendings
@@ -100,7 +137,8 @@ public class LifterAssembly {
 		Dashboard.send("Lifter Position Enum", autoLifterPosition.toString());
 		Dashboard.send("Lifter Mode Enum", lifterMode.toString());
 		Dashboard.send("Lifter Error", RobotMap.lifterBackLeft.getClosedLoopError(0));
-		
+		Dashboard.send("Locking Servo Position", RobotMap.liftLocker.get());
+		Dashboard.send("Servo State", lockMode.toString());
 		// This gives you how many (arbitrary units) "ticks" the motor has gone
 //		System.out.println(RobotMap.frontLeft.getSensorCollection().getPulseWidthPosition());
 		
@@ -148,7 +186,7 @@ public class LifterAssembly {
 	 * returns negative and the right returns positive, added together.
 	 */ 
 	private double getTriggerSum(){
-		return ((-RobotMap.driveController.getLeftTrigger()) + RobotMap.driveController.getRightTrigger());
+		return ((-RobotMap.lifterController.getLeftTrigger()) + RobotMap.lifterController.getRightTrigger());
 	}
 
 }

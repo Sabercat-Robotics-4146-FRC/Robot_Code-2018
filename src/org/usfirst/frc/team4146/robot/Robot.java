@@ -4,8 +4,7 @@ import org.usfirst.frc.team4146.robot.LifterAssembly.LifterModeEnum;
 
 /*
  * ---Things to change for competition Robot---
- * - Change pot port from 0 to 3
- * - Put back down stopper for limit switch.
+ * - done
  * 
  */
 

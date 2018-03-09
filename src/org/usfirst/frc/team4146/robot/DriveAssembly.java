@@ -13,26 +13,28 @@ public class DriveAssembly {
 		
 		vision.update(dt);
 		// Setting base movement variables
-		move = RobotMap.driveController.getDeadbandLeftYAxis();
-		spin = RobotMap.driveController.getDeadbandRightXAxis();
+		move = RobotMap.driveController.getDeadbandLeftYAxis() * 0.8;
+		spin = RobotMap.driveController.getDeadbandRightXAxis() * 0.8;
 		
-		if (RobotMap.driveController.getRightStickPress()) {
-			//vision lock
-			spin = vision.get();
-		}
+//		if (RobotMap.driveController.getRightStickPress()) {
+//			//vision lock
+//			spin = vision.get();
+//		}
 		// Applies a ramp to the drive train if the lifter is up
-		if (!RobotMap.bottomLimitSwitch.get() && rampFlag) {
-			rampFlag = false;
-			RobotMap.leftTop.configOpenloopRamp(1, 0); // secondsFromNeutralToFull, timeOut
-			RobotMap.rightTop.configOpenloopRamp(1, 0);
-		}
+//		if (!RobotMap.bottomLimitSwitch.get() && rampFlag) {
+//			rampFlag = false;
+//			RobotMap.leftTop.configOpenloopRamp(1, 0); // secondsFromNeutralToFull, timeOut
+//			RobotMap.rightTop.configOpenloopRamp(1, 0);
+//		}
+//		
+//		// Disables the ramp if the lift is down
+//		if (RobotMap.bottomLimitSwitch.get()) {
+//			rampFlag = true;
+//			RobotMap.leftTop.configOpenloopRamp(0, 0);
+//			RobotMap.rightTop.configOpenloopRamp(0, 0);
+//		}
 		
-		// Disables the ramp if the lift is down
-		if (RobotMap.bottomLimitSwitch.get()) {
-			rampFlag = true;
-			RobotMap.leftTop.configOpenloopRamp(0, 0);
-			RobotMap.rightTop.configOpenloopRamp(0, 0);
-		}
+		move = !RobotMap.bottomLimitSwitch.get() ? move * 0.6 : move;
 		
 		RobotMap.differentialDrive.arcadeDrive(move, spin);
 		

@@ -69,8 +69,8 @@ public class IntakeAssembly {
 		
 		// Controlling roller speed
 		if(RobotMap.driveController.getLeftBumper()){
-			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 1.0);
-		} else if(RobotMap.driveController.getButtonBack()){
+			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.8);
+		} else if(RobotMap.driveController.getButtonA()){
 			RobotMap.intakeRoller.set(ControlMode.PercentOutput, -1.0);
 		} else {
 			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.0);

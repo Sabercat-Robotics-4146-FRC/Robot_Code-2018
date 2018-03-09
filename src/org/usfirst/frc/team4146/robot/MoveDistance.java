@@ -17,10 +17,11 @@ public class MoveDistance {
 		Timer autoMoveDistanceTimer = new Timer();
 		double dt = 0.0;
 		tareMoveDistanceRelative();
-		RobotMap.leftTop.configOpenloopRamp(1, 0);
-		RobotMap.rightTop.configOpenloopRamp(1, 0);
+//		RobotMap.leftTop.configOpenloopRamp(1, 0);
+//		RobotMap.rightTop.configOpenloopRamp(1, 0);
 		
 		// Start the move distance controller
+		moveDistanceController.reset();
 		moveDistanceController.setSetpoint(absolutePosition);
 		moveDistanceController.flush();
 
@@ -28,21 +29,23 @@ public class MoveDistance {
 		while (moveDistanceController.getTimeInTolerance() < 1.0 && RobotMap.ROBOT.isAutonomous() && RobotMap.ROBOT.isEnabled()) {
 			dt = autoMoveDistanceTimer.getDT();
 			
-			if(RobotMap.ROBOT.isAutonomous()){
-				RobotMap.intake.update(dt);
-			}
+			
+			RobotMap.intake.update(dt);
+			
 
 			moveDistanceController.update(dt);
-			RobotMap.differentialDrive.arcadeDrive(moveDistanceController.get(), 0.0);
+			RobotMap.differentialDrive.arcadeDrive(clamp(moveDistanceController.get(), 0.8) , 0.0);
 
 			Dashboard.send("Move Error", moveDistanceController.getError());
-			
+			Dashboard.send("Move Value", moveDistanceController.getValue());
+			Dashboard.send("Move Get", moveDistanceController.get());
+			Dashboard.send("setpoint", moveDistanceController.setpoint);
 			autoMoveDistanceTimer.update();
 		}
 		System.out.println("Done Moving!");
 		RobotMap.differentialDrive.arcadeDrive(0.0, 0.0);
-		RobotMap.leftTop.configOpenloopRamp(0, 0);
-		RobotMap.rightTop.configOpenloopRamp(0, 0);
+//		RobotMap.leftTop.configOpenloopRamp(0, 0);
+//		RobotMap.rightTop.configOpenloopRamp(0, 0);
 	}
 	
 	public void moveToRelative(double relativePosition){
@@ -52,12 +55,28 @@ public class MoveDistance {
 	
 	public void tareMoveDistanceRelative(){
 		resetEcoders();
-		theoreticalPosition = (RobotMap.leftDriveEncoder.getRaw() + RobotMap.leftDriveEncoder.getRaw()) / 2;
+		
+    	//RobotMap.rightDriveEncoder.setDistancePerPulse(Math.PI/64.0);
+    	//+++RobotMap.leftDriveEncoder.setDistancePerPulse(Math.PI/64.0);
+		
+//		theoreticalPosition = (RobotMap.leftDriveEncoder.getRaw() + RobotMap.leftDriveEncoder.getRaw()) / 2;
+		theoreticalPosition = RobotMap.leftDriveEncoder.getRaw();
+		moveDistanceController.reset();
 	}
 	
 	public void resetEcoders(){
 		RobotMap.leftDriveEncoder.reset();
 		RobotMap.rightDriveEncoder.reset();
+	}
+	
+	public static double clamp(double valueToClamp, double clampValue) {
+		if(valueToClamp > clampValue)
+		{
+			return clampValue;
+		} else if(valueToClamp < -(clampValue)) {
+			return -(clampValue);
+		}
+		return valueToClamp;
 	}
 	
 //	public double feetToEncoderTicks(){

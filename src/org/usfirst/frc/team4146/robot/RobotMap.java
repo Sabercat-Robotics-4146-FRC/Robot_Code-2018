@@ -6,11 +6,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -39,13 +41,13 @@ public class RobotMap {
 	
 	// Intake Constants
 	public static final double TILT_UP_LIMIT = 0.14;
-	public static final double TILT_DOWN_LIMIT = 0.78; // was 0.79 on robot 1 //0.75
+	public static final double TILT_DOWN_LIMIT = 0.785; // was 0.79 on robot 1 //0.78
 	public static final double TILT_MID = 0.36; 
 	
 	// Move Constants
-	public static final double MOVE_kP = 0.021;
-	public static final double MOVE_kI = 0.0;
-	public static final double MOVE_kD = 0.0002;
+	public static final double MOVE_kP = 0.02;
+	public static final double MOVE_kI = 10;
+	public static final double MOVE_kD = 0.0;//0.0002;
 	
 	// Heading Constants
 	public static final double HEADING_kP = 0.1;
@@ -53,9 +55,13 @@ public class RobotMap {
 	public static final double HEADING_kD = 0.001;
 	
 	// Heading Lock Constants
-	public static final double LOCK_HEADING_kP = 0.0;
-	public static final double LOCK_HEADING_kI = 0.0;
-	public static final double LOCK_HEADING_kD = 0.0;
+	public static final double HEADING_LOCK_kP = 0.0;
+	public static final double HEADING_LOCK_kI = 0.0;
+	public static final double HEADING_LOCK_kD = 0.0;
+	
+	// Lifter Lock Constants
+	public static final double LIFTER_LOCKED_POSITION = 0.2;
+	public static final double LIFTER_UNLOCKED_POSITION = 0.8;
 	
 	//////Variables//////
 	
@@ -77,6 +83,8 @@ public class RobotMap {
 	public static TalonSRX lifterBackLeft;
 	public static TalonSRX lifterFrontRight;
 	public static TalonSRX lifterBackRight;
+	
+	public static Servo liftLocker;
 	
 	// Limit Switch Declarations
 //	public static DigitalInput topLimitSwitch; // Not a thing
@@ -125,6 +133,8 @@ public class RobotMap {
 	public static MoveDistance moveDistance;
 	
 	public static void init() { // This is to be called in robitInit and instantiates stuff.
+		// Camera Setup
+		//CameraServer.getInstance().startAutomaticCapture();
 		
 		// Controllers Initialization
     	driveController = new Controller(0);
@@ -147,6 +157,12 @@ public class RobotMap {
     	// Make motors on same side follow.
     	leftBottom.follow(leftTop);
     	rightBottom.follow(rightTop);
+    	
+//    	leftTop.configContinuousCurrentLimit(25, 0);
+//    	leftTop.enableCurrentLimit(true);
+//    	rightTop.configContinuousCurrentLimit(25, 0);
+//    	rightTop.enableCurrentLimit(true);
+    	
     	
 //    	leftTop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 //    	leftTop.configAllowableClosedloopError(0, 0, 10);
@@ -181,6 +197,9 @@ public class RobotMap {
     	lifterBackLeft.config_kI(0, LIFTER_kI, 10);
     	lifterBackLeft.config_kD(0, LIFTER_kD, 10);
     	
+    	// Servo Initilization
+    	liftLocker = new Servo(0);
+    	
     	
 //    	rearLeft.follow(frontLeft);
 //    	
@@ -206,7 +225,7 @@ public class RobotMap {
     	RobotMap.leftDriveEncoder.setDistancePerPulse((6.0 * Math.PI) / 256.0);
     	
     	// Potentiometer Initilization
-    	tiltPot = new AnalogPotentiometer(0); // Change to 3 for Robot 1.
+    	tiltPot = new AnalogPotentiometer(3); // Change to 3 for Robot 1.
     	
 		// Navx Gyro Initialization
     	gyro = new AHRS(SPI.Port.kMXP);
