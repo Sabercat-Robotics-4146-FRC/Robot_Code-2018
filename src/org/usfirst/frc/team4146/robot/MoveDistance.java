@@ -46,6 +46,13 @@ public class MoveDistance {
 			Dashboard.send("Move Value", moveDistanceController.getValue());
 			Dashboard.send("Move Get", moveDistanceController.get());
 			Dashboard.send("setpoint", moveDistanceController.setpoint);
+			
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				
+			}
+			
 			autoMoveDistanceTimer.update();
 		}
 		

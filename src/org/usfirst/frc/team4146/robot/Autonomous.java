@@ -57,7 +57,7 @@ public class Autonomous {
 	public void blueLeftLeftAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
-		turn(90);
+		turn(90, RobotMap.HEADING_TIME_OUT);
 		move(B_LEFT_WALL_TO_SWITCH - (B_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
 		rollOut();
 	}
@@ -66,10 +66,10 @@ public class Autonomous {
 		// 3 inches is "wiggle room"
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
-		turn(90);
+		turn(90, RobotMap.HEADING_TIME_OUT);
 		move((B_LEFT_WALL_TO_SWITCH - B_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH)
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
-		turn(90);
+		turn(90, RobotMap.HEADING_TIME_OUT);
 		// Check to see if having the Power Cube length messes up the robot
 		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH); 
 		rollOut();
@@ -78,9 +78,9 @@ public class Autonomous {
 	public void blueMiddleLeftAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH - B_PC_ZONE_LENGTH - ROBOT_LENGTH);
-		turn(-90);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move(B_EZ_WIDTH + HALF_ROBOT_WIDTH);
-		turn(90);
+		turn(90, RobotMap.HEADING_TIME_OUT);
 		move(B_PC_ZONE_LENGTH);
 		rollOut();
 	}
@@ -88,9 +88,9 @@ public class Autonomous {
 	public void blueMiddleRightAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH - B_PC_ZONE_LENGTH - ROBOT_LENGTH);
-		turn(90);
+		turn(90, RobotMap.HEADING_TIME_OUT);
 		move(B_RIGHT_WALL_TO_EZ - B_RIGHT_WALL_TO_SWITCH - HALF_ROBOT_WIDTH - HALF_SWITCH_PLATE_WIDTH);
-		turn(-90);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move(B_PC_ZONE_LENGTH);
 		rollOut();
 	}
@@ -98,7 +98,7 @@ public class Autonomous {
 	public void blueRightRightAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
-		turn(-90);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move(B_RIGHT_WALL_TO_SWITCH - (B_RIGHT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
 		rollOut();
 	}
@@ -107,23 +107,24 @@ public class Autonomous {
 		// 3 is "wiggle room"
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
-		turn(-90);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move((B_RIGHT_WALL_TO_SWITCH - B_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
-		turn(-90);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH);
 		rollOut();
 	}
 
 	public void blueCrossBaseline() {
-		move(B_AS_TO_AUTO_LINE);
+		move(220);
+		//move(B_AS_TO_AUTO_LINE);
 	}
 	
 	///////// RED AUTOS!! /////////
 	public void redLeftLeftAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(R_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
-		turn(90);
+		turn(90, RobotMap.HEADING_TIME_OUT);
 		move(R_LEFT_WALL_TO_SWITCH - (R_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
 		rollOut();
 	}
@@ -132,20 +133,20 @@ public class Autonomous {
 		// 3 is "wiggle room"
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
-		turn(90);
+		turn(90, RobotMap.HEADING_TIME_OUT);
 		move((R_LEFT_WALL_TO_SWITCH - R_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
-		turn(90);
+		turn(90, RobotMap.HEADING_TIME_OUT);
 		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH); 
-		rollOut();
+		//rollOut();
 	}
 
 	public void redMiddleLeftAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(R_AS_TO_SWITCH - R_PC_ZONE_LENGTH - ROBOT_LENGTH);
-		turn(-90);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move(R_EZ_WIDTH + HALF_ROBOT_WIDTH);
-		turn(90);
+		turn(90, RobotMap.HEADING_TIME_OUT);
 		move(R_PC_ZONE_LENGTH);
 		rollOut();
 	}
@@ -153,9 +154,9 @@ public class Autonomous {
 	public void redMiddleRightAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(R_AS_TO_SWITCH - R_PC_ZONE_LENGTH - ROBOT_LENGTH);
-		turn(90);
+		turn(90, RobotMap.HEADING_TIME_OUT);
 		move(R_RIGHT_WALL_TO_EZ - R_RIGHT_WALL_TO_SWITCH - HALF_ROBOT_WIDTH - HALF_SWITCH_PLATE_WIDTH);
-		turn(-90);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move(R_PC_ZONE_LENGTH);
 		rollOut();
 	}
@@ -163,7 +164,7 @@ public class Autonomous {
 	public void redRightRightAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(R_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
-		turn(-90);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move(R_RIGHT_WALL_TO_SWITCH - (R_RIGHT_PORTAL_WIDTH + HALF_ROBOT_WIDTH + HALF_ROBOT_LENGTH));
 		rollOut();
 	}
@@ -172,19 +173,19 @@ public class Autonomous {
 		// 3 is "wiggle room"
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
-		turn(-90);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move((R_RIGHT_WALL_TO_SWITCH - R_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
-		turn(-90);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH);
-		rollOut();
+		//rollOut();
 	}
 
 	public void redCrossBaseline() {
 		//move(10.188);
 		//move(3 * 12);
 		move(R_AS_TO_AUTO_LINE);
-		//turn(90);
+		//turn(90, RobotMap.HEADING_TIME_OUT);
 	}
 	
 	////Methods for Autonomous////
@@ -192,8 +193,8 @@ public class Autonomous {
 		RobotMap.moveDistance.moveToAbsolute(distance); // Distance is in inches.
 	}
 	
-	public void turn(double angle) {
-		RobotMap.heading.turnToRelative(angle);
+	public void turn(double angle, double timeOut) {
+		RobotMap.heading.turnToRelative(angle, timeOut);
 	}
 	
 	public void changeLiftState(LifterPositionEnum state){

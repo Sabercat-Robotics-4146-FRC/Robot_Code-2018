@@ -39,11 +39,11 @@ public class LifterAssembly {
 	public void update(double dt) {
 		// Reset encoder at bottom
 		if(RobotMap.bottomLimitSwitch.get() && !limitSwitchPressedFlag){
-			System.out.println("Resetting lift encoder!");
+			//System.out.println("Resetting lift encoder!");
 			lifterMode = LifterModeEnum.MANUAL_LIFT;
-			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, 0.0);
-			tareEncoderTick = RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition();
-			//RobotMap.lifterBackLeft.setSelectedSensorPosition(0, 0, 10); // No work....
+			RobotMap.lifterFrontRight.set(ControlMode.PercentOutput, 0.0);
+			tareEncoderTick = RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition();
+			//RobotMap.lifterFrontRight.setSelectedSensorPosition(0, 0, 10); // No work....
 			limitSwitchPressedFlag = true;
 		}
 		if(!RobotMap.bottomLimitSwitch.get()){
@@ -52,10 +52,11 @@ public class LifterAssembly {
 		
 		if(lifterMode == LifterModeEnum.AUTO_LIFT && autoLifterPosition == LifterPositionEnum.DOWN){
 			double loweringSpeed = -0.4;
-			if(RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition() < tareEncoderTick + 30000){
+			if(RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition() > tareEncoderTick - 21000){
 				loweringSpeed = -0.05;
 			}
-			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, loweringSpeed);
+			Dashboard.send("Lifter Down Power", loweringSpeed);
+			RobotMap.lifterFrontRight.set(ControlMode.PercentOutput, loweringSpeed);
 		}
 		
 		// Checks for what mode to have
@@ -80,7 +81,7 @@ public class LifterAssembly {
 				}
 				
 				// If the lifter goes to top soft stop and is trying to go up set lifter to 0.0.
-				if(RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition() >= tareEncoderTick + (130920-2496) && triggerInput > 0.0){
+				if(RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition() >= tareEncoderTick + (130920-2496) && triggerInput > 0.0){
 					triggerInput = 0.0;
 				}
 			} else if(RobotMap.driveController.getButtonStart()){
@@ -91,7 +92,7 @@ public class LifterAssembly {
 				triggerInput = 0.0;
 			}
 			
-			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, triggerInput);
+			RobotMap.lifterFrontRight.set(ControlMode.PercentOutput, triggerInput);
 		} else if(lifterMode == LifterModeEnum.AUTO_LIFT){
 			// Checking buttons, setting enums and updating motors.
 			// The motor updating is in here so that it only updates of you press a button.
@@ -131,12 +132,12 @@ public class LifterAssembly {
 		}
 		
 		// Dashboard Sendings
-		Dashboard.send("Raw Lifter Position", RobotMap.lifterBackLeft.getSensorCollection().getPulseWidthPosition());
+		Dashboard.send("Raw Lifter Position", RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition());
 		Dashboard.send("Tared Lifter Position", tareEncoderTick);
 		Dashboard.send("Bottom Limit Switch", RobotMap.bottomLimitSwitch.get());
 		Dashboard.send("Lifter Position Enum", autoLifterPosition.toString());
 		Dashboard.send("Lifter Mode Enum", lifterMode.toString());
-		Dashboard.send("Lifter Error", RobotMap.lifterBackLeft.getClosedLoopError(0));
+		Dashboard.send("Lifter Error", RobotMap.lifterFrontRight.getClosedLoopError(0));
 		Dashboard.send("Locking Servo Position", RobotMap.liftLocker.get());
 		Dashboard.send("Servo State", lockMode.toString());
 		// This gives you how many (arbitrary units) "ticks" the motor has gone
@@ -166,14 +167,14 @@ public class LifterAssembly {
 	public void updateAutoHeight(){
 		switch(autoLifterPosition){
 		case SCALE:
-			RobotMap.lifterBackLeft.set(ControlMode.Position, tareEncoderTick + (130920-2496)); // Set this to the Scale height
+			RobotMap.lifterFrontRight.set(ControlMode.Position, tareEncoderTick + (130920-2496)); // Set this to the Scale height
 			break;
 		case SWITCH:
-			RobotMap.lifterBackLeft.set(ControlMode.Position, tareEncoderTick + (64212-2496)); // Set this to the Switch height
+			RobotMap.lifterFrontRight.set(ControlMode.Position, tareEncoderTick + (64212-2496)); // Set this to the Switch height
 			break;
 		case DOWN:
-//			RobotMap.lifterBackLeft.set(ControlMode.Position, tareEncoderTick); // Set this to the Down height
-//			RobotMap.lifterBackLeft.set(ControlMode.PercentOutput, loweringSpeed);
+//			RobotMap.lifterFrontRight.set(ControlMode.Position, tareEncoderTick); // Set this to the Down height
+//			RobotMap.lifterFrontRight.set(ControlMode.PercentOutput, loweringSpeed);
 			break;
 		default:
 			System.out.println("Holy shit we're defaulting in LifterPosition!");

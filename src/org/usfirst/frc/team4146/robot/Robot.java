@@ -57,7 +57,7 @@ public class Robot extends SampleRobot {
 		// This is for checking to see if FMS is sending a "corrupted" String.
 		/*
 		for(int i = 0; i < 3; i++){
-			if(!RobotMap.gameData.substring(i, i + 1).equals("L") || !RobotMap.gameData.substring(i, i + 1).equals("R")){
+			if(!RobotMap.gameData.substring(i, i + 1).equals("L") || !RobotMap.gameData.substring(i, i + 1).equals("R")){00
 				autoSelected = "Cross Baseline";
 				break;
 			}
@@ -79,7 +79,7 @@ public class Robot extends SampleRobot {
 					break;
 				case "Middle":
 					if(isSwitchLeft) {
-						System.out.println/**/("Running Red Middle Left Auto.");
+						System.out.println("Running Red Middle Left Auto.");
 						RobotMap.auto.redMiddleLeftAutonomous();
 					} else {
 						System.out.println("Running Red Middle Right Auto.");
@@ -158,6 +158,11 @@ public class Robot extends SampleRobot {
 			RobotMap.intake.update(dt);
 			RobotMap.lifter.update(dt);
 			
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				
+			}
 			
 //			if(RobotMap.driveController.getLeftBumper()){
 //				RobotMap.intakeTilt.set(ControlMode.PercentOutput, 1.0);

@@ -11,17 +11,20 @@ public class Heading {
 	    headingController = new HeadingPID();
 	  }
 	  
-	  public void turnToAbsolute(double absoluteAngle) {
+	  public void turnToAbsolute(double absoluteAngle, double timeOut) {
 		  Timer autoHeadingTimer = new Timer();
 		  double dt = 0.0;
-		  
+		  double timeAccumulator = 0;
 		  // Start the heading controller
 		  headingController.setSetpoint(absoluteAngle);
 		  headingController.flush();
+		  headingController.reset();
+		  //RobotMap.gyro.reset();
 		  
-		  
-		  while (headingController.getTimeInTolerance() < 1.0 && RobotMap.ROBOT.isAutonomous() && RobotMap.ROBOT.isEnabled()) {
+		  System.out.println("Gyro Setpoint:" + headingController.setpoint);
+		  while (headingController.getTimeInTolerance() < 1.0 && timeAccumulator < timeOut && RobotMap.ROBOT.isAutonomous() && RobotMap.ROBOT.isEnabled()) {
 			  dt = autoHeadingTimer.getDT();
+			  timeAccumulator += dt;
 			  
 			  
 			  RobotMap.intake.update(dt);
@@ -29,17 +32,22 @@ public class Heading {
 			  headingController.update(dt);
 			  RobotMap.differentialDrive.arcadeDrive(0.0, MoveDistance.clamp(headingController.get(), 0.7));
 			  
-			  Dashboard.send("Gyro", RobotMap.gyro.getFusedHeading());
-			  
+			  try {
+				Thread.sleep(5);
+			  } catch (InterruptedException e) {
+				
+			  }
 			  autoHeadingTimer.update();
 		  }
+		  System.out.println("Time: " + timeAccumulator);
+		  System.out.println("Gyro Position:" + RobotMap.gyro.getAngle());
 		  RobotMap.differentialDrive.arcadeDrive(0.0, 0.0);
 		  System.out.println("Done Turning!");
 	  }
 
-	  public void turnToRelative(double relativeAngle) {
+	  public void turnToRelative(double relativeAngle, double timeOut) {
 	    theoreticalAngle += relativeAngle;
-	    turnToAbsolute(theoreticalAngle);
+	    turnToAbsolute(theoreticalAngle, timeOut);
 	  }
 
 	  public void tareHeadingRelative() {

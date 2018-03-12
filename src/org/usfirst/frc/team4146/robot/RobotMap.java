@@ -54,9 +54,11 @@ public class RobotMap {
 	public static final double SMALL_MOVE_kD = 0.0;
 	
 	// Heading Constants
-	public static final double HEADING_kP = 0.012;
+	public static final double HEADING_kP = 0.018; //0.008
 	public static final double HEADING_kI = 0.0;
 	public static final double HEADING_kD = 0.0;
+	
+	public static final double HEADING_TIME_OUT = 3.0;
 	
 	// Heading Lock Constants
 	public static final double HEADING_LOCK_kP = 0.0;
@@ -110,7 +112,7 @@ public class RobotMap {
 	// Sendable Chooser Declaration
 	public static SendableChooser chooser; //Sendable chooser allows us to choose the autonomous from smartdashboard
 	public static SendableChooser colorChooser;
-	public static SendableChooser switchChooser;
+	//public static SendableChooser switchChooser;
 	
 	// Game Data Declaration
 	public static String gameData;
@@ -187,20 +189,28 @@ public class RobotMap {
     	lifterFrontRight = new TalonSRX(9);
     	lifterBackRight = new TalonSRX(10);
     	
-    	lifterFrontLeft.follow(lifterBackLeft);
-    	lifterFrontRight.follow(lifterBackLeft);
-    	lifterBackRight.follow(lifterBackLeft);
+//    	lifterFrontLeft.follow(lifterBackLeft);
+//    	lifterFrontRight.follow(lifterBackLeft);
+//    	lifterBackRight.follow(lifterBackLeft);
+//    	
+//    	lifterFrontRight.setInverted(true);
+//    	lifterBackRight.setInverted(true);
+    	
+    	lifterFrontLeft.follow(lifterFrontRight);
+    	lifterBackLeft.follow(lifterFrontRight);
+    	lifterBackRight.follow(lifterFrontRight);
     	
     	lifterFrontRight.setInverted(true);
     	lifterBackRight.setInverted(true);
     	
-    	lifterBackLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-    	lifterBackLeft.configAllowableClosedloopError(0, 0, 10);
+    	lifterFrontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     	
-    	lifterBackLeft.config_kF(0, 0.0, 10);
-    	lifterBackLeft.config_kP(0, LIFTER_kP, 10);
-    	lifterBackLeft.config_kI(0, LIFTER_kI, 10);
-    	lifterBackLeft.config_kD(0, LIFTER_kD, 10);
+    	lifterFrontRight.configAllowableClosedloopError(0, 0, 10);
+    	
+    	lifterFrontRight.config_kF(0, 0.0, 10);
+    	lifterFrontRight.config_kP(0, LIFTER_kP, 10);
+    	lifterFrontRight.config_kI(0, LIFTER_kI, 10);
+    	lifterFrontRight.config_kD(0, LIFTER_kD, 10);
     	
     	// Servo Initilization
     	liftLocker = new Servo(0);
@@ -259,11 +269,11 @@ public class RobotMap {
     	SmartDashboard.putData("Color", colorChooser);
     	
     	
-    	switchChooser = new SendableChooser();
-    	
-    	switchChooser.addDefault("No Switch", "No Switch");
-    	switchChooser.addObject("Left Switch", "Left Switch");
-    	switchChooser.addObject("Right Switch", "Right Switch");
+//    	switchChooser = new SendableChooser();
+//    	
+//    	switchChooser.addDefault("No Switch", "No Switch");
+//    	switchChooser.addObject("Left Switch", "Left Switch");
+//    	switchChooser.addObject("Right Switch", "Right Switch");
     	
     	// Differential Drive Initialization
     	differentialDrive = new DifferentialDrive(leftTop, rightTop);  // (frontLeft, rearLeft, frontRight, rearRight);
