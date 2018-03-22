@@ -9,6 +9,7 @@ import org.usfirst.frc.team4146.robot.LifterAssembly.LifterModeEnum;
  */
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SampleRobot;
@@ -150,36 +151,25 @@ public class Robot extends SampleRobot {
 	public void operatorControl() {
 		Timer timer = new Timer();
 		double dt = 0.0;
+		double[] pidgeyData = new double[3];
 		
 		int i = 0;
 		while (isOperatorControl() && isEnabled()) {
 			dt = timer.getDT();
 			RobotMap.drive.update(dt);
-			RobotMap.intake.update(dt);
-			RobotMap.lifter.update(dt);
+//			RobotMap.intake.update(dt);
+//			RobotMap.lifter.update(dt);
+			
+			RobotMap.pidgey.getYawPitchRoll(pidgeyData);
+			
+			Dashboard.send("Pidgey Yaw", pidgeyData[0]);
 			
 			try {
 				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				
 			}
-			
-//			if(RobotMap.driveController.getLeftBumper()){
-//				RobotMap.intakeTilt.set(ControlMode.PercentOutput, 1.0);
-//			} else if(RobotMap.driveController.getRightBumper()){
-//				RobotMap.intakeTilt.set(ControlMode.PercentOutput, -1.0);
-//			} else {
-//				RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.0);
-//			}
-//			
-//			if(RobotMap.driveController.getButtonStart()){
-//				RobotMap.intakeRoller.set(ControlMode.PercentOutput, 1.0);
-//			} else {
-//				RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.0);
-//			}
-			
 			timer.update();
-			
 		}
 	}
 
@@ -188,6 +178,34 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void test() {
+		System.out.println("Teeeeest Mode");
+		RobotMap.pidgey.enterCalibrationMode(CalibrationMode.Temperature, 0);//enterCalibrationMode(CalibrationMode.Temperature);
+		
+		/*Timer timer = new Timer();
+		double dt = 0.0;
+		int i = 0;
+		
+		double[] pidgeyData = new double[3];
+		while (isTest() && isEnabled()) {
+			dt = timer.getDT();
+			i++;
+			
+			if(i >= 100){
+				RobotMap.pidgey.getYawPitchRoll(pidgeyData);
+				Dashboard.send("Pidgey Yaw", pidgeyData[2]);
+				System.out.println("Yaw: " + pidgeyData[0]);
+				
+				i = 0;
+			}
+			
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				
+			}
+			timer.update();
+			
+		}*/
 		
 	}
 }

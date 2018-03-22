@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4146.robot;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -105,6 +106,8 @@ public class RobotMap {
 	
 	// Navax Gyro Declaration
 	public static AHRS gyro;
+	
+	public static PigeonIMU pidgey;
 	
 	// Network Table Declaration
 	public static NetworkTable networkTable;
@@ -244,6 +247,8 @@ public class RobotMap {
     	
 		// Navx Gyro Initialization
     	gyro = new AHRS(SPI.Port.kMXP);
+    	
+    	pidgey = new PigeonIMU(lifterBackLeft);
     	
     	// NetworkTable Initialization
     	networkTable = NetworkTable.getTable("SmartDashboard");
