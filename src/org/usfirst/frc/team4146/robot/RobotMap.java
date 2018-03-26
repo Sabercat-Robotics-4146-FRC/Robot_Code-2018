@@ -2,6 +2,8 @@ package org.usfirst.frc.team4146.robot;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
@@ -90,6 +92,8 @@ public class RobotMap {
 	public static TalonSRX lifterBackLeft;
 	public static TalonSRX lifterFrontRight;
 	public static TalonSRX lifterBackRight;
+	
+	public static TalonSRX pigeonTalon;
 	
 	public static Servo liftLocker;
 	
@@ -215,6 +219,14 @@ public class RobotMap {
     	lifterFrontRight.config_kI(0, LIFTER_kI, 10);
     	lifterFrontRight.config_kD(0, LIFTER_kD, 10);
     	
+    	pigeonTalon = new TalonSRX(11);
+    	
+//    	pigeonTalon.configSelectedFeedbackSensor(RemoteFeedbackDevice., 0, 0);
+//    	pigeonTalon.configSelectedFeedbackSensor(RemoteFeedbackDevice.GadgeteerPigeon_Yaw, 0, 0);
+    	
+    	pigeonTalon.configRemoteFeedbackFilter(lifterBackLeft.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw, 0, 10);
+    	pigeonTalon.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 10);
+
     	// Servo Initilization
     	liftLocker = new Servo(0);
     	

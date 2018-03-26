@@ -154,15 +154,22 @@ public class Robot extends SampleRobot {
 		double[] pidgeyData = new double[3];
 		
 		int i = 0;
+		
+		//RobotMap.leftTop.follow(RobotMap.rightTop);
+		
 		while (isOperatorControl() && isEnabled()) {
 			dt = timer.getDT();
-			RobotMap.drive.update(dt);
+//			RobotMap.drive.update(dt);
 //			RobotMap.intake.update(dt);
 //			RobotMap.lifter.update(dt);
 			
 			RobotMap.pidgey.getYawPitchRoll(pidgeyData);
+			RobotMap.pigeonTalon.set(ControlMode.Position, 0);
 			
 			Dashboard.send("Pidgey Yaw", pidgeyData[0]);
+			Dashboard.send("PID Out?", RobotMap.pigeonTalon.getMotorOutputPercent());
+			Dashboard.send("Pig ir error", RobotMap.pigeonTalon.getClosedLoopError(0));
+			
 			
 			try {
 				Thread.sleep(5);
