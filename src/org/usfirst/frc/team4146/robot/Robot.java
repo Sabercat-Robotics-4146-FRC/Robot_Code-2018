@@ -106,44 +106,50 @@ public class Robot extends SampleRobot {
 						break;
 				}
 			} else if (switchScaleSelected.equals("Scale")) {
+				switch(switchScaleSelected) {
 				
+				}
 			}
 		} else if(colorSelected.equals("Blue")){
-			switch(autoSelected){
-				case "Left":
-					if(isSwitchLeft) {
-						System.out.println("Running Blue Left Left Auto.");
-						RobotMap.auto.blueLeftLeftAutonomous();
-					} else {
-						System.out.println("Running Blue Left Right Auto.");
-						RobotMap.auto.blueLeftRightAutonomous();
-					}
-					break;
-				case "Middle":
-					if(isSwitchLeft) {
-						System.out.println("Running Blue Middle Left Auto.");
-						RobotMap.auto.blueMiddleLeftAutonomous();
-					} else {
-						System.out.println("Running Blue Middle Right Auto.");
-						RobotMap.auto.blueMiddleRightAutonomous();
-					}
-					break;
-				case "Right":
-					if(isSwitchLeft) {
-						System.out.println("Running Blue Right Left Auto.");
-						RobotMap.auto.blueRightLeftAutonomous();
-					} else {
-						System.out.println("Running Blue Right Right Auto.");
-						RobotMap.auto.blueRightRightAutonomous();
-					}
-					break;
-				case "Cross Baseline":
-					System.out.println("Running Blue Cross Baseline Auto.");
-					RobotMap.auto.blueCrossBaseline();
-					break;
-				case "Do Nothing":
-					System.out.println("Doing nothing.... :'(");
-					break;
+			if (switchScaleSelected.equals("Switch")) {
+				switch(autoSelected){
+					case "Left":
+						if(isSwitchLeft) {
+							System.out.println("Running Blue Left Left Auto.");
+							RobotMap.auto.blueLeftLeftAutonomous();
+						} else {
+							System.out.println("Running Blue Left Right Auto.");
+							RobotMap.auto.blueLeftRightAutonomous();
+						}
+						break;
+					case "Middle":
+						if(isSwitchLeft) {
+							System.out.println("Running Blue Middle Left Auto.");
+							RobotMap.auto.blueMiddleLeftAutonomous();
+						} else {
+							System.out.println("Running Blue Middle Right Auto.");
+							RobotMap.auto.blueMiddleRightAutonomous();
+						}
+						break;
+					case "Right":
+						if(isSwitchLeft) {
+							System.out.println("Running Blue Right Left Auto.");
+							RobotMap.auto.blueRightLeftAutonomous();
+						} else {
+							System.out.println("Running Blue Right Right Auto.");
+							RobotMap.auto.blueRightRightAutonomous();
+						}
+						break;
+					case "Cross Baseline":
+						System.out.println("Running Blue Cross Baseline Auto.");
+						RobotMap.auto.blueCrossBaseline();
+						break;
+					case "Do Nothing":
+						System.out.println("Doing nothing.... :'(");
+						break;
+				}
+			} else if (switchScaleSelected.equals("Scale")) {
+				
 			}
 		}
 	}
