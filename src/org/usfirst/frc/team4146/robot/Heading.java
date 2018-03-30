@@ -33,10 +33,11 @@ public class Heading {
 			  RobotMap.differentialDrive.arcadeDrive(0.0, MoveDistance.clamp(headingController.get(), 0.7));
 			  
 			  try {
-				Thread.sleep(5);
+				  Thread.sleep(5);
 			  } catch (InterruptedException e) {
-				
+				  
 			  }
+			  
 			  autoHeadingTimer.update();
 		  }
 		  System.out.println("Time: " + timeAccumulator);
@@ -46,12 +47,12 @@ public class Heading {
 	  }
 
 	  public void turnToRelative(double relativeAngle, double timeOut) {
-	    theoreticalAngle += relativeAngle;
-	    turnToAbsolute(theoreticalAngle, timeOut);
+		  theoreticalAngle += relativeAngle;
+		  turnToAbsolute(theoreticalAngle, timeOut);
 	  }
 
 	  public void tareHeadingRelative() {
-	    theoreticalAngle = RobotMap.gyro.getFusedHeading(); // r-map this please
+		  theoreticalAngle = RobotMap.gyro.getFusedHeading(); // r-map this please
 	  }
 }
 

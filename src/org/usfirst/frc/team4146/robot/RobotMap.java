@@ -61,12 +61,16 @@ public class RobotMap {
 	public static final double HEADING_kI = 0.0;
 	public static final double HEADING_kD = 0.0;
 	
-	public static final double HEADING_TIME_OUT = 3.0;
+	public static final double HEADING_TIME_OUT = 5.0;
+	public static final double HEADING_TIME_IN_TOLERENCE = 2.0;
+	public static final double HEADING_TOLERENCE = 1.0;
 	
 	// Heading Lock Constants
 	public static final double HEADING_LOCK_kP = 0.0;
 	public static final double HEADING_LOCK_kI = 0.0;
 	public static final double HEADING_LOCK_kD = 0.0;
+	
+	public static final double PIGEON_TICK_CONVERSION = 5762 / 90;
 	
 	// Lifter Lock Constants
 	public static final double LIFTER_LOCKED_POSITION = 0.2;
@@ -226,6 +230,7 @@ public class RobotMap {
     	
     	pigeonTalon.configRemoteFeedbackFilter(lifterBackLeft.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw, 0, 10);
     	pigeonTalon.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 10);
+    	pigeonTalon.configAllowableClosedloopError(0, 0, 10);
 
     	// Servo Initilization
     	liftLocker = new Servo(0);
@@ -314,5 +319,10 @@ public class RobotMap {
     	
     	// Move Distance Initialization
     	moveDistance = new MoveDistance();
+	}
+	
+	// Random Methods
+	public static long secondsToMilliSecs(long seconds){
+		return seconds * 1000;
 	}
 }

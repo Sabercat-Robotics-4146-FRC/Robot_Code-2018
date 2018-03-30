@@ -23,6 +23,7 @@ public class Timer {
 		dt = convertNanoToSec(thisTime - lastTime);
 		lastTime = thisTime;
 	}
+	
 	public double getDT() {
 		return dt;
 	}

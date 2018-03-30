@@ -67,6 +67,9 @@ public class Robot extends SampleRobot {
 		
 		// <color><Robot Position><Switch Position>Autonomous
 		
+		// Reseting gyro
+		RobotMap.pidgey.setYaw(0, 10);
+		
 		if(colorSelected.equals("Red")){
 			switch(autoSelected){
 				case "Left":
@@ -151,25 +154,42 @@ public class Robot extends SampleRobot {
 	public void operatorControl() {
 		Timer timer = new Timer();
 		double dt = 0.0;
-		double[] pidgeyData = new double[3];
+		PigeonHeading ph = new PigeonHeading();
 		
-		int i = 0;
+//		RobotMap.leftTop.follow(RobotMap.pigeonTalon);
+//		RobotMap.rightTop.follow(RobotMap.pigeonTalon);
+//		
+//		RobotMap.leftTop.setInverted(true);
+//		RobotMap.leftBottom.setInverted(true);
+//		RobotMap.rightTop.setInverted(true);
+//		RobotMap.rightBottom.setInverted(true);
+		RobotMap.pidgey.setYaw(0, 10);
 		
-		//RobotMap.leftTop.follow(RobotMap.rightTop);
+		RobotMap.pigeonTalon.set(ControlMode.Position, 0);
 		
-		while (isOperatorControl() && isEnabled()) {
+		boolean flag = false;
+		
+		while(isOperatorControl() && isEnabled()) {
 			dt = timer.getDT();
 //			RobotMap.drive.update(dt);
 //			RobotMap.intake.update(dt);
 //			RobotMap.lifter.update(dt);
 			
-			RobotMap.pidgey.getYawPitchRoll(pidgeyData);
-			RobotMap.pigeonTalon.set(ControlMode.Position, 0);
+//			RobotMap.pidgey.setCompassAngle(10, 10);
+//			RobotMap.pidgey.setAccumZAngle(10, 10);
+//			RobotMap.pidgey.setFusedHeading(10, 10);
 			
-			Dashboard.send("Pidgey Yaw", pidgeyData[0]);
-			Dashboard.send("PID Out?", RobotMap.pigeonTalon.getMotorOutputPercent());
-			Dashboard.send("Pig ir error", RobotMap.pigeonTalon.getClosedLoopError(0));
-			
+			if(RobotMap.driveController.getButtonBack() && !flag) {
+				flag = true;
+				//RobotMap.pidgey.setYaw(RobotMap.PIGEON_TICK_CONVERSION/*5762*/, 10); // 5762 in set yaw gets 90 degrees
+				
+				ph.reletiveTurn(5762/3, 100000000);
+				
+				
+			}
+			if(!RobotMap.driveController.getButtonBack()) {
+				flag = false;
+			}
 			
 			try {
 				Thread.sleep(5);
@@ -179,7 +199,7 @@ public class Robot extends SampleRobot {
 			timer.update();
 		}
 	}
-
+	
 	/**
 	 * This function is run once each time the robot enters test mode
 	 */
