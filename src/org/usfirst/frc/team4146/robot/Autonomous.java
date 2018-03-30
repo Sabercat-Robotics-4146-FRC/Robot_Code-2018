@@ -35,6 +35,10 @@ public class Autonomous {
 	public static final double R_PC_ZONE_LENGTH = 42.25;
 	public static final double R_RIGHT_WALL_TO_EZ = 174.5;
 	public static final double R_AS_TO_PLATFORM = 258.5;
+	public static final double R_AS_TO_HALF_FIELD = 0;
+	public static final double R_LEFT_WALL_TO_SCALE = 0;
+	public static final double R_RIGHT_WALL_TO_SCALE = 0;
+	public static final double R_SWITCH_TO_SCALE_PLATE = 0;
 	
 	public static final double R_AS_TO_AUTO_LINE = 122.25;
 	
@@ -48,6 +52,10 @@ public class Autonomous {
 	public static final double B_PC_ZONE_LENGTH = 42;
 	public static final double B_RIGHT_WALL_TO_EZ = 175;
 	public static final double B_AS_TO_PLATFORM = 261;
+	public static final double B_AS_TO_HALF_FIELD = 0;
+	public static final double B_LEFT_WALL_TO_SCALE = 0;
+	public static final double B_RIGHT_WALL_TO_SCALE = 0;
+	public static final double B_SWITCH_TO_SCALE_PLATE = 0;
 	
 	public static final double B_AS_TO_AUTO_LINE = 122;
 	

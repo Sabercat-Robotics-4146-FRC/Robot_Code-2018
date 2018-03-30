@@ -115,6 +115,7 @@ public class RobotMap {
 	// Sendable Chooser Declaration
 	public static SendableChooser chooser; //Sendable chooser allows us to choose the autonomous from smartdashboard
 	public static SendableChooser colorChooser;
+	public static SendableChooser scaleSwitchChooser;
 	//public static SendableChooser switchChooser;
 	
 	// Game Data Declaration
@@ -273,6 +274,13 @@ public class RobotMap {
     	
     	SmartDashboard.putData("Color", colorChooser);
     	
+    	
+    	scaleSwitchChooser = new SendableChooser();
+    	
+    	scaleSwitchChooser.addObject("Switch", "Switch");
+    	scaleSwitchChooser.addObject("Scale", "Scale");
+
+    	SmartDashboard.putData("Scale or Switch", scaleSwitchChooser);
     	
 //    	switchChooser = new SendableChooser();
 //    	
