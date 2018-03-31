@@ -26,10 +26,9 @@ public class PigeonHeading {
 		double timeInTolerance = 0;
 		double timeSinceStart = 0;
 		double dt = 0;
-		
 		timer.reset();
 		
-		System.out.println("Setting motots to follow pigeon talon...");
+		System.out.println("Setting motots to follow pigeon talon and inverting them...");
 		
 		RobotMap.leftTop.follow(RobotMap.pigeonTalon);
 		RobotMap.rightTop.follow(RobotMap.pigeonTalon);
@@ -44,6 +43,7 @@ public class PigeonHeading {
 		RobotMap.pigeonTalon.set(ControlMode.Position, angle);
 		
 		while(timeInTolerance < RobotMap.HEADING_TIME_IN_TOLERENCE && timeSinceStart < seconds && RobotMap.ROBOT.isEnabled()){
+			timer.update();
 			dt = timer.getDT(); // Could put this in update....
 			update(0); // dt not currently used in update method so 0.
 			
@@ -65,8 +65,6 @@ public class PigeonHeading {
 			
 			// Adds to time since start for timeout.
 			timeSinceStart += dt;
-			
-			timer.update();
 		}
 		
 		System.out.println("Setting motots back...");
