@@ -107,15 +107,25 @@ public class Robot extends SampleRobot {
 						break;
 				}
 			} else if (switchScaleSelected.equals("Scale")) {
-				switch(switchScaleSelected) {
+				switch(autoSelected) {
 					case "Left":
 						if (isScaleLeft) {
 							System.out.println("Running Red Left Left Scale Auto");
 							RobotMap.auto.redLeftLeftScaleAutonomous();
 						} else {
-							
+							System.out.println("Running Red Left Right Scale Auto");
+							RobotMap.auto.redLeftRightScaleAutonomous();
 						}
-					
+						break;
+					case "Right":
+						if (isScaleLeft) {
+							System.out.println("Running Red Right Left Scale Auto");
+							RobotMap.auto.redRightLeftScaleAutonomous();
+						} else {
+							System.out.println("Running Red Right Right Scale Auto");
+							RobotMap.auto.redRightRightScaleAutonomous();
+						}
+						break;
 				}
 			}
 		} else if(colorSelected.equals("Blue")){
@@ -157,7 +167,26 @@ public class Robot extends SampleRobot {
 						break;
 				}
 			} else if (switchScaleSelected.equals("Scale")) {
-				
+				switch(autoSelected) {
+				case "Left":
+					if (isScaleLeft) {
+						System.out.println("Running Blue Left Left Scale Auto");
+						RobotMap.auto.blueLeftLeftScaleAutonomous();
+					} else {
+						System.out.println("Running Blue Left Right Scale Auto");
+						RobotMap.auto.blueLeftRightScaleAutonomous();
+					}
+					break;
+				case "Right":
+					if (isScaleLeft) {
+						System.out.println("Running Blue Right Left Scale Auto");
+						RobotMap.auto.blueRightLeftScaleAutonomous();
+					} else {
+						System.out.println("Running Blue Right Right Scale Auto");
+						RobotMap.auto.blueRightRightScaleAutonomous();
+					}
+					break;
+				}
 			}
 		}
 	}

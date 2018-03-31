@@ -277,7 +277,7 @@ public class RobotMap {
     	
     	scaleSwitchChooser = new SendableChooser();
     	
-    	scaleSwitchChooser.addObject("Switch", "Switch");
+    	scaleSwitchChooser.addDefault("Switch", "Switch");
     	scaleSwitchChooser.addObject("Scale", "Scale");
 
     	SmartDashboard.putData("Scale or Switch", scaleSwitchChooser);

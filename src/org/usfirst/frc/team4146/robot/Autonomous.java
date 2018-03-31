@@ -36,8 +36,8 @@ public class Autonomous {
 	public static final double R_RIGHT_WALL_TO_EZ = 174.5;
 	public static final double R_AS_TO_PLATFORM = 258.5;
 	public static final double R_AS_TO_HALF_FIELD = 0;
-	public static final double R_LEFT_WALL_TO_SCALE = 0;
-	public static final double R_RIGHT_WALL_TO_SCALE = 0;
+	public static final double R_LEFT_WALL_TO_SCALE_PLATE = 0;
+	public static final double R_RIGHT_WALL_TO_SCALE_PLATE = 0;
 	public static final double R_SWITCH_TO_SCALE_PLATE = 0;
 	
 	public static final double R_AS_TO_AUTO_LINE = 122.25;
@@ -53,8 +53,8 @@ public class Autonomous {
 	public static final double B_RIGHT_WALL_TO_EZ = 175;
 	public static final double B_AS_TO_PLATFORM = 261;
 	public static final double B_AS_TO_HALF_FIELD = 0;
-	public static final double B_LEFT_WALL_TO_SCALE = 0;
-	public static final double B_RIGHT_WALL_TO_SCALE = 0;
+	public static final double B_LEFT_WALL_TO_SCALE_PLATE = 0;
+	public static final double B_RIGHT_WALL_TO_SCALE_PLATE = 0;
 	public static final double B_SWITCH_TO_SCALE_PLATE = 0;
 	
 	public static final double B_AS_TO_AUTO_LINE = 122;
@@ -62,6 +62,8 @@ public class Autonomous {
 	// <color><Robot Position><Switch Position>Autonomous
 	
 	///////// BLUE AUTOS!! /////////
+	
+	// Switch Autos
 	public void blueLeftLeftAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(B_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
@@ -123,12 +125,55 @@ public class Autonomous {
 		rollOut();
 	}
 
+	// Scale Autos
+	public void blueLeftLeftScaleAutonomous() {
+		move(B_AS_TO_HALF_FIELD - HALF_ROBOT_LENGTH);
+		changeLiftState(LifterPositionEnum.SCALE);
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		turn(90, RobotMap.HEADING_TIME_OUT);
+		move(B_LEFT_WALL_TO_SCALE_PLATE - B_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH); // Do I need to subtract half robot width????
+		rollOut();
+	}
+	
+	public void blueLeftRightScaleAutonomous() {
+		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		turn(90, RobotMap.HEADING_TIME_OUT);
+		move(B_LEFT_WALL_TO_SWITCH - (B_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH) + SWITCH_WIDTH);
+		changeLiftState(LifterPositionEnum.SCALE);                                             // Where do we want to put these???
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
+		move(B_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		rollOut();
+	}
+	
+	public void blueRightRightScaleAutonomous() {
+		move(B_AS_TO_HALF_FIELD - HALF_ROBOT_LENGTH);
+		changeLiftState(LifterPositionEnum.SCALE);
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
+		move(B_RIGHT_WALL_TO_SCALE_PLATE - B_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH); // Do I need to subtract half robot width????
+		rollOut();
+	}
+	
+	public void blueRightLeftScaleAutonomous() {
+		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		turn(-90, RobotMap.HEADING_TIME_OUT);
+		move(B_RIGHT_WALL_TO_SWITCH - (B_RIGHT_PORTAL_WIDTH + HALF_ROBOT_WIDTH) + SWITCH_WIDTH);
+		changeLiftState(LifterPositionEnum.SCALE);                                             // Where do we want to put these???
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		turn(90, RobotMap.HEADING_TIME_OUT);
+		move(B_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		rollOut();
+	}
+	
 	public void blueCrossBaseline() {
 		move(220);
 		//move(B_AS_TO_AUTO_LINE);
 	}
 	
 	///////// RED AUTOS!! /////////
+	
+	//Switch Autos
 	public void redLeftLeftAutonomous() {
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		move(R_AS_TO_SWITCH + HALF_SWITCH_LENGTH - HALF_ROBOT_LENGTH);
@@ -189,8 +234,45 @@ public class Autonomous {
 		//rollOut();
 	}
 	
+	// Scale Autos
 	public void redLeftLeftScaleAutonomous() {
-		
+		move(R_AS_TO_HALF_FIELD - HALF_ROBOT_LENGTH);
+		changeLiftState(LifterPositionEnum.SCALE);
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		turn(90, RobotMap.HEADING_TIME_OUT);
+		move(R_LEFT_WALL_TO_SCALE_PLATE - R_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH); // Do I need to subtract half robot width????
+		rollOut();
+	}
+	
+	public void redLeftRightScaleAutonomous() {
+		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		turn(90, RobotMap.HEADING_TIME_OUT);
+		move(R_LEFT_WALL_TO_SWITCH - (R_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH) + SWITCH_WIDTH);
+		changeLiftState(LifterPositionEnum.SCALE);                                             // Where do we want to put these???
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
+		move(R_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		rollOut();
+	}
+	
+	public void redRightRightScaleAutonomous() {
+		move(R_AS_TO_HALF_FIELD - HALF_ROBOT_LENGTH);
+		changeLiftState(LifterPositionEnum.SCALE);
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		turn(-90, RobotMap.HEADING_TIME_OUT);
+		move(R_RIGHT_WALL_TO_SCALE_PLATE - R_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH); // Do I need to subtract half robot width????
+		rollOut();
+	}
+	
+	public void redRightLeftScaleAutonomous() {
+		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		turn(-90, RobotMap.HEADING_TIME_OUT);
+		move(R_RIGHT_WALL_TO_SWITCH - (R_RIGHT_PORTAL_WIDTH + HALF_ROBOT_WIDTH) + SWITCH_WIDTH);
+		changeLiftState(LifterPositionEnum.SCALE);                                             // Where do we want to put these???
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+		turn(90, RobotMap.HEADING_TIME_OUT);
+		move(R_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		rollOut();
 	}
 
 	public void redCrossBaseline() {
