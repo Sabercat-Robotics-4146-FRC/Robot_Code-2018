@@ -156,15 +156,7 @@ public class Robot extends SampleRobot {
 		double dt = 0.0;
 		PigeonHeading ph = new PigeonHeading();
 		
-//		RobotMap.leftTop.follow(RobotMap.pigeonTalon);
-//		RobotMap.rightTop.follow(RobotMap.pigeonTalon);
-//		
-//		RobotMap.leftTop.setInverted(true);
-//		RobotMap.leftBottom.setInverted(true);
-//		RobotMap.rightTop.setInverted(true);
-//		RobotMap.rightBottom.setInverted(true);
 		RobotMap.pidgey.setYaw(0, 10);
-		
 		RobotMap.pigeonTalon.set(ControlMode.Position, 0);
 		
 		boolean flag = false;
@@ -174,6 +166,7 @@ public class Robot extends SampleRobot {
 //			RobotMap.drive.update(dt);
 //			RobotMap.intake.update(dt);
 //			RobotMap.lifter.update(dt);
+			ph.update(dt);
 			
 //			RobotMap.pidgey.setCompassAngle(10, 10);
 //			RobotMap.pidgey.setAccumZAngle(10, 10);
@@ -183,9 +176,7 @@ public class Robot extends SampleRobot {
 				flag = true;
 				//RobotMap.pidgey.setYaw(RobotMap.PIGEON_TICK_CONVERSION/*5762*/, 10); // 5762 in set yaw gets 90 degrees
 				
-				ph.reletiveTurn(5762/3, 100000000);
-				
-				
+				ph.reletiveTurn(90, 100000000);
 			}
 			if(!RobotMap.driveController.getButtonBack()) {
 				flag = false;
