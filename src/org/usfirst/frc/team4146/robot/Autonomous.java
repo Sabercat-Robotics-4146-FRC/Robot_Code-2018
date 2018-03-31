@@ -188,6 +188,10 @@ public class Autonomous {
 		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH);
 		//rollOut();
 	}
+	
+	public void redLeftLeftScaleAutonomous() {
+		
+	}
 
 	public void redCrossBaseline() {
 		//move(10.188);

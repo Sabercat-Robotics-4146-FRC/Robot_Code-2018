@@ -54,6 +54,7 @@ public class Robot extends SampleRobot {
 		System.out.println("Game Data: " + RobotMap.gameData);
 		
 		boolean isSwitchLeft = RobotMap.gameData.charAt(0) == 'L';
+		boolean isScaleLeft = RobotMap.gameData.charAt(1) == 'L';
 		
 		// This is for checking to see if FMS is sending a "corrupted" String.
 		/*
@@ -107,7 +108,14 @@ public class Robot extends SampleRobot {
 				}
 			} else if (switchScaleSelected.equals("Scale")) {
 				switch(switchScaleSelected) {
-				
+					case "Left":
+						if (isScaleLeft) {
+							System.out.println("Running Red Left Left Scale Auto");
+							RobotMap.auto.redLeftLeftScaleAutonomous();
+						} else {
+							
+						}
+					
 				}
 			}
 		} else if(colorSelected.equals("Blue")){
