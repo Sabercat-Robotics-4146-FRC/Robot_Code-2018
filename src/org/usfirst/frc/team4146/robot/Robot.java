@@ -4,7 +4,7 @@ import org.usfirst.frc.team4146.robot.LifterAssembly.LifterModeEnum;
 
 /*
  * ---Things to change for competition Robot---
- * - done
+ * - Change the potentiometer port to 3 
  * 
  */
 
@@ -65,6 +65,9 @@ public class Robot extends SampleRobot {
 			}
 		}
 		*/
+		
+		// Reseting gyro
+		RobotMap.pidgey.setYaw(0, 10); // Do we want this here for competition?
 		
 		// <color><Robot Position><Switch Position>Autonomous
 		
@@ -198,24 +201,36 @@ public class Robot extends SampleRobot {
 	public void operatorControl() {
 		Timer timer = new Timer();
 		double dt = 0.0;
-		double[] pidgeyData = new double[3];
 		
-		int i = 0;
+		// This is for testing the pigeon. Take out before competition 
+//		RobotMap.pidgey.setYaw(0, 10);
+//		RobotMap.pigeonTalon.set(ControlMode.Position, 0);
+		
+//		boolean flag = false;
+		
 		while (isOperatorControl() && isEnabled()) {
 			dt = timer.getDT();
 			RobotMap.drive.update(dt);
-//			RobotMap.intake.update(dt);
-//			RobotMap.lifter.update(dt);
+			RobotMap.intake.update(dt);
+			RobotMap.lifter.update(dt);
+
+			// This is for testing the pigeon. Take out before competition 
+//			if(RobotMap.driveController.getButtonBack() && !flag) {
+//				flag = true;
+//				//RobotMap.pidgey.setYaw(RobotMap.PIGEON_TICK_CONVERSION/*5762*/, 10); // 5762 in set yaw gets 90 degrees
+//				
+//				ph.reletiveTurn(90, 100000000);
+//			}
+//			if(!RobotMap.driveController.getButtonBack()) {
+//				flag = false;
+//			}
+//			
+//			try {
+//				Thread.sleep(5);
+//			} catch (InterruptedException e) {
+//				
+//			}
 			
-			RobotMap.pidgey.getYawPitchRoll(pidgeyData);
-			
-			Dashboard.send("Pidgey Yaw", pidgeyData[0]);
-			
-			try {
-				Thread.sleep(5);
-			} catch (InterruptedException e) {
-				
-			}
 			timer.update();
 		}
 	}

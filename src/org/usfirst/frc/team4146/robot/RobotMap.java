@@ -2,6 +2,8 @@ package org.usfirst.frc.team4146.robot;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
@@ -59,7 +61,9 @@ public class RobotMap {
 	public static final double HEADING_kI = 0.0;
 	public static final double HEADING_kD = 0.0;
 	
-	public static final double HEADING_TIME_OUT = 3.0;
+	public static final double HEADING_TIME_OUT = 5.0;
+	public static final double HEADING_TIME_IN_TOLERENCE = 0.5;
+	public static final double HEADING_TOLERENCE = 30.0;
 	
 	// Heading Lock Constants
 	public static final double HEADING_LOCK_kP = 0.0;
@@ -90,6 +94,8 @@ public class RobotMap {
 	public static TalonSRX lifterBackLeft;
 	public static TalonSRX lifterFrontRight;
 	public static TalonSRX lifterBackRight;
+	
+	public static TalonSRX pigeonTalon;
 	
 	public static Servo liftLocker;
 	
@@ -139,6 +145,9 @@ public class RobotMap {
 	
 	// Heading Declaration
 	public static Heading heading;
+	
+	// Pigeon Heading Declaration
+	public static PigeonHeading pigeonHeading;
 	
 	// Move Distance Declaration
 	public static MoveDistance moveDistance;
@@ -216,6 +225,11 @@ public class RobotMap {
     	lifterFrontRight.config_kI(0, LIFTER_kI, 10);
     	lifterFrontRight.config_kD(0, LIFTER_kD, 10);
     	
+    	pigeonTalon = new TalonSRX(11);
+    	
+    	pigeonTalon.configRemoteFeedbackFilter(lifterBackLeft.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw, 0, 10);
+    	//pigeonTalon.configAllowableClosedloopError(0, 0, 10);
+    	
     	// Servo Initilization
     	liftLocker = new Servo(0);
     	
@@ -244,7 +258,7 @@ public class RobotMap {
     	RobotMap.leftDriveEncoder.setDistancePerPulse((6.0 * Math.PI) / 256.0);
     	
     	// Potentiometer Initilization
-    	tiltPot = new AnalogPotentiometer(3); // Change to 3 for Robot 1.
+    	tiltPot = new AnalogPotentiometer(0); // Change to 3 for Robot 1.
     	
 		// Navx Gyro Initialization
     	gyro = new AHRS(SPI.Port.kMXP);
@@ -307,6 +321,9 @@ public class RobotMap {
     	
     	// Heading Initialization
     	heading = new Heading();
+    	
+    	// Pigeon Heading Initialization
+    	pigeonHeading = new PigeonHeading();
     	
     	// Move Distance Initialization
     	moveDistance = new MoveDistance();
