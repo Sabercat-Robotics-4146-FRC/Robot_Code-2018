@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 
 public class RobotMap {
 	
@@ -62,8 +63,8 @@ public class RobotMap {
 	public static final double HEADING_kD = 0.0;
 	
 	public static final double HEADING_TIME_OUT = 5.0;
-	public static final double HEADING_TIME_IN_TOLERENCE = 2.0;
-	public static final double HEADING_TOLERENCE = 1.0;
+	public static final double HEADING_TIME_IN_TOLERENCE = 0.5;
+	public static final double HEADING_TOLERENCE = 30.0;
 	
 	// Heading Lock Constants
 	public static final double HEADING_LOCK_kP = 0.0;
@@ -147,6 +148,8 @@ public class RobotMap {
 	// Heading Declaration
 	public static Heading heading;
 	
+	public static PigeonHeading pigeonHeading;
+	
 	// Move Distance Declaration
 	public static MoveDistance moveDistance;
 	
@@ -229,9 +232,8 @@ public class RobotMap {
 //    	pigeonTalon.configSelectedFeedbackSensor(RemoteFeedbackDevice.GadgeteerPigeon_Yaw, 0, 0);
     	
     	pigeonTalon.configRemoteFeedbackFilter(lifterBackLeft.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw, 0, 10);
-    	pigeonTalon.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 10);
-    	pigeonTalon.configAllowableClosedloopError(0, 0, 10);
-
+    	//pigeonTalon.configAllowableClosedloopError(0, 0, 10);
+    	//pigeonTalon.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, 10);
     	// Servo Initilization
     	liftLocker = new Servo(0);
     	
@@ -260,7 +262,7 @@ public class RobotMap {
     	RobotMap.leftDriveEncoder.setDistancePerPulse((6.0 * Math.PI) / 256.0);
     	
     	// Potentiometer Initilization
-    	tiltPot = new AnalogPotentiometer(3); // Change to 3 for Robot 1.
+    	tiltPot = new AnalogPotentiometer(0); // Change to 3 for Robot 1.
     	
 		// Navx Gyro Initialization
     	gyro = new AHRS(SPI.Port.kMXP);
@@ -316,6 +318,8 @@ public class RobotMap {
     	
     	// Heading Initialization
     	heading = new Heading();
+    	
+    	pigeonHeading = new PigeonHeading();
     	
     	// Move Distance Initialization
     	moveDistance = new MoveDistance();

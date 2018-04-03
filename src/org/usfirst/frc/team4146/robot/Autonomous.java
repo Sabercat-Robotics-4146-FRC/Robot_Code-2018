@@ -194,7 +194,8 @@ public class Autonomous {
 	}
 	
 	public void turn(double angle, double timeOut) {
-		RobotMap.heading.turnToRelative(angle, timeOut);
+		//RobotMap.heading.turnToRelative(angle, timeOut);
+		RobotMap.pigeonHeading.reletiveTurn(-angle, (int)timeOut);
 	}
 	
 	public void changeLiftState(LifterPositionEnum state){
