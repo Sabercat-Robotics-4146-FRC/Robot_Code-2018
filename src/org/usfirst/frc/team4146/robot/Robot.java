@@ -202,6 +202,8 @@ public class Robot extends SampleRobot {
 		Timer timer = new Timer();
 		double dt = 0.0;
 		
+		RobotMap.drive.setPeakOutput(1.0);
+		
 		// This is for testing the pigeon. Take out before competition 
 //		RobotMap.pidgey.setYaw(0, 10);
 //		RobotMap.pigeonTalon.set(ControlMode.Position, 0);
@@ -241,6 +243,7 @@ public class Robot extends SampleRobot {
 	@Override
 	public void test() {
 		System.out.println("Teeeeest Mode");
+		
 		RobotMap.pidgey.enterCalibrationMode(CalibrationMode.Temperature, 0);//enterCalibrationMode(CalibrationMode.Temperature);
 		
 		/*Timer timer = new Timer();

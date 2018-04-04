@@ -63,7 +63,7 @@ public class RobotMap {
 	
 	public static final double HEADING_TIME_OUT = 5.0;
 	public static final double HEADING_TIME_IN_TOLERENCE = 0.5;
-	public static final double HEADING_TOLERENCE = 30.0;
+	public static final double HEADING_TOLERENCE = 69.0;
 	
 	// Heading Lock Constants
 	public static final double HEADING_LOCK_kP = 0.0;
@@ -177,6 +177,8 @@ public class RobotMap {
     	// Make motors on same side follow.
     	leftBottom.follow(leftTop);
     	rightBottom.follow(rightTop);
+    	
+    	//setPeakOutput(1.0);
     	
 //    	leftTop.configContinuousCurrentLimit(25, 0);
 //    	leftTop.enableCurrentLimit(true);
@@ -328,4 +330,5 @@ public class RobotMap {
     	// Move Distance Initialization
     	moveDistance = new MoveDistance();
 	}
+	
 }

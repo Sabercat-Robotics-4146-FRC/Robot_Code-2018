@@ -85,9 +85,9 @@ public class LifterAssembly {
 					triggerInput = 0.0;
 				}
 			} else if(RobotMap.driveController.getButtonStart()){
-				triggerInput = 0.2;
+				//triggerInput = 0.2; // Don't want to introduce errors by changing too much so just commented these...
 			} else if(RobotMap.driveController.getButtonBack()){
-				triggerInput = -0.1;
+				//triggerInput = -0.1;
 			} else {
 				triggerInput = 0.0;
 			}

@@ -35,10 +35,10 @@ public class Autonomous {
 	public static final double R_PC_ZONE_LENGTH = 42.25;
 	public static final double R_RIGHT_WALL_TO_EZ = 174.5;
 	public static final double R_AS_TO_PLATFORM = 258.5;
-	public static final double R_AS_TO_HALF_FIELD = 0;
-	public static final double R_LEFT_WALL_TO_SCALE_PLATE = 0;
-	public static final double R_RIGHT_WALL_TO_SCALE_PLATE = 0;
-	public static final double R_SWITCH_TO_SCALE_PLATE = 0;
+	public static final double R_AS_TO_HALF_FIELD = 327.0;
+	public static final double R_LEFT_WALL_TO_SCALE_PLATE = 70;
+	public static final double R_RIGHT_WALL_TO_SCALE_PLATE = 70;
+	public static final double R_SWITCH_TO_SCALE_PLATE = 107.5;
 	
 	public static final double R_AS_TO_AUTO_LINE = 122.25;
 	
@@ -52,10 +52,10 @@ public class Autonomous {
 	public static final double B_PC_ZONE_LENGTH = 42;
 	public static final double B_RIGHT_WALL_TO_EZ = 175;
 	public static final double B_AS_TO_PLATFORM = 261;
-	public static final double B_AS_TO_HALF_FIELD = 0;
-	public static final double B_LEFT_WALL_TO_SCALE_PLATE = 0;
-	public static final double B_RIGHT_WALL_TO_SCALE_PLATE = 0;
-	public static final double B_SWITCH_TO_SCALE_PLATE = 0;
+	public static final double B_AS_TO_HALF_FIELD = 327;
+	public static final double B_LEFT_WALL_TO_SCALE_PLATE = 70.0;
+	public static final double B_RIGHT_WALL_TO_SCALE_PLATE = 70.0;
+	public static final double B_SWITCH_TO_SCALE_PLATE = 107.5;
 	
 	public static final double B_AS_TO_AUTO_LINE = 122;
 	
@@ -230,8 +230,8 @@ public class Autonomous {
 		move((R_RIGHT_WALL_TO_SWITCH - R_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(-90, RobotMap.HEADING_TIME_OUT);
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH);
-		//rollOut();
+		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) /*- HALF_ROBOT_LENGTH*/);
+		rollOut();
 	}
 	
 	// Scale Autos
@@ -256,12 +256,13 @@ public class Autonomous {
 	}
 	
 	public void redRightRightScaleAutonomous() {
-		move(R_AS_TO_HALF_FIELD - HALF_ROBOT_LENGTH);
+		//move(R_AS_TO_HALF_FIELD - HALF_ROBOT_LENGTH);
 		changeLiftState(LifterPositionEnum.SCALE);
+		RobotMap.lifter.update(0);
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		turn(-90, RobotMap.HEADING_TIME_OUT);
-		move(R_RIGHT_WALL_TO_SCALE_PLATE - R_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH); // Do I need to subtract half robot width????
-		rollOut();
+		//turn(-90, RobotMap.HEADING_TIME_OUT);
+		//move(R_RIGHT_WALL_TO_SCALE_PLATE - R_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH); // Do I need to subtract half robot width????
+		//rollOut();
 	}
 	
 	public void redRightLeftScaleAutonomous() {
@@ -312,13 +313,15 @@ public class Autonomous {
 	}
 	
 	public void rollOut() {
-		RobotMap.intakeRoller.set(ControlMode.PercentOutput, -1.0);
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			System.out.println("Exception in RollOut....");
+		if (RobotMap.ROBOT.isAutonomous()) {
+			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 1.0);
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				System.out.println("Exception in RollOut....");
+			}
+			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.0);
 		}
-		RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.0);
 	}
 	
 	public static double inchesToFeet(double inches){

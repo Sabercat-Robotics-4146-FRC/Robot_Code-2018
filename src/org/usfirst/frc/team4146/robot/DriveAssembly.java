@@ -13,8 +13,8 @@ public class DriveAssembly {
 		
 		vision.update(dt);
 		// Setting base movement variables
-		move = RobotMap.driveController.getDeadbandLeftYAxis() * 0.8;
-		spin = RobotMap.driveController.getDeadbandRightXAxis() * 0.8;
+		move = RobotMap.driveController.getDeadbandLeftYAxis() *  1.0;//0.8;
+		spin = RobotMap.driveController.getDeadbandRightXAxis() * 0.92;
 		
 //		if (RobotMap.driveController.getRightStickPress()) {
 //			//vision lock
@@ -36,7 +36,7 @@ public class DriveAssembly {
 		
 		move = !RobotMap.bottomLimitSwitch.get() ? move * 0.75 : move; // keep?
 		
-		RobotMap.differentialDrive.arcadeDrive(move, spin);
+		RobotMap.differentialDrive.arcadeDrive(move, spin, true);
 		
 		// Sending things to Dashboard
 		Dashboard.send("Move", move);
@@ -53,6 +53,21 @@ public class DriveAssembly {
 		Dashboard.send("Right Distance shit", RobotMap.rightDriveEncoder.getDistance());
 		
 		
+	}
+	
+	public void setPeakOutput(double x) {
+		RobotMap.pigeonTalon.configPeakOutputForward(x, 10);
+		RobotMap.pigeonTalon.configPeakOutputReverse(-x, 10);
+		
+		RobotMap.leftTop.configPeakOutputForward(x, 10);
+		RobotMap.leftBottom.configPeakOutputForward(x, 10);
+		RobotMap.rightTop.configPeakOutputForward(x, 10);
+		RobotMap.rightBottom.configPeakOutputForward(x, 10);
+		
+		RobotMap.leftTop.configPeakOutputReverse(-x, 10);
+		RobotMap.leftBottom.configPeakOutputReverse(-x, 10);
+		RobotMap.rightTop.configPeakOutputReverse(-x, 10);
+		RobotMap.rightBottom.configPeakOutputReverse(-x, 10);
 	}
 
 }

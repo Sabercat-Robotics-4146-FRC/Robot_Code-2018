@@ -41,18 +41,7 @@ public class PigeonHeading {
 		RobotMap.rightBottom.setInverted(true);
 		
 		// Essentially clamps the turning speed
-		RobotMap.pigeonTalon.configPeakOutputForward(0.6, 10);
-		RobotMap.pigeonTalon.configPeakOutputReverse(-0.6, 10);
-		
-		RobotMap.leftTop.configPeakOutputForward(0.6, 10);
-		RobotMap.leftBottom.configPeakOutputForward(0.6, 10);
-		RobotMap.rightTop.configPeakOutputForward(0.6, 10);
-		RobotMap.rightBottom.configPeakOutputForward(0.6, 10);
-		
-		RobotMap.leftTop.configPeakOutputReverse(-0.6, 10);
-		RobotMap.leftBottom.configPeakOutputReverse(-0.6, 10);
-		RobotMap.rightTop.configPeakOutputReverse(-0.6, 10);
-		RobotMap.rightBottom.configPeakOutputReverse(-0.6, 10);
+		RobotMap.drive.setPeakOutput(0.6);
 			
 		//theoreticalAngle = angle; // copletely redundant.....
 		RobotMap.pigeonTalon.set(ControlMode.Position, angle);

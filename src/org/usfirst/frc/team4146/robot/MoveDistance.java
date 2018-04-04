@@ -18,6 +18,7 @@ public class MoveDistance {
 		Timer autoMoveDistanceTimer = new Timer();
 		double dt = 0.0;
 		tareMoveDistanceRelative();
+		RobotMap.drive.setPeakOutput(1.0);
 //		RobotMap.leftTop.configOpenloopRamp(1, 0);
 //		RobotMap.rightTop.configOpenloopRamp(1, 0);
 		
