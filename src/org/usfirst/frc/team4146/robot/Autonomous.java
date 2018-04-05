@@ -81,7 +81,7 @@ public class Autonomous {
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(90, RobotMap.HEADING_TIME_OUT);
 		// Check to see if having the Power Cube length messes up the robot
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH); 
+		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) /*- HALF_ROBOT_LENGTH*/); 
 		rollOut();
 	}
 
@@ -121,7 +121,7 @@ public class Autonomous {
 		move((B_RIGHT_WALL_TO_SWITCH - B_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(-90, RobotMap.HEADING_TIME_OUT);
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH);
+		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH)/* - HALF_ROBOT_LENGTH*/);
 		rollOut();
 	}
 
@@ -190,7 +190,7 @@ public class Autonomous {
 		move((R_LEFT_WALL_TO_SWITCH - R_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(90, RobotMap.HEADING_TIME_OUT);
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) - HALF_ROBOT_LENGTH); 
+		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) /*- HALF_ROBOT_LENGTH*/); 
 		//rollOut();
 	}
 
@@ -256,13 +256,12 @@ public class Autonomous {
 	}
 	
 	public void redRightRightScaleAutonomous() {
-		//move(R_AS_TO_HALF_FIELD - HALF_ROBOT_LENGTH);
+		move(R_AS_TO_HALF_FIELD - HALF_ROBOT_LENGTH);
 		changeLiftState(LifterPositionEnum.SCALE);
-		RobotMap.lifter.update(0);
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		//turn(-90, RobotMap.HEADING_TIME_OUT);
-		//move(R_RIGHT_WALL_TO_SCALE_PLATE - R_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH); // Do I need to subtract half robot width????
-		//rollOut();
+		turn(-90, RobotMap.HEADING_TIME_OUT);
+		move(R_RIGHT_WALL_TO_SCALE_PLATE - R_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH); // Do I need to subtract half robot width????
+		rollOut();
 	}
 	
 	public void redRightLeftScaleAutonomous() {
@@ -296,7 +295,8 @@ public class Autonomous {
 	public void changeLiftState(LifterPositionEnum state){
 		RobotMap.lifter.lifterMode = LifterModeEnum.AUTO_LIFT;
 		RobotMap.lifter.autoLifterPosition = state;
-		RobotMap.lifter.update(0.0); // 0.0 cuz we don't actually use dt
+		
+		RobotMap.lifterFrontRight.set(ControlMode.Position, RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition() + (130920-2496));
 	}
 	
 	public void changeIntakeTiltState(IntakeTiltEnum state){
@@ -327,5 +327,4 @@ public class Autonomous {
 	public static double inchesToFeet(double inches){
 		return inches/12;
 	}
-
 }

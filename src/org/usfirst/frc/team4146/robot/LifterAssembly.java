@@ -61,7 +61,7 @@ public class LifterAssembly {
 		
 		// Checks for what mode to have
 		if(RobotMap.lifterController.getLeftTriggerBool() || RobotMap.lifterController.getRightTriggerBool() 
-				|| RobotMap.driveController.getButtonStart() || RobotMap.driveController.getButtonBack() ){
+				/*|| RobotMap.driveController.getButtonStart() || RobotMap.driveController.getButtonBack()*/ ){ // commented this so that they don't do anything.
 			lifterMode = LifterModeEnum.MANUAL_LIFT;
 		} else if(RobotMap.driveController.getButtonY() || RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getRightTriggerBool()){
 			lifterMode = LifterModeEnum.AUTO_LIFT;

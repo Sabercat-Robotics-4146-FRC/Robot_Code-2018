@@ -232,6 +232,12 @@ public class RobotMap {
     	pigeonTalon.configRemoteFeedbackFilter(lifterBackLeft.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw, 0, 10);
     	//pigeonTalon.configAllowableClosedloopError(0, 0, 10);
     	
+    	// We better remember this TODO
+//    	pigeonTalon.config_kP(0, 0.65, 10);
+//    	pigeonTalon.config_kI(0, 0.004, 10);
+//    	pigeonTalon.config_kD(0, 0.0, 10);
+//    	pigeonTalon.config_IntegralZone(0, 300, 10);
+    	
     	// Servo Initilization
     	liftLocker = new Servo(0);
     	

@@ -71,7 +71,7 @@ public class IntakeAssembly {
 		if(RobotMap.driveController.getLeftBumper()){
 			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.8);
 		} else if(RobotMap.driveController.getButtonA()){
-			RobotMap.intakeRoller.set(ControlMode.PercentOutput, -1.0);
+			RobotMap.intakeRoller.set(ControlMode.PercentOutput, -0.65);
 		} else if(RobotMap.driveController.getButtonB()){
 			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.25);
 		} else {
