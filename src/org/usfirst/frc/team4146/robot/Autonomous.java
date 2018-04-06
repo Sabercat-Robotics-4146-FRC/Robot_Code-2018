@@ -16,48 +16,48 @@ public class Autonomous {
 	public static final double HALF_ROBOT_WIDTH = ROBOT_WIDTH/2;
 	
 	// Switch size
-	public static final double SWITCH_WIDTH = 155; // these need to be measured and changed
+	public static final double SWITCH_WIDTH = 154; // these need to be measured and changed
 	public static final double SWITCH_LENGTH = 56; // change
 	public static final double HALF_SWITCH_LENGTH = SWITCH_LENGTH/2;
-	public static final double SWITCH_PLATE_WIDTH = 41.75; // change
+	public static final double SWITCH_PLATE_WIDTH = 41.5; // change
 	public static final double HALF_SWITCH_PLATE_WIDTH = SWITCH_PLATE_WIDTH/2;
 	
 	// Power Cube
 	public static final double POWER_CUBE = 13.0;
 	
 	///Red Auto Constants///
-	public static final double R_LEFT_WALL_TO_SWITCH = 86;
-	public static final double R_RIGHT_WALL_TO_SWITCH = 84.5;
-	public static final double R_LEFT_PORTAL_WIDTH = 29.4;
-	public static final double R_RIGHT_PORTAL_WIDTH = 29;
-	public static final double R_AS_TO_SWITCH = 140.5;
-	public static final double R_EZ_WIDTH = 48.2;
-	public static final double R_PC_ZONE_LENGTH = 42.25;
-	public static final double R_RIGHT_WALL_TO_EZ = 174.5;
+	public static final double R_LEFT_WALL_TO_SWITCH = 83.5;
+	public static final double R_RIGHT_WALL_TO_SWITCH = 86.5;
+	public static final double R_LEFT_PORTAL_WIDTH = 27.5;
+	public static final double R_RIGHT_PORTAL_WIDTH = 30.5;
+	public static final double R_AS_TO_SWITCH = 139.5;
+	public static final double R_EZ_WIDTH = 49.0;
+	public static final double R_PC_ZONE_LENGTH = 42.0;
+	public static final double R_RIGHT_WALL_TO_EZ = 175.0;
 	public static final double R_AS_TO_PLATFORM = 258.5;
-	public static final double R_AS_TO_HALF_FIELD = 327.0;
-	public static final double R_LEFT_WALL_TO_SCALE_PLATE = 70;
-	public static final double R_RIGHT_WALL_TO_SCALE_PLATE = 70;
-	public static final double R_SWITCH_TO_SCALE_PLATE = 107.5;
+	public static final double R_AS_TO_HALF_FIELD = 323.0;
+	public static final double R_LEFT_WALL_TO_SCALE_PLATE = 72.5;
+	public static final double R_RIGHT_WALL_TO_SCALE_PLATE = 72;
+	public static final double R_SWITCH_TO_SCALE_PLATE = 105.25;
 	
-	public static final double R_AS_TO_AUTO_LINE = 122.25;
+	public static final double R_AS_TO_AUTO_LINE = 121.0;
 	
 	///Blue Auto Constants///
-	public static final double B_LEFT_WALL_TO_SWITCH = 85;
-	public static final double B_RIGHT_WALL_TO_SWITCH = 85;
-	public static final double B_LEFT_PORTAL_WIDTH = 27.4;
-	public static final double B_RIGHT_PORTAL_WIDTH = 30.75;
-	public static final double B_AS_TO_SWITCH = 140;
-	public static final double B_EZ_WIDTH = 48.4;
-	public static final double B_PC_ZONE_LENGTH = 42;
-	public static final double B_RIGHT_WALL_TO_EZ = 175;
+	public static final double B_LEFT_WALL_TO_SWITCH = 85.6;
+	public static final double B_RIGHT_WALL_TO_SWITCH = 84.75;
+	public static final double B_LEFT_PORTAL_WIDTH = 28.875;
+	public static final double B_RIGHT_PORTAL_WIDTH = 26.5;
+	public static final double B_AS_TO_SWITCH = 140.0;
+	public static final double B_EZ_WIDTH = 48.0;
+	public static final double B_PC_ZONE_LENGTH = 42.0;
+	public static final double B_RIGHT_WALL_TO_EZ = 172.5;
 	public static final double B_AS_TO_PLATFORM = 261;
-	public static final double B_AS_TO_HALF_FIELD = 327;
-	public static final double B_LEFT_WALL_TO_SCALE_PLATE = 70.0;
-	public static final double B_RIGHT_WALL_TO_SCALE_PLATE = 70.0;
-	public static final double B_SWITCH_TO_SCALE_PLATE = 107.5;
+	public static final double B_AS_TO_HALF_FIELD = 325.5;
+	public static final double B_LEFT_WALL_TO_SCALE_PLATE = 72.0;
+	public static final double B_RIGHT_WALL_TO_SCALE_PLATE = 72.5;
+	public static final double B_SWITCH_TO_SCALE_PLATE = 104.0;
 	
-	public static final double B_AS_TO_AUTO_LINE = 122;
+	public static final double B_AS_TO_AUTO_LINE = 121.0;
 	
 	// <color><Robot Position><Switch Position>Autonomous
 	

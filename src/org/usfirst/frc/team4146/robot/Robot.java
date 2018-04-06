@@ -4,7 +4,7 @@ import org.usfirst.frc.team4146.robot.LifterAssembly.LifterModeEnum;
 
 /*
  * ---Things to change for competition Robot---
- * - Change the potentiometer port to 3 
+ * - Change the potentiometer port to 3 -done
  * - Uncomment pid setting stuff for pids
  * 
  */

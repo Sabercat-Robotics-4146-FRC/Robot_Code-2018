@@ -36,7 +36,7 @@ public class DriveAssembly {
 		
 		move = !RobotMap.bottomLimitSwitch.get() ? move * 0.75 : move; // keep?
 		
-		RobotMap.differentialDrive.arcadeDrive(move, spin, true);
+		RobotMap.differentialDrive.arcadeDrive(move, spin);
 		
 		// Sending things to Dashboard
 		Dashboard.send("Move", move);
