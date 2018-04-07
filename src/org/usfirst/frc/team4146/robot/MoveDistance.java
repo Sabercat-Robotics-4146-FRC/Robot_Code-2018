@@ -33,7 +33,7 @@ public class MoveDistance {
 		}
 
 
-		while (moveDistanceController.getTimeInTolerance() < 1.0 && RobotMap.ROBOT.isAutonomous() && RobotMap.ROBOT.isEnabled()) {
+		while (moveDistanceController.getTimeInTolerance() < 0.3 && RobotMap.ROBOT.isAutonomous() && RobotMap.ROBOT.isEnabled()) {
 			dt = autoMoveDistanceTimer.getDT();
 			
 			

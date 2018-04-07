@@ -24,6 +24,7 @@ public class Autonomous {
 	
 	// Power Cube
 	public static final double POWER_CUBE = 13.0;
+	public static final double WIGGLE_ROOM = 8.0;
 	
 	///Red Auto Constants///
 	public static final double R_LEFT_WALL_TO_SWITCH = 83.5;
@@ -75,13 +76,13 @@ public class Autonomous {
 	public void blueLeftRightAutonomous() {
 		// 3 inches is "wiggle room"
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(90, RobotMap.HEADING_TIME_OUT);
 		move((B_LEFT_WALL_TO_SWITCH - B_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH)
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(90, RobotMap.HEADING_TIME_OUT);
 		// Check to see if having the Power Cube length messes up the robot
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) /*- HALF_ROBOT_LENGTH*/); 
+		move((POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) /*- HALF_ROBOT_LENGTH*/); 
 		rollOut();
 	}
 
@@ -116,12 +117,12 @@ public class Autonomous {
 	public void blueRightLeftAutonomous() {
 		// 3 is "wiggle room"
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move((B_RIGHT_WALL_TO_SWITCH - B_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(-90, RobotMap.HEADING_TIME_OUT);
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH)/* - HALF_ROBOT_LENGTH*/);
+		move((POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH)/* - HALF_ROBOT_LENGTH*/);
 		rollOut();
 	}
 
@@ -136,13 +137,13 @@ public class Autonomous {
 	}
 	
 	public void blueLeftRightScaleAutonomous() {
-		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(90, RobotMap.HEADING_TIME_OUT);
 		move(B_LEFT_WALL_TO_SWITCH - (B_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH) + SWITCH_WIDTH);
 		changeLiftState(LifterPositionEnum.SCALE);                                             // Where do we want to put these???
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		turn(-90, RobotMap.HEADING_TIME_OUT);
-		move(B_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(B_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		rollOut();
 	}
 	
@@ -156,13 +157,13 @@ public class Autonomous {
 	}
 	
 	public void blueRightLeftScaleAutonomous() {
-		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(B_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move(B_RIGHT_WALL_TO_SWITCH - (B_RIGHT_PORTAL_WIDTH + HALF_ROBOT_WIDTH) + SWITCH_WIDTH);
 		changeLiftState(LifterPositionEnum.SCALE);                                             // Where do we want to put these???
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		turn(90, RobotMap.HEADING_TIME_OUT);
-		move(B_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(B_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		rollOut();
 	}
 	
@@ -185,12 +186,12 @@ public class Autonomous {
 	public void redLeftRightAutonomous() {
 		// 3 is "wiggle room"
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(90, RobotMap.HEADING_TIME_OUT);
 		move((R_LEFT_WALL_TO_SWITCH - R_LEFT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(90, RobotMap.HEADING_TIME_OUT);
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) /*- HALF_ROBOT_LENGTH*/); 
+		move((POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) /*- HALF_ROBOT_LENGTH*/); 
 		//rollOut();
 	}
 
@@ -225,12 +226,12 @@ public class Autonomous {
 	public void redRightLeftAutonomous() {
 		// 3 is "wiggle room"
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move((R_RIGHT_WALL_TO_SWITCH - R_RIGHT_PORTAL_WIDTH - HALF_ROBOT_WIDTH) 
 				+ (SWITCH_WIDTH - HALF_SWITCH_PLATE_WIDTH));
 		turn(-90, RobotMap.HEADING_TIME_OUT);
-		move((POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) /*- HALF_ROBOT_LENGTH*/);
+		move((POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH) /*- HALF_ROBOT_LENGTH*/);
 		rollOut();
 	}
 	
@@ -245,13 +246,13 @@ public class Autonomous {
 	}
 	
 	public void redLeftRightScaleAutonomous() {
-		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(90, RobotMap.HEADING_TIME_OUT);
 		move(R_LEFT_WALL_TO_SWITCH - (R_LEFT_PORTAL_WIDTH + HALF_ROBOT_WIDTH) + SWITCH_WIDTH);
 		changeLiftState(LifterPositionEnum.SCALE);                                             // Where do we want to put these???
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		turn(-90, RobotMap.HEADING_TIME_OUT);
-		move(R_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(R_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		rollOut();
 	}
 	
@@ -265,13 +266,13 @@ public class Autonomous {
 	}
 	
 	public void redRightLeftScaleAutonomous() {
-		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(R_AS_TO_SWITCH + SWITCH_LENGTH + (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move(R_RIGHT_WALL_TO_SWITCH - (R_RIGHT_PORTAL_WIDTH + HALF_ROBOT_WIDTH) + SWITCH_WIDTH);
 		changeLiftState(LifterPositionEnum.SCALE);                                             // Where do we want to put these???
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		turn(90, RobotMap.HEADING_TIME_OUT);
-		move(R_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + 3 + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
+		move(R_SWITCH_TO_SCALE_PLATE - (POWER_CUBE + WIGGLE_ROOM + HALF_ROBOT_WIDTH - HALF_ROBOT_LENGTH));
 		rollOut();
 	}
 
