@@ -114,20 +114,30 @@ public class Robot extends SampleRobot {
 				switch(autoSelected) {
 					case "Left":
 						if (isScaleLeft) {
-							System.out.println("Running Red Left Left Scale Auto");
-							RobotMap.auto.redLeftLeftScaleAutonomous();
+							System.out.println("Running Red Left Left New Scale Auto");
+							RobotMap.auto.redLeftLeftNewScaleAutonomous();
 						} else {
-							System.out.println("Running Red Left Right Scale Auto");
-							RobotMap.auto.redLeftRightScaleAutonomous();
+							if(isSwitchLeft) {
+								System.out.println("Running Red Left Left Auto.");
+								RobotMap.auto.redLeftLeftAutonomous();
+							} else {
+								System.out.println("Running Red Left Right Auto.");
+								RobotMap.auto.redLeftRightAutonomous();
+							}
 						}
 						break;
 					case "Right":
-						if (isScaleLeft) {
-							System.out.println("Running Red Right Left Scale Auto");
-							RobotMap.auto.redRightLeftScaleAutonomous();
-						} else {
+						if (!isScaleLeft) {
 							System.out.println("Running Red Right Right Scale Auto");
-							RobotMap.auto.redRightRightScaleAutonomous();
+							RobotMap.auto.redRightRightNewScaleAutonomous();
+						} else {
+							if(isSwitchLeft) {
+								System.out.println("Running Red Right Left Auto.");
+								RobotMap.auto.redRightLeftAutonomous();
+							} else {
+								System.out.println("Running Red Right Right Auto.");
+								RobotMap.auto.redRightRightAutonomous();
+							}
 						}
 						break;
 				}
@@ -175,19 +185,29 @@ public class Robot extends SampleRobot {
 				case "Left":
 					if (isScaleLeft) {
 						System.out.println("Running Blue Left Left Scale Auto");
-						RobotMap.auto.blueLeftLeftScaleAutonomous();
+						RobotMap.auto.blueLeftLeftNewScaleAutonomous();
 					} else {
-						System.out.println("Running Blue Left Right Scale Auto");
-						RobotMap.auto.blueLeftRightScaleAutonomous();
+						if(isSwitchLeft) {
+							System.out.println("Running Blue Left Left Auto.");
+							RobotMap.auto.blueLeftLeftAutonomous();
+						} else {
+							System.out.println("Running Blue Left Right Auto.");
+							RobotMap.auto.blueLeftRightAutonomous();
+						}
 					}
 					break;
 				case "Right":
-					if (isScaleLeft) {
-						System.out.println("Running Blue Right Left Scale Auto");
-						RobotMap.auto.blueRightLeftScaleAutonomous();
-					} else {
+					if (!isScaleLeft) {
 						System.out.println("Running Blue Right Right Scale Auto");
-						RobotMap.auto.blueRightRightScaleAutonomous();
+						RobotMap.auto.blueRightRightNewScaleAutonomous();
+					} else {
+						if(isSwitchLeft) {
+							System.out.println("Running Blue Right Left Auto.");
+							RobotMap.auto.blueRightLeftAutonomous();
+						} else {
+							System.out.println("Running Blue Right Right Auto.");
+							RobotMap.auto.blueRightRightAutonomous();
+						}
 					}
 					break;
 				}
