@@ -71,7 +71,7 @@ public class RobotMap {
 	public static final double HEADING_LOCK_kD = 0.0;
 	
 	// Lifter Lock Constants
-	public static final double LIFTER_LOCKED_POSITION = 0.2;
+	public static final double LIFTER_LOCKED_POSITION = 0.25;
 	public static final double LIFTER_UNLOCKED_POSITION = 0.8;
 	
 	//////Variables//////

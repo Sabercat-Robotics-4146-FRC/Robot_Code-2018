@@ -38,7 +38,8 @@ public class LifterAssembly {
 	
 	public void update(double dt) {
 		// Reset encoder at bottom
-		if(RobotMap.bottomLimitSwitch.get() && !limitSwitchPressedFlag){
+		boolean stop = RobotMap.bottomLimitSwitch.get();
+		if(stop && !limitSwitchPressedFlag){
 			//System.out.println("Resetting lift encoder!");
 			lifterMode = LifterModeEnum.MANUAL_LIFT;
 			RobotMap.lifterFrontRight.set(ControlMode.PercentOutput, 0.0);
@@ -84,11 +85,13 @@ public class LifterAssembly {
 				if(RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition() >= tareEncoderTick + (130920-2496) && triggerInput > 0.0){
 					triggerInput = 0.0;
 				}
-			} else if(RobotMap.driveController.getButtonStart()){
-				//triggerInput = 0.2; // Don't want to introduce errors by changing too much so just commented these...
-			} else if(RobotMap.driveController.getButtonBack()){
-				//triggerInput = -0.1;
-			} else {
+			}
+//			else if(RobotMap.driveController.getButtonStart()){
+//				//triggerInput = 0.2; // Don't want to introduce errors by changing too much so just commented these...
+//			} else if(RobotMap.driveController.getButtonBack()){
+//				//triggerInput = -0.1;
+//			} 
+			else {
 				triggerInput = 0.0;
 			}
 			

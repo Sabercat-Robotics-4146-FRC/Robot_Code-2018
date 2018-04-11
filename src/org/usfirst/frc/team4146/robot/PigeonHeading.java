@@ -50,6 +50,8 @@ public class PigeonHeading {
 			timer.update(); // Could put this in update....
 			dt = timer.getDT(); // Could put this in update....
 			update(0); // dt not currently used in update method so 0.
+			
+			RobotMap.intake.update(dt);
 
 			// Checks if still in tolerance and adds dt to timeInTolerance, else sets it to 0.
 			if(Math.abs(RobotMap.pigeonTalon.getClosedLoopError(0)) <= RobotMap.HEADING_TOLERENCE){

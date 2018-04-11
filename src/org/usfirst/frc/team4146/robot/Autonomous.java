@@ -61,9 +61,11 @@ public class Autonomous {
 	public static final double B_AS_TO_AUTO_LINE = 121.0;
 	
 	public static final double MOVE_BACK_AFTER_MID_AUTO = -24.0;
-	public static final long TIME_FOR_LIFT_TO_RAISE = 1000;
+	public static final long TIME_FOR_LIFT_TO_RAISE = 2500;
 	public static final double HALF_NULL_TERRITORY = 3.0;
 	public static final double MOVE_TO_SCALE = 29.0;
+	
+	public static Timer autoTimer = new Timer();
 	
 	// <color><Robot Position><Switch Position>Autonomous
 	
@@ -101,7 +103,8 @@ public class Autonomous {
 		rollOut();
 		move(MOVE_BACK_AFTER_MID_AUTO); // this constant is negative
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_DOWN);
-		This isnt done yet! Fix it! need to update intake tilt and add this to every middle
+		tiltStateUpdater();
+		//TODO
 	}
 
 	public void blueMiddleRightAutonomous() {
@@ -112,6 +115,9 @@ public class Autonomous {
 		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move(B_PC_ZONE_LENGTH);
 		rollOut();
+		move(MOVE_BACK_AFTER_MID_AUTO); // this constant is negative
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_DOWN);
+		tiltStateUpdater();
 	}
 
 	public void blueRightRightAutonomous() {
@@ -140,8 +146,8 @@ public class Autonomous {
 		changeLiftState(LifterPositionEnum.SCALE);
 		waitTime(TIME_FOR_LIFT_TO_RAISE);
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		turn(-24, RobotMap.HEADING_TIME_OUT);
-		move(MOVE_TO_SCALE - HALF_ROBOT_LENGTH);
+		turn(-35, RobotMap.HEADING_TIME_OUT);
+		//move(MOVE_TO_SCALE - HALF_ROBOT_LENGTH);
 		rollOut();
 	}
 	
@@ -150,8 +156,8 @@ public class Autonomous {
 		changeLiftState(LifterPositionEnum.SCALE);
 		waitTime(TIME_FOR_LIFT_TO_RAISE);
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		turn(24, RobotMap.HEADING_TIME_OUT);
-		move(MOVE_TO_SCALE - HALF_ROBOT_LENGTH);
+		turn(35, RobotMap.HEADING_TIME_OUT);
+		//move(MOVE_TO_SCALE - HALF_ROBOT_LENGTH);
 		rollOut();
 	}
 	
@@ -231,6 +237,9 @@ public class Autonomous {
 		turn(90, RobotMap.HEADING_TIME_OUT);
 		move(R_PC_ZONE_LENGTH);
 		rollOut();
+		move(MOVE_BACK_AFTER_MID_AUTO); // this constant is negative
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_DOWN);
+		tiltStateUpdater();
 	}
 
 	public void redMiddleRightAutonomous() {
@@ -241,6 +250,9 @@ public class Autonomous {
 		turn(-90, RobotMap.HEADING_TIME_OUT);
 		move(R_PC_ZONE_LENGTH);
 		rollOut();
+		move(MOVE_BACK_AFTER_MID_AUTO); // this constant is negative
+		changeIntakeTiltState(IntakeTiltEnum.TILTED_DOWN);
+		tiltStateUpdater();
 	}
 
 	public void redRightRightAutonomous() {
@@ -269,18 +281,19 @@ public class Autonomous {
 		changeLiftState(LifterPositionEnum.SCALE);
 		waitTime(TIME_FOR_LIFT_TO_RAISE);
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		turn(-24, RobotMap.HEADING_TIME_OUT);
-		move(MOVE_TO_SCALE - HALF_ROBOT_LENGTH);
+		turn(-35, 1.75);
+		//move(MOVE_TO_SCALE - HALF_ROBOT_LENGTH);
 		rollOut();
 	}
 	
 	public void redLeftLeftNewScaleAutonomous() {
+		//move(215 - HALF_ROBOT_LENGTH); // subtracted 8
 		move(R_AS_TO_HALF_FIELD - HALF_NULL_TERRITORY - HALF_ROBOT_LENGTH);
 		changeLiftState(LifterPositionEnum.SCALE);
 		waitTime(TIME_FOR_LIFT_TO_RAISE);
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
-		turn(24, RobotMap.HEADING_TIME_OUT);
-		move(MOVE_TO_SCALE - HALF_ROBOT_LENGTH);
+		turn(35, 1.75);
+		//move(MOVE_TO_SCALE - HALF_ROBOT_LENGTH);
 		rollOut();
 	}
 	
@@ -354,11 +367,18 @@ public class Autonomous {
 	}
 	
 	public void tiltStateUpdater() {
-		Timer autoTimer = new Timer();
-		double dt = 0.0;
+		autoTimer.reset();
+		double dt;
+		double timeSinceStart = 0;
 		
-		while(Math.abs(RobotMap.intakeTilt.getMotorOutputVoltage()) != 0 && RobotMap.ROBOT.isAutonomous()) {
+		while((timeSinceStart < 5) && (RobotMap.ROBOT.isAutonomous())) {
+			waitTime(5);
+			autoTimer.update();
+			dt = autoTimer.getDT();
+			timeSinceStart += dt;
+			
 			RobotMap.intake.update(dt);
+			
 		}
 	}
 	
