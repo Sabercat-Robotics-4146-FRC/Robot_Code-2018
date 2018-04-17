@@ -266,7 +266,7 @@ public class RobotMap {
     	RobotMap.leftDriveEncoder.setDistancePerPulse((6.0 * Math.PI) / 256.0);
     	
     	// Potentiometer Initilization
-    	tiltPot = new AnalogPotentiometer(3); // Change to 3 for Robot 1.
+    	tiltPot = new AnalogPotentiometer(0); // Change to 3 for Robot 1.
     	
 		// Navx Gyro Initialization
     	gyro = new AHRS(SPI.Port.kMXP);

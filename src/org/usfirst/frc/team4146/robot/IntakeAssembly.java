@@ -54,7 +54,7 @@ public class IntakeAssembly {
 			case TILTED_DOWN:
 				// Pot value is inverted so make up value be bigger.
 				if(RobotMap.tiltPot.get() <= RobotMap.TILT_DOWN_LIMIT){
-					RobotMap.intakeTilt.set(ControlMode.PercentOutput, -1.0);
+					RobotMap.intakeTilt.set(ControlMode.PercentOutput, -0.8);
 				} else {
 					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.0);
 				}
@@ -71,7 +71,7 @@ public class IntakeAssembly {
 		if(RobotMap.driveController.getLeftBumper()){
 			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.8);
 		} else if(RobotMap.driveController.getButtonA()){
-			RobotMap.intakeRoller.set(ControlMode.PercentOutput, -0.65);
+			RobotMap.intakeRoller.set(ControlMode.PercentOutput, -0.8); // was -.65
 		} else if(RobotMap.driveController.getButtonB()){
 			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.25);
 		} else {
