@@ -40,7 +40,7 @@ public class LifterAssembly {
 		// Reset encoder at bottom
 		boolean stop = RobotMap.bottomLimitSwitch.get();
 		if(stop && !limitSwitchPressedFlag){
-			//System.out.println("Resetting lift encoder!");
+			System.out.println("Resetting lift encoder!");
 			lifterMode = LifterModeEnum.MANUAL_LIFT;
 			RobotMap.lifterFrontRight.set(ControlMode.PercentOutput, 0.0);
 			tareEncoderTick = RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition();
