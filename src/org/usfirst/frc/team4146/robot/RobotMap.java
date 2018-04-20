@@ -45,7 +45,8 @@ public class RobotMap {
 	// Intake Constants
 	public static final double TILT_UP_LIMIT = 0.14;
 	public static final double TILT_DOWN_LIMIT = 0.785; // was 0.79 on robot 1 //0.78
-	public static final double TILT_MID = 0.36; 
+	public static final double TILT_MID = 0.36;
+	public static final double TILT_LOW_MID = 0.55;
 	
 	// Move Constants
 	public static final double MOVE_kP = 0.02;

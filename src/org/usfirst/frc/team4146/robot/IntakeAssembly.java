@@ -10,7 +10,8 @@ public class IntakeAssembly {
 	enum IntakeTiltEnum{
 		TILTED_UP,
 		TILTED_DOWN,
-		TILTED_MID
+		TILTED_MID,
+		TILTED_LOW_MID
 	}
 	
 	private boolean tiltFlag = false;
@@ -42,6 +43,12 @@ public class IntakeAssembly {
 		if (RobotMap.driveController.getButtonX() && intakeTiltPosition != IntakeTiltEnum.TILTED_MID) {
 			intakeTiltPosition = IntakeTiltEnum.TILTED_MID;
 		}
+		
+		// enable tilt low mid PID state
+		if (RobotMap.driveController.getButtonY() && intakeTiltPosition != IntakeTiltEnum.TILTED_LOW_MID) {
+			intakeTiltPosition = IntakeTiltEnum.TILTED_LOW_MID;
+		}
+		
 		switch(intakeTiltPosition){
 			case TILTED_UP:
 				// Pot value is inverted so make up value be bigger.
@@ -60,6 +67,11 @@ public class IntakeAssembly {
 				}
 				break;
 			case TILTED_MID:
+				tiltPID.setSetpoint(RobotMap.TILT_MID);
+				RobotMap.intakeTilt.set(ControlMode.PercentOutput, -tiltPID.get());
+				break;
+			case TILTED_LOW_MID:
+				tiltPID.setSetpoint(RobotMap.TILT_LOW_MID);
 				RobotMap.intakeTilt.set(ControlMode.PercentOutput, -tiltPID.get());
 				break;
 			default:
@@ -73,7 +85,7 @@ public class IntakeAssembly {
 		} else if(RobotMap.driveController.getButtonA()){
 			RobotMap.intakeRoller.set(ControlMode.PercentOutput, -0.8); // was -.65
 		} else if(RobotMap.driveController.getButtonB()){
-			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.25);
+			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.45);
 		} else {
 			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.0);
 		}

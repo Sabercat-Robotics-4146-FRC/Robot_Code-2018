@@ -64,7 +64,7 @@ public class LifterAssembly {
 		if(RobotMap.lifterController.getLeftTriggerBool() || RobotMap.lifterController.getRightTriggerBool() 
 				/*|| RobotMap.driveController.getButtonStart() || RobotMap.driveController.getButtonBack()*/ ){ // commented this so that they don't do anything.
 			lifterMode = LifterModeEnum.MANUAL_LIFT;
-		} else if(RobotMap.driveController.getButtonY() || RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getRightTriggerBool()){
+		} else if(/*RobotMap.driveController.getButtonY() ||*/ RobotMap.driveController.getLeftTriggerBool() || RobotMap.driveController.getRightTriggerBool()){
 			lifterMode = LifterModeEnum.AUTO_LIFT;
 		}
 		
@@ -100,8 +100,8 @@ public class LifterAssembly {
 			// Checking buttons, setting enums and updating motors.
 			// The motor updating is in here so that it only updates of you press a button.
 			if(RobotMap.driveController.getButtonY()){
-				autoLifterPosition = LifterPositionEnum.SCALE;
-				updateAutoHeight();
+//				autoLifterPosition = LifterPositionEnum.SCALE;
+//				updateAutoHeight();
 			} else if(RobotMap.driveController.getLeftTriggerBool()){
 				RobotMap.intake.intakeTiltPosition = IntakeTiltEnum.TILTED_MID;
 				autoLifterPosition = LifterPositionEnum.SCALE;

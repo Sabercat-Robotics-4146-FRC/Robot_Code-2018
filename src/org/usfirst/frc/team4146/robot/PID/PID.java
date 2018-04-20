@@ -36,11 +36,11 @@ public abstract class PID {
 
 	public PID( double sampleRate, double errorTolerance ){
 		setpoint = 0;
-    integral = 0;
-    nIterationsInTolerance = 0;
-    this.sampleRate = sampleRate;
-    this.errorTolerance = errorTolerance;
-	}
+	    integral = 0;
+	    nIterationsInTolerance = 0;
+	    this.sampleRate = sampleRate;
+	    this.errorTolerance = errorTolerance;
+}
   public abstract double getValue();
 
   public void flush(){ // flushes any earlier values for controller

@@ -4,7 +4,7 @@ import org.usfirst.frc.team4146.robot.RobotMap;
 
 public class TiltPID extends PID {
 	
-	static double ENCODER_UPDATE_RATE = 200; //Htz
+	 static double ENCODER_UPDATE_RATE = 200; //Htz
 	 static double TILT_BREAK_TOLERANCE = 0.0001; //degrees
 	 static double kP = 5;
 	 static double kI = 0.0;
@@ -18,6 +18,6 @@ public class TiltPID extends PID {
 	 
 	 public double getValue() {
 		    return RobotMap.tiltPot.get();
-	}
+	 }
 	 
 }

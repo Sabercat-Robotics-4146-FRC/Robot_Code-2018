@@ -166,8 +166,11 @@ public class Robot extends SampleRobot {
 						break;
 					case "Right":
 						if(isSwitchLeft) {
+							//System.out.println("Running modified auto");
+							//RobotMap.auto.blueCrossBaseline();
 							System.out.println("Running Blue Right Left Auto.");
 							RobotMap.auto.blueRightLeftAutonomous();
+							//TODO
 						} else {
 							System.out.println("Running Blue Right Right Auto.");
 							RobotMap.auto.blueRightRightAutonomous();
