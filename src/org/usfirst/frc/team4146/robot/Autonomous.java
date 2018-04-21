@@ -101,9 +101,30 @@ public class Autonomous {
 		turn(90, RobotMap.HEADING_TIME_OUT);
 		move(B_PC_ZONE_LENGTH);
 		rollOut();
-		move(MOVE_BACK_AFTER_MID_AUTO); // this constant is negative
+		move(MOVE_BACK_AFTER_MID_AUTO); // this constant is negative // this is for the regular auto
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_DOWN);
-		tiltStateUpdater();
+		tiltStateUpdater(); // New auto starts here // this is for regular auto
+		
+// This is the new middle switch auto
+//		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+//		move(B_AS_TO_SWITCH - B_PC_ZONE_LENGTH - ROBOT_LENGTH);
+//		turn(-90, RobotMap.HEADING_TIME_OUT);
+//		move(B_EZ_WIDTH + HALF_ROBOT_WIDTH);
+//		turn(90, RobotMap.HEADING_TIME_OUT);
+//		move(B_PC_ZONE_LENGTH);
+//		rollOut();
+//		move(-55);
+//		//move(MOVE_BACK_AFTER_MID_AUTO); // this constant is negative // this is for the regular auto
+//		changeIntakeTiltState(IntakeTiltEnum.TILTED_DOWN);
+//		//tiltStateUpdater(); // New auto starts here // this is for regular auto
+//		turn(35, RobotMap.HEADING_TIME_OUT);
+//		setRoller(-0.8);
+//		move(12);
+//		setRoller(0.0);
+//		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
+//		turn(-50, RobotMap.HEADING_TIME_OUT);
+//		move(60);
+//		rollOut();
 		//TODO
 	}
 
@@ -398,6 +419,12 @@ public class Autonomous {
 				System.out.println("Exception in RollOut....");
 			}
 			RobotMap.intakeRoller.set(ControlMode.PercentOutput, 0.0);
+		}
+	}
+	
+	public void setRoller(double speed) {
+		if (RobotMap.ROBOT.isAutonomous()) {
+			RobotMap.intakeRoller.set(ControlMode.PercentOutput, speed);
 		}
 	}
 	
