@@ -36,9 +36,35 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void operatorControl() {
+		Controller driver = new Controller(0);
+		
+		CANTalon frontRight = new CANTalon(0);
+		CANTalon rearRight = new CANTalon(1);
+		CANTalon frontLeft = new CANTalon(2);
+		CANTalon rearLeft = new CANTalon(3);
+		
+		frontRight.setSafetyEnabled(false);
+		rearRight.setSafetyEnabled(false);
+		frontLeft.setSafetyEnabled(false);
+		rearLeft.setSafetyEnabled(false);
+		
+		RobotDrive drive = new RobotDrive(frontRight, rearRight, frontLeft, rearLeft);
 		
 		while (isOperatorControl() && isEnabled()) {
 			
+			if  (driver.getButtonA()){
+				frontRight.set(0.5);
+				rearRight.set(0.5);
+				frontLeft.set(0.5);
+				rearLeft.set(0.5);
+				
+			}else{
+				frontRight.set(0.0);
+				rearRight.set(0.0);
+				frontLeft.set(0.0);
+				rearLeft.set(0.0);
+				
+			}
 		}
 	}
 
