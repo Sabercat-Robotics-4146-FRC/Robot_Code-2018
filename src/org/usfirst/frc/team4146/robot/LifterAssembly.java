@@ -20,6 +20,10 @@ public class LifterAssembly {
 		UNLOCKED
 	}
 	
+//	enum BarReleaseEnum{
+//		
+//	}
+//	
 	LifterPositionEnum autoLifterPosition = LifterPositionEnum.DOWN;
 	LifterModeEnum lifterMode = LifterModeEnum.AUTO_LIFT;
 	LifterLockEnum lockMode = LifterLockEnum.UNLOCKED;
@@ -31,6 +35,8 @@ public class LifterAssembly {
 	private boolean lockFlag = false;
 	
 	private double tareEncoderTick;
+	
+	int i = 0;
 	
 	public LifterAssembly(){
 		
@@ -134,6 +140,11 @@ public class LifterAssembly {
 			RobotMap.liftLocker.set(RobotMap.LIFTER_UNLOCKED_POSITION);
 		}
 		
+		if (i == 20) { // 
+			System.out.println(RobotMap.barRelease.get());
+			i = 0;
+		}
+		i ++;
 		// Dashboard Sendings
 		Dashboard.send("Raw Lifter Position", RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition());
 		Dashboard.send("Tared Lifter Position", tareEncoderTick);

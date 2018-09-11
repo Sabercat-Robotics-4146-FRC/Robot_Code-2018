@@ -99,6 +99,7 @@ public class RobotMap {
 	public static TalonSRX pigeonTalon;
 	
 	public static Servo liftLocker;
+	public static Servo barRelease;
 	
 	// Limit Switch Declarations
 //	public static DigitalInput topLimitSwitch; // Not a thing
@@ -241,6 +242,7 @@ public class RobotMap {
     	
     	// Servo Initilization
     	liftLocker = new Servo(0);
+    	barRelease = new Servo(1);
     	
     	
 //    	rearLeft.follow(frontLeft);
