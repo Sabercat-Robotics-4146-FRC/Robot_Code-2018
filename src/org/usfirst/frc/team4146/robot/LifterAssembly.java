@@ -20,13 +20,15 @@ public class LifterAssembly {
 		UNLOCKED
 	}
 	
-//	enum BarReleaseEnum{
-//		
-//	}
-//	
+	enum BarReleaseEnum{
+		HELD,
+		RELEASED
+	}
+	
 	LifterPositionEnum autoLifterPosition = LifterPositionEnum.DOWN;
 	LifterModeEnum lifterMode = LifterModeEnum.AUTO_LIFT;
 	LifterLockEnum lockMode = LifterLockEnum.UNLOCKED;
+	BarReleaseEnum barMode = BarReleaseEnum.HELD;
 	
 	private double triggerInput = 0.0; // Used for manual mode input.
 	
@@ -34,9 +36,9 @@ public class LifterAssembly {
 	
 	private boolean lockFlag = false;
 	
-	private double tareEncoderTick;
+	private boolean barFlag = false;
 	
-	int i = 0;
+	private double tareEncoderTick;
 	
 	public LifterAssembly(){
 		
@@ -140,11 +142,27 @@ public class LifterAssembly {
 			RobotMap.liftLocker.set(RobotMap.LIFTER_UNLOCKED_POSITION);
 		}
 		
-		if (i == 20) { // 
-			System.out.println(RobotMap.barRelease.get());
-			i = 0;
+		// Bar servo stuff
+		
+		if (RobotMap.lifterController.getButtonA() && !barFlag) {
+			barFlag = true;
+			if (barMode == BarReleaseEnum.HELD) {
+				barMode = BarReleaseEnum.RELEASED;
+			} else {
+				barMode = BarReleaseEnum.HELD;
+			}
+			System.out.println(barMode == BarReleaseEnum.HELD ? "held": "released");
 		}
-		i ++;
+		if (!RobotMap.lifterController.getButtonA()) {
+			barFlag = false;
+		}
+		
+		if (barMode.equals(BarReleaseEnum.HELD)) {
+			RobotMap.barRelease.set(RobotMap.BAR_HELD_POSITION);
+		} else if (barMode.equals(BarReleaseEnum.RELEASED)) {
+			RobotMap.barRelease.set(RobotMap.BAR_RELEASE_POSITION);
+		}
+		
 		// Dashboard Sendings
 		Dashboard.send("Raw Lifter Position", RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition());
 		Dashboard.send("Tared Lifter Position", tareEncoderTick);

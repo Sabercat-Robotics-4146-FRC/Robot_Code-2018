@@ -75,6 +75,10 @@ public class RobotMap {
 	public static final double LIFTER_LOCKED_POSITION = 0.25;
 	public static final double LIFTER_UNLOCKED_POSITION = 0.8;
 	
+	// Bar Release Constants
+	public static final double BAR_HELD_POSITION = 0.05;
+	public static final double BAR_RELEASE_POSITION = 0.7;
+	
 	//////Variables//////
 	
 	
