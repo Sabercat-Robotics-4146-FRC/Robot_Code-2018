@@ -45,6 +45,7 @@ public class LifterAssembly {
 	}
 	
 	public void update(double dt) {
+		//System.out.println("Limit Switch: " + RobotMap.bottomLimitSwitch.get());
 		// Reset encoder at bottom
 		boolean stop = RobotMap.bottomLimitSwitch.get();
 		if(stop && !limitSwitchPressedFlag){
@@ -90,7 +91,8 @@ public class LifterAssembly {
 				}
 				
 				// If the lifter goes to top soft stop and is trying to go up set lifter to 0.0.
-				if(RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition() >= tareEncoderTick + (130920-2496) && triggerInput > 0.0){
+				//CHanged the value to be negative
+				if(RobotMap.lifterFrontRight.getSensorCollection().getPulseWidthPosition() <= -(tareEncoderTick + (130920-2496)) && triggerInput > 0.0){
 					triggerInput = 0.0;
 				}
 			}
@@ -172,6 +174,7 @@ public class LifterAssembly {
 		Dashboard.send("Lifter Error", RobotMap.lifterFrontRight.getClosedLoopError(0));
 		Dashboard.send("Locking Servo Position", RobotMap.liftLocker.get());
 		Dashboard.send("Servo State", lockMode.toString());
+		Dashboard.send("Soft Stop?", -(tareEncoderTick + (130920-2496)));
 		// This gives you how many (arbitrary units) "ticks" the motor has gone
 //		System.out.println(RobotMap.frontLeft.getSensorCollection().getPulseWidthPosition());
 		
@@ -215,11 +218,11 @@ public class LifterAssembly {
 	}
 	
 	/** 
-	 * Returns the sum of the two triggers where the left is - and the left + so that the left
-	 * returns negative and the right returns positive, added together.
+	 * Returns the sum of the two triggers where the left is + and the right is - so that the left
+	 * returns positive and the right returns negative, added together.
 	 */ 
 	private double getTriggerSum(){
-		return ((-RobotMap.lifterController.getLeftTrigger()) + RobotMap.lifterController.getRightTrigger());
+		return ((RobotMap.lifterController.getLeftTrigger()) + -RobotMap.lifterController.getRightTrigger());
 	}
 
 }

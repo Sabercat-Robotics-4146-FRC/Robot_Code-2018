@@ -46,7 +46,7 @@ public class RobotMap {
 	public static final double TILT_UP_LIMIT = 0.14;
 	public static final double TILT_DOWN_LIMIT = 0.785; // was 0.79 on robot 1 //0.78
 	public static final double TILT_MID = 0.36;
-	public static final double TILT_LOW_MID = 0.55;
+	public static final double TILT_LOW_MID = 0.6;
 	
 	// Move Constants
 	public static final double MOVE_kP = 0.02;
@@ -229,9 +229,9 @@ public class RobotMap {
     	lifterFrontRight.configAllowableClosedloopError(0, 0, 10);
     	
     	lifterFrontRight.config_kF(0, 0.0, 10);
-    	lifterFrontRight.config_kP(0, LIFTER_kP, 10);
-    	lifterFrontRight.config_kI(0, LIFTER_kI, 10);
-    	lifterFrontRight.config_kD(0, LIFTER_kD, 10);
+    	//lifterFrontRight.config_kP(0, LIFTER_kP, 10);
+    	//lifterFrontRight.config_kI(0, LIFTER_kI, 10);
+    	//lifterFrontRight.config_kD(0, LIFTER_kD, 10);
     	
     	pigeonTalon = new TalonSRX(11);
     	
