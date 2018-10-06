@@ -53,26 +53,28 @@ public class IntakeAssembly {
 			case TILTED_UP:
 				// Pot value is inverted so make up value be bigger.
 				if(RobotMap.tiltPot.get() >= RobotMap.TILT_UP_LIMIT){
-					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 1.0);
+//					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 1.0);
+					System.out.println("Moving intake up");
 				} else {
 					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.0);
+					System.out.println("Intake is up stop moving");
 				}
 				break;
 			case TILTED_DOWN:
 				// Pot value is inverted so make up value be bigger.
 				if(RobotMap.tiltPot.get() <= RobotMap.TILT_DOWN_LIMIT){
-					RobotMap.intakeTilt.set(ControlMode.PercentOutput, -0.8);
+//				RobotMap.intakeTilt.set(ControlMode.PercentOutput, -0.8);
 				} else {
 					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.0);
 				}
 				break;
 			case TILTED_MID:
-				tiltPID.setSetpoint(RobotMap.TILT_MID);
-				RobotMap.intakeTilt.set(ControlMode.PercentOutput, -tiltPID.get());
+//				tiltPID.setSetpoint(RobotMap.TILT_MID);
+//				RobotMap.intakeTilt.set(ControlMode.PercentOutput, -tiltPID.get());
 				break;
 			case TILTED_LOW_MID:
-				tiltPID.setSetpoint(RobotMap.TILT_LOW_MID);
-				RobotMap.intakeTilt.set(ControlMode.PercentOutput, -tiltPID.get());
+//				tiltPID.setSetpoint(RobotMap.TILT_LOW_MID);
+//				RobotMap.intakeTilt.set(ControlMode.PercentOutput, -tiltPID.get());
 				break;
 			default:
 				System.out.println("Holy shit we're defalting in intakeTilt!");

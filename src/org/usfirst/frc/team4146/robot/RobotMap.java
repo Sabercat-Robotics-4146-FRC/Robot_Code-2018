@@ -44,7 +44,7 @@ public class RobotMap {
 	
 	// Intake Constants
 	public static final double TILT_UP_LIMIT = 0.14;
-	public static final double TILT_DOWN_LIMIT = 0.785; // was 0.79 on robot 1 //0.78
+	public static final double TILT_DOWN_LIMIT = 0.773; // was 0.785 10/6/18 // was 0.79 on robot 1 //0.78
 	public static final double TILT_MID = 0.36;
 	public static final double TILT_LOW_MID = 0.6;
 	
@@ -273,7 +273,7 @@ public class RobotMap {
     	RobotMap.leftDriveEncoder.setDistancePerPulse((6.0 * Math.PI) / 256.0);
     	
     	// Potentiometer Initilization
-    	tiltPot = new AnalogPotentiometer(3); // Change to 3 for Robot 1.
+    	tiltPot = new AnalogPotentiometer(2); // Change to 3 for Robot 1.
     	
 		// Navx Gyro Initialization
     	gyro = new AHRS(SPI.Port.kMXP);
