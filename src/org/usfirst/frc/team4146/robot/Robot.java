@@ -13,6 +13,7 @@ import org.usfirst.frc.team4146.robot.LifterAssembly.LifterModeEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SampleRobot;
 
@@ -269,7 +270,20 @@ public class Robot extends SampleRobot {
 	public void test() {
 		System.out.println("Teeeeest Mode");
 		
-		RobotMap.pidgey.enterCalibrationMode(CalibrationMode.Temperature, 0);//enterCalibrationMode(CalibrationMode.Temperature);
+//		final AnalogPotentiometer pot;
+//		pot = new AnalogPotentiometer(1);
+//		int i = 0;
+//		while (true) {
+//			if (i >=1000) {
+//				System.out.println("pot value" + pot.get());
+//				i = 0;
+//			}
+//			i++;
+//		}
+		
+		
+		
+		//RobotMap.pidgey.enterCalibrationMode(CalibrationMode.Temperature, 0);//enterCalibrationMode(CalibrationMode.Temperature);
 		
 		/*Timer timer = new Timer();
 		double dt = 0.0;

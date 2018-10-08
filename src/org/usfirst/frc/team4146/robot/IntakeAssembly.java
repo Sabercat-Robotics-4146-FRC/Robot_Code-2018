@@ -1,4 +1,6 @@
 package org.usfirst.frc.team4146.robot;
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import org.usfirst.frc.team4146.robot.PID.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -54,10 +56,10 @@ public class IntakeAssembly {
 				// Pot value is inverted so make up value be bigger.
 				if(RobotMap.tiltPot.get() >= RobotMap.TILT_UP_LIMIT){
 //					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 1.0);
-					System.out.println("Moving intake up");
+					//System.out.println("Moving intake up");
 				} else {
 					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.0);
-					System.out.println("Intake is up stop moving");
+					//System.out.println("Intake is up stop moving");
 				}
 				break;
 			case TILTED_DOWN:
@@ -95,6 +97,7 @@ public class IntakeAssembly {
 		// Dashboard Sendings
 		Dashboard.send("Pot Value", RobotMap.tiltPot.get());
 		Dashboard.send("Tilt PID Out", -tiltPID.get());
+		//System.out.println("Pot Value" + RobotMap.tiltPot.get());
 		
 	}
 }
