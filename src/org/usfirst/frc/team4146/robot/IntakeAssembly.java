@@ -55,7 +55,7 @@ public class IntakeAssembly {
 			case TILTED_UP:
 				// Pot value is inverted so make up value be bigger.
 				if(RobotMap.tiltPot.get() >= RobotMap.TILT_UP_LIMIT){
-					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 1.0);
+					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.8);
 					//System.out.println("Moving intake up");
 				} else {
 					RobotMap.intakeTilt.set(ControlMode.PercentOutput, 0.0);

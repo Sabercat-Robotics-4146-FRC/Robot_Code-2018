@@ -17,7 +17,7 @@ public class PigeonHeading {
 		// Dashboard Sends
 		Dashboard.send("Pidgey Yaw", pidgeyData[0]);
 		Dashboard.send("PID Out?", RobotMap.pigeonTalon.getMotorOutputPercent());
-		Dashboard.send("Pig error", RobotMap.pigeonTalon.getClosedLoopError(0));
+		Dashboard.send("Pigey error", RobotMap.pigeonTalon.getClosedLoopError(0));
 		Dashboard.send("Pig Sensor Pos", RobotMap.pigeonTalon.getSelectedSensorPosition(0));
 		Dashboard.send("Pidgey Angle", theoreticalAngle);
 	}
@@ -28,7 +28,7 @@ public class PigeonHeading {
 		double dt = 0;
 		timer.reset();
 		
-		angle = (/*(5762/3)*//*2048*/2070/90) * angle; // 2070 is the arbitrary units to move 90 degrees
+		angle = (/*(5762/3)*//*2070*/2048/90) * angle; // 2070 is the arbitrary units to move 90 degrees
 		
 		System.out.println("Setting motots to follow pigeon talon and inverting them...");
 		
@@ -52,6 +52,8 @@ public class PigeonHeading {
 			update(0); // dt not currently used in update method so 0.
 			
 			RobotMap.intake.update(dt);
+			
+			Dashboard.send("Pigey error", RobotMap.pigeonTalon.getClosedLoopError(0));
 
 			// Checks if still in tolerance and adds dt to timeInTolerance, else sets it to 0.
 			if(Math.abs(RobotMap.pigeonTalon.getClosedLoopError(0)) <= RobotMap.HEADING_TOLERENCE){

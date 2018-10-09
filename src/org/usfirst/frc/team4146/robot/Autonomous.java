@@ -164,7 +164,7 @@ public class Autonomous {
 	// Scale Autos
 	public void blueRightRightNewScaleAutonomous() {
 		move(B_AS_TO_HALF_FIELD - HALF_NULL_TERRITORY - HALF_ROBOT_LENGTH);
-		//changeLiftState(LifterPositionEnum.SCALE);
+		changeLiftState(LifterPositionEnum.SCALE);
 		waitTime(TIME_FOR_LIFT_TO_RAISE);
 		changeIntakeTiltState(IntakeTiltEnum.TILTED_MID);
 		turn(-35, RobotMap.HEADING_TIME_OUT);

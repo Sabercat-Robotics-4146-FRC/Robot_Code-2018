@@ -118,12 +118,12 @@ public class LifterAssembly {
 				if(RobotMap.driveController.getLeftTriggerBool()){
 					RobotMap.intake.intakeTiltPosition = IntakeTiltEnum.TILTED_MID;
 					autoLifterPosition = LifterPositionEnum.SCALE;
-					System.out.println("Switching to scale");
+					//System.out.println("Switching to scale");
 					updateAutoHeight();
 				} else if(RobotMap.driveController.getRightTriggerBool()){
 					RobotMap.intake.intakeTiltPosition = IntakeTiltEnum.TILTED_UP;
 					autoLifterPosition = LifterPositionEnum.DOWN;
-					System.out.println("Switching to down");
+					//System.out.println("Switching to down");
 					updateAutoHeight();
 				}
 			}
