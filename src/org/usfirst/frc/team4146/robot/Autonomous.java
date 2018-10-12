@@ -359,16 +359,16 @@ public class Autonomous {
 
 	public void redCrossBaseline() {
 		//move(10.188);
-		//move(3 * 12);
-		//move(R_AS_TO_AUTO_LINE);
-		turn(90, RobotMap.HEADING_TIME_OUT);
+		//move(3 * 12 - 8);
+		move(R_AS_TO_AUTO_LINE);
+		//turn(90, RobotMap.HEADING_TIME_OUT);
 		//waitTime(5);
 		//turn(90, RobotMap.HEADING_TIME_OUT);
 	}
 	
 	////Methods for Autonomous////
 	public void move(double distance) {
-		RobotMap.moveDistance.moveToAbsolute(distance); // Distance is in inches.
+		RobotMap.moveDistance.moveToAbsolute(distance - 8); // Distance is in inches.
 	}
 	
 	public void turn(double angle, double timeOut) {

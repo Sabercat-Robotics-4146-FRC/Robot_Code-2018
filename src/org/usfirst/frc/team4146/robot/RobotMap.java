@@ -55,8 +55,8 @@ public class RobotMap {
 	public static final double MOVE_kI = 10;
 	public static final double MOVE_kD = 0.0;//0.0002;
 	
-	public static final double SMALL_MOVE_kP = 0.035;
-	public static final double SMALL_MOVE_kI = 8.5;
+	public static final double SMALL_MOVE_kP = 0.03;
+	public static final double SMALL_MOVE_kI = 10;
 	public static final double SMALL_MOVE_kD = 0.0;
 	
 	// Heading Constants
@@ -64,7 +64,7 @@ public class RobotMap {
 	public static final double HEADING_kI = 0.0;
 	public static final double HEADING_kD = 0.0;
 	
-	public static final double HEADING_TIME_OUT = 5; // was 3.5 10/9/18
+	public static final double HEADING_TIME_OUT = 3.5; // was 3.5 10/9/18
 	public static final double HEADING_TIME_IN_TOLERENCE = 0.8;
 	public static final double HEADING_TOLERENCE = (8192/360) * 2;
 	

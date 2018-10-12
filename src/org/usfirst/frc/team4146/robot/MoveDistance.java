@@ -77,7 +77,8 @@ public class MoveDistance {
     	//+++RobotMap.leftDriveEncoder.setDistancePerPulse(Math.PI/64.0);
 		
 //		theoreticalPosition = (RobotMap.leftDriveEncoder.getRaw() + RobotMap.leftDriveEncoder.getRaw()) / 2;
-		theoreticalPosition = RobotMap.leftDriveEncoder.getRaw();
+//		theoreticalPosition = RobotMap.leftDriveEncoder.getRaw();
+		theoreticalPosition = RobotMap.rightDriveEncoder.getRaw();
 		moveDistanceController.reset();
 	}
 	
