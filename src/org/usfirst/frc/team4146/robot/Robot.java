@@ -119,13 +119,15 @@ public class Robot extends SampleRobot {
 							System.out.println("Running Red Left Left New Scale Auto");
 							RobotMap.auto.redLeftLeftNewScaleAutonomous();
 						} else {
-							if(isSwitchLeft) {
-								System.out.println("Running Red Left Left Auto.");
-								RobotMap.auto.redLeftLeftAutonomous();
-							} else {
-								System.out.println("Running Red Left Right Auto.");
-								RobotMap.auto.redLeftRightAutonomous();
-							}
+							System.out.println("Running Red Cross Baseline Auto.");
+							RobotMap.auto.redCrossBaseline();
+//							if(isSwitchLeft) {
+//								System.out.println("Running Red Left Left Auto.");
+//								RobotMap.auto.redLeftLeftAutonomous();
+//							} else {
+//								System.out.println("Running Red Left Right Auto.");
+//								RobotMap.auto.redLeftRightAutonomous();
+//							}
 						}
 						break;
 					case "Right":
@@ -133,13 +135,15 @@ public class Robot extends SampleRobot {
 							System.out.println("Running Red Right Right Scale Auto");
 							RobotMap.auto.redRightRightNewScaleAutonomous();
 						} else {
-							if(isSwitchLeft) {
-								System.out.println("Running Red Right Left Auto.");
-								RobotMap.auto.redRightLeftAutonomous();
-							} else {
-								System.out.println("Running Red Right Right Auto.");
-								RobotMap.auto.redRightRightAutonomous();
-							}
+							System.out.println("Running Red Cross Baseline Auto.");
+							RobotMap.auto.redCrossBaseline();
+//							if(isSwitchLeft) {
+//								System.out.println("Running Red Right Left Auto.");
+//								RobotMap.auto.redRightLeftAutonomous();
+//							} else {
+//								System.out.println("Running Red Right Right Auto.");
+//								RobotMap.auto.redRightRightAutonomous();
+//							}
 						}
 						break;
 				}
@@ -192,13 +196,15 @@ public class Robot extends SampleRobot {
 						System.out.println("Running Blue Left Left Scale Auto");
 						RobotMap.auto.blueLeftLeftNewScaleAutonomous();
 					} else {
-						if(isSwitchLeft) {
-							System.out.println("Running Blue Left Left Auto.");
-							RobotMap.auto.blueLeftLeftAutonomous();
-						} else {
-							System.out.println("Running Blue Left Right Auto.");
-							RobotMap.auto.blueLeftRightAutonomous();
-						}
+						System.out.println("Running Blue Cross Baseline Auto.");
+						RobotMap.auto.blueCrossBaseline();
+//						if(isSwitchLeft) {
+//							System.out.println("Running Blue Left Left Auto.");
+//							RobotMap.auto.blueLeftLeftAutonomous();
+//						} else {
+//							System.out.println("Running Blue Left Right Auto.");
+//							RobotMap.auto.blueLeftRightAutonomous();
+//						}
 					}
 					break;
 				case "Right":
@@ -206,13 +212,15 @@ public class Robot extends SampleRobot {
 						System.out.println("Running Blue Right Right Scale Auto");
 						RobotMap.auto.blueRightRightNewScaleAutonomous();
 					} else {
-						if(isSwitchLeft) {
-							System.out.println("Running Blue Right Left Auto.");
-							RobotMap.auto.blueRightLeftAutonomous();
-						} else {
-							System.out.println("Running Blue Right Right Auto.");
-							RobotMap.auto.blueRightRightAutonomous();
-						}
+						System.out.println("Running Blue Cross Baseline Auto.");
+						RobotMap.auto.blueCrossBaseline();
+//						if(isSwitchLeft) {
+//							System.out.println("Running Blue Right Left Auto.");
+//							RobotMap.auto.blueRightLeftAutonomous();
+//						} else {
+//							System.out.println("Running Blue Right Right Auto.");
+//							RobotMap.auto.blueRightRightAutonomous();
+//						}
 					}
 					break;
 				}
@@ -238,9 +246,10 @@ public class Robot extends SampleRobot {
 		
 		while (isOperatorControl() && isEnabled()) {
 			dt = timer.getDT();
-			RobotMap.drive.update(dt);
-			RobotMap.intake.update(dt);
-			RobotMap.lifter.update(dt);
+			//RobotMap.drive.update(dt);
+			//RobotMap.intake.update(dt);
+			//RobotMap.lifter.update(dt);
+			RobotMap.motionProfiling.update();
 
 			// This is for testing the pigeon. Take out before competition 
 //			if(RobotMap.driveController.getButtonBack() && !flag) {

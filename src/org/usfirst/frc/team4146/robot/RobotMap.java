@@ -103,6 +103,7 @@ public class RobotMap {
 	public static TalonSRX lifterBackRight;
 	
 	public static TalonSRX pigeonTalon;
+	public static TalonSRX motionProfileTalon;
 	
 	public static Servo liftLocker;
 	public static Servo barRelease;
@@ -159,6 +160,9 @@ public class RobotMap {
 	
 	// Move Distance Declaration
 	public static MoveDistance moveDistance;
+	
+	// Motion Profiling Declaration
+	public static MotionProfiling motionProfiling;
 	
 	public static void init() { // This is to be called in robitInit and instantiates stuff.
 		// Camera Setup
@@ -245,6 +249,10 @@ public class RobotMap {
 //    	pigeonTalon.config_kI(0, 0.004, 10);
 //    	pigeonTalon.config_kD(0, 0.0, 10);
 //    	pigeonTalon.config_IntegralZone(0, 300, 10);
+    	
+    	motionProfileTalon = new TalonSRX(12);
+    	
+    	motionProfileTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     	
     	// Servo Initilization
     	liftLocker = new Servo(0);
@@ -344,6 +352,9 @@ public class RobotMap {
     	
     	// Move Distance Initialization
     	moveDistance = new MoveDistance();
+    	
+    	// Motion Profiling Initialization
+    	motionProfiling = new MotionProfiling();
 	}
 	
 }
