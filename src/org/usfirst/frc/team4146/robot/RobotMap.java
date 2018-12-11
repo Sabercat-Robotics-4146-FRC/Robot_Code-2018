@@ -252,6 +252,8 @@ public class RobotMap {
     	
     	motionProfileTalon = new TalonSRX(12);
     	
+    	motionProfileTalon.setInverted(true);
+    	
     	motionProfileTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     	
     	// Servo Initilization
