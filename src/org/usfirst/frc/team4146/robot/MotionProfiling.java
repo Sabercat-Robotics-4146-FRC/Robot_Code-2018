@@ -3,6 +3,7 @@ package org.usfirst.frc.team4146.robot;
 import com.ctre.phoenix.motion.MotionProfileStatus;
 //import com.ctre.CANTalon;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
+import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -116,6 +117,64 @@ public class MotionProfiling {
 		/* printfs and/or logging */
 		System.out.println("Motion Profile Status: " + status);
 	}
+	
+	// Start filling the MPs to all of the involved Talons. 
+	private void startFilling() {
+		// since this example only has one talon, just update that one 
+		startFilling(GeneratedMotionProfile.Points, GeneratedMotionProfile.kNumPoints);
+	}
+
+	private void startFilling(double[][] profile, int totalCnt) {
+
+		// create an empty point
+		TrajectoryPoint point = new TrajectoryPoint();
+
+		// check to see if we got an underrun condition since last time we checked 
+		if (status.hasUnderrun) {
+			// better log it so we know about it 
+			System.out.println("Motion profile is underrun");
+			// clear the error. This flag does not auto clear, this way 
+			// we never miss logging it.
+			RobotMap.motionProfileTalon.clearMotionProfileHasUnderrun();
+		}
+		// just in case we are interrupting another MP and there is still buffer
+		// points in memory, clear it.
+		RobotMap.motionProfileTalon.clearMotionProfileTrajectories();
+
+		// This is fast since it's just into our TOP buffer 
+		for (int i = 0; i < totalCnt; ++i) {
+			/* for each point, fill our structure and pass it to API */
+			point.position = profile[i][0];
+			point.velocity = profile[i][1];
+			point.timeDurMs = (int) profile[i][2];
+			point.profileSlotSelect = 0; /* which set of gains would you like to use? */
+			point.velocityOnly = false; /* set true to not do any position
+										 * servo, just velocity feedforward
+										 */
+			point.zeroPos = false;
+			if (i == 0)
+				point.zeroPos = true; // set this to true on the first point 
+
+			point.isLastPoint = false;
+			if ((i + 1) == totalCnt)
+				point.isLastPoint = true; // set this to true on the last point  
+
+			RobotMap.motionProfileTalon.pushMotionProfileTrajectory(point);
+		}
+	}
+
+	// Called by application to signal Talon to start the buffered MP (when it's
+	// able to).
+	void startMotionProfile() {
+		buttonFlag = true;
+	}
+
+	// @return the output value to pass to Talon's set() routine. 0 for disable
+	//         motion-profile output, 1 for enable motion-profile, 2 for hold
+	//         current motion profile trajectory point.
+	SetValueMotionProfile getSetValue() {
+		return setValue;
+}
 
 
 //	public void update() {
