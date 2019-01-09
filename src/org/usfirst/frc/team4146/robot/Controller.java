@@ -22,7 +22,7 @@ public class Controller {
 	double offDuration = 0;
 	double elapsedTime = 0;
 	boolean isRumblingFlag = false;
-	//boolean firstBuzzFlag = true;
+	boolean firstBuzzFlag = false;
 	
 	//// Constant Variables ////
 	// Define buttons
@@ -344,38 +344,39 @@ public class Controller {
 	}
 	
 	public void updateRumbleBuzz(double dt) { // dt is in seconds
-//		if(count > 0 && firstBuzzFlag) { // UNNEEDED???
-//			firstBuzzFlag = false;
-//			count--;
-//			setRumble(1.0);
-//			return;
-//		}
-		
 		if(count > 0) {
+			if(!firstBuzzFlag) {
+				System.out.println("First Rumble.");
+				firstBuzzFlag = true;
+				isRumblingFlag = true;
+				count--;
+				setRumble(1.0);
+				return;
+			}
+		
 			elapsedTime += dt;
-			
-			if(isRumblingFlag && elapsedTime >= onDuration) { // Turning buzz off
-				elapsedTime = 0;
-				setRumble(0.0);
-			} else if(!isRumblingFlag && elapsedTime >= offDuration) { // Turning buzz on
+			if(!isRumblingFlag && elapsedTime >= offDuration) { // Turning buzz on
+				System.out.println("Turn on.");
+				isRumblingFlag = true;
 				elapsedTime = 0;
 				count--;
 				setRumble(1.0);
+			} else if(isRumblingFlag && elapsedTime >= onDuration) { // Turning buzz off
+				System.out.println("Turn off.");
+				elapsedTime = 0;
+				isRumblingFlag = false;
+				count--;
+				setRumble(0.0);
 			}
 		}
-		
-//		if( isRumblingFlag ) {
-//			setRumble(1.0);
-//		} else {
-//			setRumble(0.0);
-//		}
 	}
 	
 	public void setRumbleBuzz(int count, double onDuration, double offDuration) {
-		this.count = count;
+		this.count = count * 2;
 		this.onDuration = onDuration;
 		this.offDuration = offDuration;
 		this.elapsedTime = 0;
+		this.firstBuzzFlag = false;
 	}
 	
 	/**
