@@ -4,18 +4,27 @@ import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.;
 
 /**
- * The Controller class is a wrapper for the WPI Joystick class for the use of Xbox 360 Controllers (was Logitech Controllers)
+ * The Controller class is a wrapper for the WPI Joystick class for the use of Xbox 360 Controllers
  * 
  * @author GowanR
  * @author JacobE
  * @author EliA
- * @version 2.2.1
+ * @version 2.3.1
  * // (MAJOR.MINOR.PATCH)
  * 
  */
 public class Controller {
 	Joystick joy;
 	
+	// Rumble Variables
+	int count = 0;
+	double onDuration = 0;
+	double offDuration = 0;
+	double elapsedTime = 0;
+	boolean isRumblingFlag = false;
+	//boolean firstBuzzFlag = true;
+	
+	//// Constant Variables ////
 	// Define buttons
 	public static final int aButton = 1;
     public static final int bButton = 2;
@@ -36,7 +45,6 @@ public class Controller {
     public static final int rightXAxis = 4;
     public static final int rightYAxis = 5;
     
-    // Constant Variables
     /**
      * used by getDeadband functions. Values within the distance of this value from zero will be set to 0
      * 
@@ -293,7 +301,7 @@ public class Controller {
 	 * If value is between -{@link #ctrlDeadband} and {@link #ctrlDeadband} then value is set to 0.0
 	 * 
 	 * @param joystickInput the value given to the function to be deadbanded
-	 * @return the input deadbanded. (
+	 * @return the input deadbanded.
 	 */
 	private double joystickDeadband(double joystickInput) {
 		if(Math.abs(joystickInput) < CONTROLLER_DEADBAND) { 
@@ -304,27 +312,70 @@ public class Controller {
 		}
 	}
 	
-//	public double getBezierCurveLeftYAxis() {
-//		return bezierFunction(getDeadbandLeftYAxis(), RobotMap.MOVE_P0, RobotMap.MOVE_P1, RobotMap.MOVE_P2, RobotMap.MOVE_P3);
-//	}
-//	
-//	private double bezierFunction(double x, double p0, double p1, double p2, double p3) {
-//		return Math.pow((1-x), 3) * p0 + 3 * Math.pow((1-x), 2) * x * p1
-//				+ 3 * (1-x) * Math.pow(x, 2) * p2 + Math.pow(x, 3) * p3;
-//	}
-	
 	/**
 	 * Rumble Code!!!
 	 */
 	
-	public void rumble(RumbleType side, double r){
-		joy.setRumble(side, r);
-		joy.setRumble(side, r);
+	/**
+	 * Sets the rumble for a specific side of the controller
+	 * 
+	 * @param side to set the rumble for (L or R)
+	 * @param intensity of the rumble (0-1)
+	 */
+	// Done like this so that something doesn't need to import RumbleType before using it.
+	public void setRumble(char side, double intensity){
+		if(Character.toUpperCase(side) == 'L') {
+			joy.setRumble(RumbleType.kLeftRumble, intensity);
+		} else if(Character.toUpperCase(side) == 'R') {
+			joy.setRumble(RumbleType.kRightRumble, intensity);
+		} else {
+			System.out.println("ERROR!!: Incorrect side char given to setRumble in controller...");
+		}
 	}
 	
-	public void rumble(double r){
-		joy.setRumble(RumbleType.kLeftRumble, r);
-		joy.setRumble(RumbleType.kRightRumble, r);
+	/**
+	 * Sets the rumble for both sides of the controller at once
+	 * 
+	 * @param intensity of the rumble (0-1)
+	 */
+	public void setRumble(double intensity){
+		joy.setRumble(RumbleType.kLeftRumble, intensity);
+		joy.setRumble(RumbleType.kRightRumble, intensity);
+	}
+	
+	public void updateRumbleBuzz(double dt) { // dt is in seconds
+//		if(count > 0 && firstBuzzFlag) { // UNNEEDED???
+//			firstBuzzFlag = false;
+//			count--;
+//			setRumble(1.0);
+//			return;
+//		}
+		
+		if(count > 0) {
+			elapsedTime += dt;
+			
+			if(isRumblingFlag && elapsedTime >= onDuration) { // Turning buzz off
+				elapsedTime = 0;
+				setRumble(0.0);
+			} else if(!isRumblingFlag && elapsedTime >= offDuration) { // Turning buzz on
+				elapsedTime = 0;
+				count--;
+				setRumble(1.0);
+			}
+		}
+		
+//		if( isRumblingFlag ) {
+//			setRumble(1.0);
+//		} else {
+//			setRumble(0.0);
+//		}
+	}
+	
+	public void setRumbleBuzz(int count, double onDuration, double offDuration) {
+		this.count = count;
+		this.onDuration = onDuration;
+		this.offDuration = offDuration;
+		this.elapsedTime = 0;
 	}
 	
 	/**

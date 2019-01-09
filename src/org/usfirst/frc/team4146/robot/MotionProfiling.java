@@ -63,7 +63,7 @@ public class MotionProfiling {
 		}
 
 		// first check if we are in MP mode 
-		if (RobotMap.motionProfileTalon.getControlMode() != TalonControlMode.MotionProfile) {
+		if (RobotMap.motionProfileTalon.getControlMode() != ControlMode.MotionProfile) {
 			//we are not in MP mode
 			state = 0;
 			loopTimeout = -1;
@@ -104,7 +104,7 @@ public class MotionProfiling {
 					 // If we are executing an MP and the MP finished, start loading
 					 // another. We will go into hold state so robot servo's
 					 // position.
-					if (status.activePointValid && status.activePoint.isLastPoint) {
+					if (status.activePointValid && status.isLast) {
 						 // because we set the last point's isLast to true, we will
 						 // get here when the MP is done
 						setValue = SetValueMotionProfile.Hold;
@@ -121,7 +121,7 @@ public class MotionProfiling {
 	// Start filling the MPs to all of the involved Talons. 
 	private void startFilling() {
 		// since this example only has one talon, just update that one 
-		startFilling(GeneratedMotionProfile.Points, GeneratedMotionProfile.kNumPoints);
+		startFilling(GeneratedPath.Points, GeneratedPath.kNumPoints);        /** fix this later this isn't how we should be accessing this*/
 	}
 
 	private void startFilling(double[][] profile, int totalCnt) {
@@ -146,10 +146,11 @@ public class MotionProfiling {
 			/* for each point, fill our structure and pass it to API */
 			point.position = profile[i][0];
 			point.velocity = profile[i][1];
-			point.timeDurMs = (int) profile[i][2];
-			point.profileSlotSelect = 0; /* which set of gains would you like to use? */
-			point.velocityOnly = false; /* set true to not do any position
-										 * servo, just velocity feedforward
+			//point.timeDur = (int) profile[i][2];
+			point.timeDur = TrajectoryPoint.TrajectoryDuration.valueOf((int) profile[i][2]);
+			point.profileSlotSelect0 = 0; /* which set of gains would you like to use? */
+			//point.velocityOnly = false;/* set true to not do any position
+										 /* servo, just velocity feedforward
 										 */
 			point.zeroPos = false;
 			if (i == 0)

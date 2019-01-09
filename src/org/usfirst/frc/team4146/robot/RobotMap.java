@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -120,7 +120,7 @@ public class RobotMap {
 	public static AnalogPotentiometer tiltPot;
 	
 	// Navax Gyro Declaration
-	public static AHRS gyro;
+	//public static AHRS gyro;
 	
 	public static PigeonIMU pidgey;
 	
@@ -153,7 +153,7 @@ public class RobotMap {
 	public static Autonomous auto;
 	
 	// Heading Declaration
-	public static Heading heading;
+	//public static Heading heading;
 	
 	// Pigeon Heading Declaration
 	public static PigeonHeading pigeonHeading;
@@ -288,7 +288,7 @@ public class RobotMap {
     	tiltPot = new AnalogPotentiometer(1); // Change to 3 for Robot 1.
     	
 		// Navx Gyro Initialization
-    	gyro = new AHRS(SPI.Port.kMXP);
+    	//gyro = new AHRS(SPI.Port.kMXP);
     	
     	pidgey = new PigeonIMU(lifterBackLeft);
     	
@@ -347,7 +347,7 @@ public class RobotMap {
     	auto = new Autonomous();
     	
     	// Heading Initialization
-    	heading = new Heading();
+    	//heading = new Heading();
     	
     	// Pigeon Heading Initialization
     	pigeonHeading = new PigeonHeading();

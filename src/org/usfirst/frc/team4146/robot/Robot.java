@@ -2,6 +2,8 @@ package org.usfirst.frc.team4146.robot;
 
 import org.usfirst.frc.team4146.robot.LifterAssembly.LifterModeEnum;
 
+import com.ctre.phoenix.motion.SetValueMotionProfile;
+
 /*
  * ---Things to change for competition Robot---
  * - Change the potentiometer port to 3  - done
@@ -30,7 +32,7 @@ public class Robot extends SampleRobot {
 	@Override
 	public void robotInit() {
 		RobotMap.init(); // Instantiates and Declares things to be used from RobotMap.
-		RobotMap.gyro.reset();
+		//RobotMap.gyro.reset();
 	}
 
 	/**
@@ -249,7 +251,7 @@ public class Robot extends SampleRobot {
 			//RobotMap.drive.update(dt);
 			//RobotMap.intake.update(dt);
 			//RobotMap.lifter.update(dt);
-			RobotMap.motionProfiling.update();
+		
 
 			// This is for testing the pigeon. Take out before competition 
 //			if(RobotMap.driveController.getButtonBack() && !flag) {
@@ -279,18 +281,53 @@ public class Robot extends SampleRobot {
 	public void test() {
 		System.out.println("Teeeeest Mode");
 		
-//		final AnalogPotentiometer pot;
-//		pot = new AnalogPotentiometer(1);
-//		int i = 0;
-//		while (true) {
-//			if (i >=1000) {
-//				System.out.println("pot value" + pot.get());
-//				i = 0;
-//			}
-//			i++;
-//		}
+		// this is for testing motion profiling
 		
+		// this is to store the last iterations of 
+		boolean [] buttonLast = {false,false,false,false,false,false,false,false,false,false};
 		
+		// get buttons 
+		boolean [] button = new boolean [buttonLast.length];
+		for( int i=1; i < buttonLast.length;++i ) {
+			button[i] = RobotMap.driveController.getButtonA();
+		}
+		
+		// runs periodically only applies if user wants to run MP
+		RobotMap.motionProfiling.control();
+		
+		if (button[5] == false) { /* Check button 5 (top left shoulder on the logitech gamead). */
+			/*
+			 * If it's not being pressed, just do a simple drive.  This
+			 * could be a RobotDrive class or custom drivetrain logic.
+			 * The point is we want the switch in and out of MP Control mode.*/
+		
+			/* button5 is off so straight drive */
+			RobotMap.motionProfileTalon.set(ControlMode.PercentOutput, RobotMap.driveController.getDeadbandLeftYAxis());
+
+			RobotMap.motionProfiling.reset();
+		} else {
+			/* Button5 is held down so switch to motion profile control mode => This is done in MotionProfileControl.
+			 * When we transition from no-press to press,
+			 * pass a "true" once to MotionProfileControl.
+			 */
+			
+			SetValueMotionProfile setOutput =RobotMap.motionProfiling.getSetValue();
+					
+			RobotMap.motionProfileTalon.set(ControlMode.MotionProfile, setOutput.value);
+
+			/* if btn is pressed and was not pressed last time,
+			 * In other words we just detected the on-press event.
+			 * This will signal the robot to start a MP */
+			if( (button[6] == true) && (buttonLast[6] == false) ) {
+				/* user just tapped button 6 */
+				RobotMap.motionProfiling.startMotionProfile();
+			}
+		}
+		
+		/* save buttons states for on-press detection */
+		for( int i=1; i<10; ++i ) {
+			buttonLast[i] = button[i];
+		}
 		
 		//RobotMap.pidgey.enterCalibrationMode(CalibrationMode.Temperature, 0);//enterCalibrationMode(CalibrationMode.Temperature);
 		
