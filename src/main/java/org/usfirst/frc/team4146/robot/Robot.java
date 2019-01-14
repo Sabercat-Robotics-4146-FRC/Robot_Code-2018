@@ -14,6 +14,12 @@ import com.ctre.phoenix.motion.SetValueMotionProfile;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
+import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.can.*;
+import com.ctre.phoenix.motion.*;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.TimedRobot;
+
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -25,6 +31,61 @@ public class Robot extends SampleRobot {
 		RobotMap.ROBOT = this;
 	}
 	
+	 /** very simple state machine to prevent calling set() while firing MP. */
+	 int _state = 0;
+
+	 /** a master talon, add followers if need be. */
+	 TalonSRX _master = new TalonSRX(12);
+ 
+	 /** gamepad for control */
+	 //Joystick _joy = new Joystick(0);
+ 
+	 /** new class type in 2019 for holding MP buffer. */
+	 BufferedTrajectoryPointStream _bufferedStream = new BufferedTrajectoryPointStream();
+ 
+	 /* talon configs */
+	 TalonSRXConfiguration _config = new TalonSRXConfiguration(); // factory default settings
+	 
+	 /* quick and dirty plotter to smartdash */
+	  PlotThread _plotThread = new PlotThread(_master);
+	  
+	  private void initBuffer(double[][] profile, int totalCnt) {
+
+		boolean forward = true; // set to false to drive in opposite direction of profile (not really needed
+								// since you can use negative numbers in profile).
+
+		TrajectoryPoint point = new TrajectoryPoint(); // temp for for loop, since unused params are initialized
+													   // automatically, you can alloc just one
+
+		/* clear the buffer, in case it was used elsewhere */
+		_bufferedStream.Clear();
+
+		/* Insert every point into buffer, no limit on size */
+		for (int i = 0; i < totalCnt; ++i) {
+
+			double direction = forward ? +1 : -1;
+			double positionRot = profile[i][0];
+			double velocityRPM = profile[i][1];
+			int durationMilliseconds = (int) profile[i][2];
+
+			/* for each point, fill our structure and pass it to API */
+			point.timeDur = durationMilliseconds;
+			point.position = direction * positionRot * Constants.kSensorUnitsPerRotation; // Convert Revolutions to
+																						  // Units
+			point.velocity = direction * velocityRPM * Constants.kSensorUnitsPerRotation / 600.0; // Convert RPM to
+																								  // Units/100ms
+			point.auxiliaryPos = 0;
+			point.auxiliaryVel = 0;
+			point.profileSlotSelect0 = Constants.kPrimaryPIDSlot; /* which set of gains would you like to use [0,3]? */
+			point.profileSlotSelect1 = 0; /* auxiliary PID [0,1], leave zero */
+			point.zeroPos = (i == 0); /* set this to true on the first point */
+			point.isLastPoint = ((i + 1) == totalCnt); /* set this to true on the last point */
+			point.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
+
+			_bufferedStream.Write(point);
+		}
+	}
+
 	/**
 	 * Runs once when the robot is powered on and called when you are basically guaranteed that
 	 * all WPILIBJ stuff will work.
@@ -33,6 +94,26 @@ public class Robot extends SampleRobot {
 	public void robotInit() {
 		RobotMap.init(); // Instantiates and Declares things to be used from RobotMap.
 		//RobotMap.gyro.reset();
+		/* fill our buffer object with the excel points */
+        initBuffer(MotionProfile.Points, MotionProfile.kNumPoints);
+
+        /* _config the master specific settings */
+        _config.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
+        _config.neutralDeadband = Constants.kNeutralDeadband; /* 0.1 % super small for best low-speed control */
+        _config.slot0.kF = Constants.kGains_MotProf.kF;
+        _config.slot0.kP = Constants.kGains_MotProf.kP;
+        _config.slot0.kI = Constants.kGains_MotProf.kI;
+        _config.slot0.kD = Constants.kGains_MotProf.kD;
+        _config.slot0.integralZone = (int) Constants.kGains_MotProf.kIzone;
+        _config.slot0.closedLoopPeakOutput = Constants.kGains_MotProf.kPeakOutput;
+        // _config.slot0.allowableClosedloopError // left default for this example
+        // _config.slot0.maxIntegralAccumulator; // left default for this example
+        // _config.slot0.closedLoopPeriod; // left default for this example
+        _master.configAllSettings(_config);
+
+        /* pick the sensor phase and desired direction */
+        _master.setSensorPhase(true);
+		_master.setInverted(false);
 	}
 
 	/**
@@ -41,193 +122,7 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void autonomous() {
-		
-		//RobotMap.heading.tareHeadingRelative();
-		
-		//RobotMap.auto.move(12*12);
-		
-		String switchScaleSelected = (String)RobotMap.scaleSwitchChooser.getSelected();
-		System.out.println("Switch Or Switch Data: " + switchScaleSelected);
-		
-		String colorSelected = (String)RobotMap.colorChooser.getSelected();
-		System.out.println("Color Data: " + colorSelected);
-		
-		String autoSelected = (String)RobotMap.chooser.getSelected();
-		System.out.println("Base Chooser Data: " + autoSelected);
-		
-		RobotMap.gameData = DriverStation.getInstance().getGameSpecificMessage();
-		System.out.println("Game Data: " + RobotMap.gameData);
-		
-		boolean isSwitchLeft = RobotMap.gameData.charAt(0) == 'L';
-		boolean isScaleLeft = RobotMap.gameData.charAt(1) == 'L';
-		
-		// This is for checking to see if FMS is sending a "corrupted" String.
-		/*
-		for(int i = 0; i < 3; i++){
-			if(!RobotMap.gameData.substring(i, i + 1).equals("L") || !RobotMap.gameData.substring(i, i + 1).equals("R")){00
-				autoSelected = "Cross Baseline";
-				break;
-			}
-		}
-		*/
-		
-		// Reseting gyro
-		RobotMap.pidgey.setYaw(0, 10); // Do we want this here for competition?
-		
-		// <color><Robot Position><Switch Position>Autonomous
-		
-		if(colorSelected.equals("Red")){
-			if (switchScaleSelected.equals("Switch")) {
-				switch(autoSelected){
-					case "Left":
-						if(isSwitchLeft) {
-							System.out.println("Running Red Left Left Auto.");
-							RobotMap.auto.redLeftLeftAutonomous();
-						} else {
-							System.out.println("Running Red Left Right Auto.");
-							RobotMap.auto.redLeftRightAutonomous();
-						}
-						break;
-					case "Middle":
-						if(isSwitchLeft) {
-							System.out.println("Running Red Middle Left Auto.");
-							RobotMap.auto.redMiddleLeftAutonomous();
-						} else {
-							System.out.println("Running Red Middle Right Auto.");
-							RobotMap.auto.redMiddleRightAutonomous();
-						}
-						break;
-					case "Right":
-						if(isSwitchLeft) {
-							System.out.println("Running Red Right Left Auto.");
-							RobotMap.auto.redRightLeftAutonomous();
-						} else {
-							System.out.println("Running Red Right Right Auto.");
-							RobotMap.auto.redRightRightAutonomous();
-						}
-						break;
-					case "Cross Baseline":
-						System.out.println("Running Red Cross Baseline Auto.");
-						RobotMap.auto.redCrossBaseline();
-						break;
-					case "Do Nothing":
-						System.out.println("Doing nothing.... :'(");
-						break;
-				}
-			} else if (switchScaleSelected.equals("Scale")) {
-				switch(autoSelected) {
-					case "Left":
-						if (isScaleLeft) {
-							System.out.println("Running Red Left Left New Scale Auto");
-							RobotMap.auto.redLeftLeftNewScaleAutonomous();
-						} else {
-							System.out.println("Running Red Cross Baseline Auto.");
-							RobotMap.auto.redCrossBaseline();
-//							if(isSwitchLeft) {
-//								System.out.println("Running Red Left Left Auto.");
-//								RobotMap.auto.redLeftLeftAutonomous();
-//							} else {
-//								System.out.println("Running Red Left Right Auto.");
-//								RobotMap.auto.redLeftRightAutonomous();
-//							}
-						}
-						break;
-					case "Right":
-						if (!isScaleLeft) {
-							System.out.println("Running Red Right Right Scale Auto");
-							RobotMap.auto.redRightRightNewScaleAutonomous();
-						} else {
-							System.out.println("Running Red Cross Baseline Auto.");
-							RobotMap.auto.redCrossBaseline();
-//							if(isSwitchLeft) {
-//								System.out.println("Running Red Right Left Auto.");
-//								RobotMap.auto.redRightLeftAutonomous();
-//							} else {
-//								System.out.println("Running Red Right Right Auto.");
-//								RobotMap.auto.redRightRightAutonomous();
-//							}
-						}
-						break;
-				}
-			}
-		} else if(colorSelected.equals("Blue")){
-			if (switchScaleSelected.equals("Switch")) {
-				switch(autoSelected){
-					case "Left":
-						if(isSwitchLeft) {
-							System.out.println("Running Blue Left Left Auto.");
-							RobotMap.auto.blueLeftLeftAutonomous();
-						} else {
-							System.out.println("Running Blue Left Right Auto.");
-							RobotMap.auto.blueLeftRightAutonomous();
-						}
-						break;
-					case "Middle":
-						if(isSwitchLeft) {
-							System.out.println("Running Blue Middle Left Auto.");
-							RobotMap.auto.blueMiddleLeftAutonomous();
-						} else {
-							System.out.println("Running Blue Middle Right Auto.");
-							RobotMap.auto.blueMiddleRightAutonomous();
-						}
-						break;
-					case "Right":
-						if(isSwitchLeft) {
-							//System.out.println("Running modified auto");
-							//RobotMap.auto.blueCrossBaseline();
-							System.out.println("Running Blue Right Left Auto.");
-							RobotMap.auto.blueRightLeftAutonomous();
-							//TODO
-						} else {
-							System.out.println("Running Blue Right Right Auto.");
-							RobotMap.auto.blueRightRightAutonomous();
-						}
-						break;
-					case "Cross Baseline":
-						System.out.println("Running Blue Cross Baseline Auto.");
-						RobotMap.auto.blueCrossBaseline();
-						break;
-					case "Do Nothing":
-						System.out.println("Doing nothing.... :'(");
-						break;
-				}
-			} else if (switchScaleSelected.equals("Scale")) {
-				switch(autoSelected) {
-				case "Left":
-					if (isScaleLeft) {
-						System.out.println("Running Blue Left Left Scale Auto");
-						RobotMap.auto.blueLeftLeftNewScaleAutonomous();
-					} else {
-						System.out.println("Running Blue Cross Baseline Auto.");
-						RobotMap.auto.blueCrossBaseline();
-//						if(isSwitchLeft) {
-//							System.out.println("Running Blue Left Left Auto.");
-//							RobotMap.auto.blueLeftLeftAutonomous();
-//						} else {
-//							System.out.println("Running Blue Left Right Auto.");
-//							RobotMap.auto.blueLeftRightAutonomous();
-//						}
-					}
-					break;
-				case "Right":
-					if (!isScaleLeft) {
-						System.out.println("Running Blue Right Right Scale Auto");
-						RobotMap.auto.blueRightRightNewScaleAutonomous();
-					} else {
-						System.out.println("Running Blue Cross Baseline Auto.");
-						RobotMap.auto.blueCrossBaseline();
-//						if(isSwitchLeft) {
-//							System.out.println("Running Blue Right Left Auto.");
-//							RobotMap.auto.blueRightLeftAutonomous();
-//						} else {
-//							System.out.println("Running Blue Right Right Auto.");
-//							RobotMap.auto.blueRightRightAutonomous();
-//						}
-					}
-					break;
-				}
-			}
-		}
+
 	}
 
 	/**
@@ -240,38 +135,60 @@ public class Robot extends SampleRobot {
 		
 		RobotMap.drive.setPeakOutput(1.0);
 		
-		// This is for testing the pigeon. Take out before competition 
-//		RobotMap.pidgey.setYaw(0, 10);
-//		RobotMap.pigeonTalon.set(ControlMode.Position, 0);
-		
-//		boolean flag = false;
-		
 		while (isOperatorControl() && isEnabled()) {
 			dt = timer.getDT();
-			RobotMap.drive.update(dt);
-			RobotMap.intake.update(dt);
-			RobotMap.lifter.update(dt);
-		
+			//RobotMap.drive.update(dt);
+			//RobotMap.intake.update(dt);
+			//RobotMap.lifter.update(dt);
 
-			// This is for testing the pigeon. Take out before competition 
-//			if(RobotMap.driveController.getButtonBack() && !flag) {
-//				flag = true;
-//				//RobotMap.pidgey.setYaw(RobotMap.PIGEON_TICK_CONVERSION/*5762*/, 10); // 5762 in set yaw gets 90 degrees
-//				
-//				ph.reletiveTurn(90, 100000000);
-//			}
-//			if(!RobotMap.driveController.getButtonBack()) {
-//				flag = false;
-//			}
-//			
-//			try {
-//				Thread.sleep(5);
-//			} catch (InterruptedException e) {
-//				
-//			}
+			/* get joystick button and stick */
+			boolean bPrintValues = RobotMap.driveController.getButtonB();
+			boolean bFireMp = RobotMap.driveController.getButtonA();
+			double axis = RobotMap.driveController.getDeadbandLeftYAxis();
+	
+			/* if button is up, just drive the motor in PercentOutput */
+			if (bFireMp == false) {
+				_state = 0;
+			}
+	
+			switch (_state) {
+				/* drive master talon normally */
+				case 0:
+					_master.set(ControlMode.PercentOutput, axis);
+					if (bFireMp == true) {
+						/* go to MP logic */
+						_state = 1;
+					}
+					break;
+	
+				/* fire the MP, and stop calling set() since that will cancel the MP */
+				case 1:
+					/* wait for 10 points to buffer in firmware, then transition to MP */
+					_master.startMotionProfile(_bufferedStream, 10, ControlMode.MotionProfile);
+					_state = 2;
+					Instrum.printLine("MP started");
+					break;
+	
+				/* wait for MP to finish */
+				case 2:
+					if (_master.isMotionProfileFinished()) {
+						Instrum.printLine("MP finished");
+						_state = 3;
+					}
+					break;
+	
+				/* MP is finished, nothing to do */
+				case 3:
+					break;
+			}
+	
+			/* print MP values */
+			Instrum.loop(bPrintValues, _master);
 			
 			timer.update();
 		}
+
+		
 	}
 
 	/**
@@ -281,33 +198,6 @@ public class Robot extends SampleRobot {
 	public void test() {
 		System.out.println("Teeeeest Mode");
 		
-		//RobotMap.pidgey.enterCalibrationMode(CalibrationMode.Temperature, 0);//enterCalibrationMode(CalibrationMode.Temperature);
-		
-		/*Timer timer = new Timer();
-		double dt = 0.0;
-		int i = 0;
-		
-		double[] pidgeyData = new double[3];
-		while (isTest() && isEnabled()) {
-			dt = timer.getDT();
-			i++;
-			
-			if(i >= 100){
-				RobotMap.pidgey.getYawPitchRoll(pidgeyData);
-				Dashboard.send("Pidgey Yaw", pidgeyData[2]);
-				System.out.println("Yaw: " + pidgeyData[0]);
-				
-				i = 0;
-			}
-			
-			try {
-				Thread.sleep(5);
-			} catch (InterruptedException e) {
-				
-			}
-			timer.update();
-			
-		}*/
 		
 	}
 }
