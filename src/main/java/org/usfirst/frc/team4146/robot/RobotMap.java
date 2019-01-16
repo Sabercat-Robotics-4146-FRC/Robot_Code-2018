@@ -6,6 +6,8 @@ import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motion.*;
+
 //import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -30,6 +32,27 @@ public class RobotMap {
 	public static Robot ROBOT;
 	
 	//////Constants//////
+
+	// Motion Profile Constants
+	/**
+	 * How many sensor units per rotation.
+	 * Using CTRE Magnetic Encoder.
+	 * @link https://github.com/CrossTheRoadElec/Phoenix-Documentation#what-are-the-units-of-my-sensor
+	 */
+	public final static int kSensorUnitsPerRotation = 4096;
+
+	/**
+	 * Motor neutral dead-band, set to the minimum 0.1%.
+	 */
+	public final static double kNeutralDeadband = 0.001;
+
+	/**
+	 * PID Gains may have to be adjusted based on the responsiveness of control loop
+	 * 	                                    			  kP   kI    kD     kF             Iz    PeakOut */
+	public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 ); /* measured 6800 velocity units at full motor output */
+	
+	public final static int kPrimaryPIDSlot = 0; // any slot [0,3]
+
 //	public static final double MOVE_P0 = 0.48;
 //	public static final double MOVE_P1 = 0.21;
 //	public static final double MOVE_P2 = 0.15;
@@ -104,7 +127,8 @@ public class RobotMap {
 	public static TalonSRX lifterBackRight;
 	
 	public static TalonSRX pigeonTalon;
-	//public static TalonSRX motionProfileTalon;
+
+	public static TalonSRX motionProfileTalon;
 
 	public static Talon test;
 	
@@ -251,7 +275,7 @@ public class RobotMap {
 //    	pigeonTalon.config_kD(0, 0.0, 10);
 //    	pigeonTalon.config_IntegralZone(0, 300, 10);
     	
-    	//motionProfileTalon = new TalonSRX(12);
+		motionProfileTalon = new TalonSRX(12);
     	
     	//motionProfileTalon.setInverted(true);
     	
