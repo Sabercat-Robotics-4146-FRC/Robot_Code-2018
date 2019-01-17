@@ -1,231 +1,122 @@
-package org.usfirst.frc.team4146.robot;
+ package org.usfirst.frc.team4146.robot;
 
-public class MotionProfile {			
-	public static final int kNumPoints =224;		
-	// Position (rotations)	Velocity (RPM)	Duration (ms)
-	public static double [][]Points = new double[][]{		
-	{0,	0	,25},
-	{0.000347222222222222,	1.666666667	,25},
-	{0.0015625,	4.166666667	,25},
-	{0.00399305555555556,	7.5	,25},
-	{0.00798611111111111,	11.66666667	,25},
-	{0.0138888888888889,	16.66666667	,25},
-	{0.0220486111111111,	22.5	,25},
-	{0.0328125,	29.16666667	,25},
-	{0.0465277777777778,	36.66666667	,25},
-	{0.0633680555555556,	44.16666667	,25},
-	{0.0833333333333333,	51.66666667	,25},
-	{0.106423611111111,	59.16666667	,25},
-	{0.132638888888889,	66.66666667	,25},
-	{0.161979166666667,	74.16666667	,25},
-	{0.194444444444444,	81.66666667	,25},
-	{0.230034722222222,	89.16666667	,25},
-	{0.26875,	96.66666667	,25},
-	{0.310243055555556,	102.5	,25},
-	{0.353993055555556,	107.5	,25},
-	{0.399652777777778,	111.6666667	,25},
-	{0.446875,	115	,25},
-	{0.4953125,	117.5	,25},
-	{0.544618055555556,	119.1666667	,25},
-	{0.594444444444444,	120	,25},
-	{0.644444444444444,	120	,25},
-	{0.694444444444445,	120	,25},
-	{0.744444444444445,	120	,25},
-	{0.794444444444445,	120	,25},
-	{0.844444444444445,	120	,25},
-	{0.894444444444445,	120	,25},
-	{0.944444444444445,	120	,25},
-	{0.994444444444445,	120	,25},
-	{1.04444444444444,	120	,25},
-	{1.09444444444444,	120	,25},
-	{1.14444444444444,	120	,25},
-	{1.19444444444444,	120	,25},
-	{1.24444444444444,	120	,25},
-	{1.29444444444444,	120	,25},
-	{1.34444444444444,	120	,25},
-	{1.39444444444445,	120	,25},
-	{1.44444444444445,	120	,25},
-	{1.49444444444445,	120	,25},
-	{1.54444444444445,	120	,25},
-	{1.59444444444445,	120	,25},
-	{1.64444444444445,	120	,25},
-	{1.69444444444445,	120	,25},
-	{1.74444444444445,	120	,25},
-	{1.79444444444445,	120	,25},
-	{1.84444444444445,	120	,25},
-	{1.89444444444445,	120	,25},
-	{1.94444444444445,	120	,25},
-	{1.99444444444445,	120	,25},
-	{2.04444444444445,	120	,25},
-	{2.09444444444445,	120	,25},
-	{2.14444444444445,	120	,25},
-	{2.19444444444445,	120	,25},
-	{2.24444444444444,	120	,25},
-	{2.29444444444444,	120	,25},
-	{2.34444444444444,	120	,25},
-	{2.39444444444444,	120	,25},
-	{2.44444444444444,	120	,25},
-	{2.49444444444444,	120	,25},
-	{2.54444444444444,	120	,25},
-	{2.59444444444444,	120	,25},
-	{2.64444444444444,	120	,25},
-	{2.69444444444444,	120	,25},
-	{2.74444444444444,	120	,25},
-	{2.79444444444444,	120	,25},
-	{2.84444444444444,	120	,25},
-	{2.89444444444444,	120	,25},
-	{2.94444444444444,	120	,25},
-	{2.99444444444444,	120	,25},
-	{3.04444444444444,	120	,25},
-	{3.09444444444444,	120	,25},
-	{3.14444444444444,	120	,25},
-	{3.19444444444444,	120	,25},
-	{3.24444444444444,	120	,25},
-	{3.29444444444444,	120	,25},
-	{3.34444444444444,	120	,25},
-	{3.39444444444444,	120	,25},
-	{3.44444444444444,	120	,25},
-	{3.49444444444444,	120	,25},
-	{3.54444444444444,	120	,25},
-	{3.59444444444444,	120	,25},
-	{3.64444444444444,	120	,25},
-	{3.69444444444444,	120	,25},
-	{3.74444444444444,	120	,25},
-	{3.79444444444444,	120	,25},
-	{3.84444444444444,	120	,25},
-	{3.89444444444444,	120	,25},
-	{3.94444444444444,	120	,25},
-	{3.99444444444444,	120	,25},
-	{4.04444444444444,	120	,25},
-	{4.09444444444444,	120	,25},
-	{4.14444444444444,	120	,25},
-	{4.19444444444444,	120	,25},
-	{4.24444444444444,	120	,25},
-	{4.29444444444444,	120	,25},
-	{4.34444444444444,	120	,25},
-	{4.39444444444444,	120	,25},
-	{4.44444444444444,	120	,25},
-	{4.49444444444444,	120	,25},
-	{4.54444444444444,	120	,25},
-	{4.59444444444444,	120	,25},
-	{4.64444444444444,	120	,25},
-	{4.69444444444444,	120	,25},
-	{4.74444444444444,	120	,25},
-	{4.79444444444444,	120	,25},
-	{4.84444444444444,	120	,25},
-	{4.89444444444444,	120	,25},
-	{4.94444444444444,	120	,25},
-	{4.99444444444444,	120	,25},
-	{5.04444444444444,	120	,25},
-	{5.09444444444444,	120	,25},
-	{5.14444444444444,	120	,25},
-	{5.19444444444443,	120	,25},
-	{5.24444444444443,	120	,25},
-	{5.29444444444443,	120	,25},
-	{5.34444444444443,	120	,25},
-	{5.39444444444443,	120	,25},
-	{5.44444444444443,	120	,25},
-	{5.49444444444443,	120	,25},
-	{5.54444444444443,	120	,25},
-	{5.59444444444443,	120	,25},
-	{5.64444444444443,	120	,25},
-	{5.69444444444443,	120	,25},
-	{5.74444444444443,	120	,25},
-	{5.79444444444443,	120	,25},
-	{5.84444444444443,	120	,25},
-	{5.89444444444443,	120	,25},
-	{5.94444444444443,	120	,25},
-	{5.99444444444443,	120	,25},
-	{6.04444444444443,	120	,25},
-	{6.09444444444443,	120	,25},
-	{6.14444444444443,	120	,25},
-	{6.19444444444443,	120	,25},
-	{6.24444444444443,	120	,25},
-	{6.29444444444443,	120	,25},
-	{6.34444444444443,	120	,25},
-	{6.39444444444443,	120	,25},
-	{6.44444444444443,	120	,25},
-	{6.49444444444443,	120	,25},
-	{6.54444444444443,	120	,25},
-	{6.59444444444443,	120	,25},
-	{6.64444444444443,	120	,25},
-	{6.69444444444443,	120	,25},
-	{6.74444444444443,	120	,25},
-	{6.79444444444443,	120	,25},
-	{6.84444444444443,	120	,25},
-	{6.89444444444443,	120	,25},
-	{6.94444444444443,	120	,25},
-	{6.99444444444443,	120	,25},
-	{7.04444444444443,	120	,25},
-	{7.09444444444443,	120	,25},
-	{7.14444444444443,	120	,25},
-	{7.19444444444443,	120	,25},
-	{7.24444444444443,	120	,25},
-	{7.29444444444443,	120	,25},
-	{7.34444444444443,	120	,25},
-	{7.39444444444443,	120	,25},
-	{7.44444444444443,	120	,25},
-	{7.49444444444443,	120	,25},
-	{7.54444444444443,	120	,25},
-	{7.59444444444443,	120	,25},
-	{7.64444444444443,	120	,25},
-	{7.69444444444443,	120	,25},
-	{7.74444444444443,	120	,25},
-	{7.79444444444443,	120	,25},
-	{7.84444444444443,	120	,25},
-	{7.89444444444443,	120	,25},
-	{7.94444444444443,	120	,25},
-	{7.99444444444442,	120	,25},
-	{8.04444444444442,	120	,25},
-	{8.09444444444443,	120	,25},
-	{8.14444444444443,	120	,25},
-	{8.19444444444443,	120	,25},
-	{8.24444444444443,	120	,25},
-	{8.29444444444443,	120	,25},
-	{8.34444444444443,	120	,25},
-	{8.39444444444443,	120	,25},
-	{8.44444444444443,	120	,25},
-	{8.49444444444443,	120	,25},
-	{8.54444444444443,	120	,25},
-	{8.59444444444443,	120	,25},
-	{8.64444444444443,	120	,25},
-	{8.69444444444443,	120	,25},
-	{8.74444444444443,	120	,25},
-	{8.79444444444444,	120	,25},
-	{8.84444444444444,	120	,25},
-	{8.89444444444444,	120	,25},
-	{8.94444444444444,	120	,25},
-	{8.99444444444444,	120	,25},
-	{9.04444444444444,	120	,25},
-	{9.09444444444444,	120	,25},
-	{9.14444444444444,	120	,25},
-	{9.19444444444444,	120	,25},
-	{9.24444444444444,	120	,25},
-	{9.29444444444444,	120	,25},
-	{9.34444444444444,	120	,25},
-	{9.39444444444444,	120	,25},
-	{9.44444444444444,	120	,25},
-	{9.49409722222222,	118.3333333	,25},
-	{9.54288194444445,	115.8333333	,25},
-	{9.59045138888889,	112.5	,25},
-	{9.63645833333334,	108.3333333	,25},
-	{9.68055555555556,	103.3333333	,25},
-	{9.72239583333334,	97.5	,25},
-	{9.76163194444445,	90.83333333	,25},
-	{9.79791666666667,	83.33333333	,25},
-	{9.83107638888889,	75.83333333	,25},
-	{9.86111111111111,	68.33333333	,25},
-	{9.88802083333333,	60.83333333	,25},
-	{9.91180555555556,	53.33333333	,25},
-	{9.93246527777778,	45.83333333	,25},
-	{9.95,	38.33333333	,25},
-	{9.96440972222222,	30.83333333	,25},
-	{9.97569444444444,	23.33333333	,25},
-	{9.98420138888889,	17.5	,25},
-	{9.99045138888889,	12.5	,25},
-	{9.99479166666667,	8.333333333	,25},
-	{9.99756944444445,	5	,25},
-	{9.99913194444445,	2.5	,25},
-	{9.99982638888889,	0.833333333	,25},
-	{10, 0	,25}};
-}
+ import com.ctre.phoenix.motion.*;
+ import com.ctre.phoenix.motorcontrol.ControlMode;
+
+ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+ public class MotionProfile {
+
+	enum MotionProfileEnum{
+		DISABLE,
+		FILL_BUFFER,
+		RUN_PROFILE,
+		FINISHED
+	}
+
+	MotionProfileEnum MotionProfileState = MotionProfileEnum.DISABLE;
+
+	/** new class type in 2019 for holding MP buffer. */
+	BufferedTrajectoryPointStream bufferedStream = new BufferedTrajectoryPointStream();
+
+
+	public MotionProfile(double[][] points, int numPoints) {
+		initBuffer(points, numPoints);
+	}
+
+	public void update() {
+		/* get joystick button and stick */
+		boolean bPrintValues = RobotMap.driveController.getButtonB();
+		boolean bFireMp = RobotMap.driveController.getButtonA();
+		double axis = RobotMap.driveController.getDeadbandLeftYAxis();
+
+		/* if button is up, just drive the motor in PercentOutput */
+		if (bFireMp == false) {
+			MotionProfileState = MotionProfileEnum.DISABLE;
+		}
+
+		switch (MotionProfileState) {
+			/* drive master talon normally */
+			case DISABLE:
+			RobotMap.motionProfileTalon.set(ControlMode.PercentOutput, axis);
+				if (bFireMp == true) {
+					/* go to MP logic */
+					MotionProfileState = MotionProfileEnum.FILL_BUFFER;
+				}
+				break;
+
+			/* fire the MP, and stop calling set() since that will cancel the MP */
+			case FILL_BUFFER:
+				/* wait for 10 points to buffer in firmware, then transition to MP */
+				RobotMap.motionProfileTalon.startMotionProfile(bufferedStream, 10, ControlMode.MotionProfile);
+				MotionProfileState = MotionProfileEnum.RUN_PROFILE;
+				System.out.println("MP started");
+				break;
+
+			/* wait for MP to finish */
+			case RUN_PROFILE:
+				if (RobotMap.motionProfileTalon.isMotionProfileFinished()) {
+					System.out.println("MP finished");
+					MotionProfileState = MotionProfileEnum.FINISHED;
+				}
+				break;
+
+			/* MP is finished, nothing to do */
+			case FINISHED:
+				break;
+		}
+
+		// Send values to Shuffleboard
+		double sensorPosition = RobotMap.motionProfileTalon.getSelectedSensorPosition(0);
+		double sensorVelocity = RobotMap.motionProfileTalon.getSelectedSensorVelocity(0);
+		double trajectoryPosition = RobotMap.motionProfileTalon.getActiveTrajectoryPosition(0);
+		double trajectoryVelocity = RobotMap.motionProfileTalon.getActiveTrajectoryVelocity(0);
+		double trajectoryArbFeedFwd = RobotMap.motionProfileTalon.getActiveTrajectoryArbFeedFwd(0);
+		SmartDashboard.putNumber("Sensor Position", sensorPosition);
+		SmartDashboard.putNumber("Sensor Velocity", sensorVelocity);
+		SmartDashboard.putNumber("Trajectory Position", trajectoryPosition);
+		SmartDashboard.putNumber("Trajectory Velocity", trajectoryVelocity);
+		SmartDashboard.putNumber("Trajectory ArbFeedFwd", trajectoryArbFeedFwd);
+
+		/* print MP values */
+		Instrum.loop(bPrintValues, RobotMap.motionProfileTalon);
+	}
+
+	private void initBuffer(double[][] profile, int totalCnt) {
+
+		boolean forward = true; // set to false to drive in opposite direction of profile (not really needed
+								// since you can use negative numbers in profile).
+
+		TrajectoryPoint point = new TrajectoryPoint(); // temp for for loop, since unused params are initialized
+													   // automatically, you can alloc just one
+
+		/* clear the buffer, in case it was used elsewhere */
+		bufferedStream.Clear();
+
+		/* Insert every point into buffer, no limit on size */
+		for (int i = 0; i < totalCnt; ++i) {
+
+			double direction = forward ? +1 : -1;
+			double positionRot = profile[i][0];
+			double velocityRPM = profile[i][1];
+			int durationMilliseconds = (int) profile[i][2];
+
+			/* for each point, fill our structure and pass it to API */
+			point.timeDur = durationMilliseconds;
+			point.position = direction * positionRot * RobotMap.kSensorUnitsPerRotation; // Convert Revolutions to
+																						  // Units
+			point.velocity = direction * velocityRPM * RobotMap.kSensorUnitsPerRotation / 600.0; // Convert RPM to
+																								  // Units/100ms
+			point.auxiliaryPos = 0;
+			point.auxiliaryVel = 0;
+			point.profileSlotSelect0 = RobotMap.kPrimaryPIDSlot; /* which set of gains would you like to use [0,3]? */
+			point.profileSlotSelect1 = 0; /* auxiliary PID [0,1], leave zero */
+			point.zeroPos = (i == 0); /* set this to true on the first point */
+			point.isLastPoint = ((i + 1) == totalCnt); /* set this to true on the last point */
+			point.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
+
+			bufferedStream.Write(point);
+		}
+	}
+
+ }

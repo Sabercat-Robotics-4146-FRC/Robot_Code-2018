@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motion.*;
+import com.ctre.phoenix.motorcontrol.can.*;
 
 //import com.kauailabs.navx.frc.AHRS;
 
@@ -130,7 +131,8 @@ public class RobotMap {
 
 	public static TalonSRX motionProfileTalon;
 
-	public static Talon test;
+	/* talon configs */
+	public static TalonSRXConfiguration config; 
 	
 	public static Servo liftLocker;
 	public static Servo barRelease;
@@ -276,6 +278,25 @@ public class RobotMap {
 //    	pigeonTalon.config_IntegralZone(0, 300, 10);
     	
 		motionProfileTalon = new TalonSRX(12);
+
+		config = new TalonSRXConfiguration(); // factory default settings
+		/* _config the master specific settings */
+        config.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
+    	config.neutralDeadband = kNeutralDeadband; /* 0.1 % super small for best low-speed control */
+        config.slot0.kF = kGains_MotProf.kF;
+        config.slot0.kP = kGains_MotProf.kP;
+        config.slot0.kI = kGains_MotProf.kI;
+        config.slot0.kD = kGains_MotProf.kD;
+        config.slot0.integralZone = (int) kGains_MotProf.kIzone;
+        config.slot0.closedLoopPeakOutput = kGains_MotProf.kPeakOutput;
+        // config.slot0.allowableClosedloopError // left default for this example
+        // config.slot0.maxIntegralAccumulator; // left default for this example
+        // config.slot0.closedLoopPeriod; // left default for this example
+        motionProfileTalon.configAllSettings(config);
+
+        /* pick the sensor phase and desired direction */
+        motionProfileTalon.setSensorPhase(true);
+		motionProfileTalon.setInverted(false);
     	
     	//motionProfileTalon.setInverted(true);
     	
