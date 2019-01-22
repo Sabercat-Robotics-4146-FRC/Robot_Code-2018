@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SampleRobot;
 
 public class Robot extends SampleRobot {
-	MotionProfile profile;
+	//MotionProfile profile;
 	
 	public Robot() {
 		RobotMap.ROBOT = this;
@@ -40,7 +40,7 @@ public class Robot extends SampleRobot {
 	@Override
 	public void robotInit() {
 		RobotMap.init(); // Instantiates and Declares things to be used from RobotMap.
-		profile = new MotionProfile(GeneratedProfiles.Points, GeneratedProfiles.kNumPoints);
+		//profile = new MotionProfile(GeneratedProfiles.Points, GeneratedProfiles.kNumPoints);
 		//RobotMap.gyro.reset();
 		/* fill our buffer object with the excel points */
         //initBuffer(GeneratedProfiles.Points, GeneratedProfiles.kNumPoints);
@@ -70,7 +70,8 @@ public class Robot extends SampleRobot {
 			//RobotMap.drive.update(dt);
 			//RobotMap.intake.update(dt);
 			//RobotMap.lifter.update(dt);
-			profile.update();
+			//profile.update();
+			RobotMap.testProflies.update();
 			
 			timer.update();
 		}

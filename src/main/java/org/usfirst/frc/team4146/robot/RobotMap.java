@@ -50,8 +50,9 @@ public class RobotMap {
 	/**
 	 * PID Gains may have to be adjusted based on the responsiveness of control loop
 	 * 	                                    			  kP   kI    kD     kF             Iz    PeakOut */
+	//public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 ); /* measured 6800 velocity units at full motor output */
 	public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 ); /* measured 6800 velocity units at full motor output */
-	
+
 	public final static int kPrimaryPIDSlot = 0; // any slot [0,3]
 
 //	public static final double MOVE_P0 = 0.48;
@@ -129,7 +130,8 @@ public class RobotMap {
 	
 	public static TalonSRX pigeonTalon;
 
-	public static TalonSRX motionProfileTalon;
+	public static TalonSRX motionProfileTalonA;
+	public static TalonSRX motionProfileTalonB;
 
 	/* talon configs */
 	public static TalonSRXConfiguration config; 
@@ -189,6 +191,9 @@ public class RobotMap {
 	
 	// Move Distance Declaration
 	public static MoveDistance moveDistance;
+
+	// Testing Profiles Declaration
+	public static TestProfiles testProflies;
 
 	
 	public static void init() { // This is to be called in robitInit and instantiates stuff.
@@ -277,7 +282,7 @@ public class RobotMap {
 //    	pigeonTalon.config_kD(0, 0.0, 10);
 //    	pigeonTalon.config_IntegralZone(0, 300, 10);
     	
-		motionProfileTalon = new TalonSRX(12);
+		motionProfileTalonA = new TalonSRX(12);
 
 		config = new TalonSRXConfiguration(); // factory default settings
 		/* _config the master specific settings */
@@ -292,15 +297,23 @@ public class RobotMap {
         // config.slot0.allowableClosedloopError // left default for this example
         // config.slot0.maxIntegralAccumulator; // left default for this example
         // config.slot0.closedLoopPeriod; // left default for this example
-        motionProfileTalon.configAllSettings(config);
+        motionProfileTalonA.configAllSettings(config);
 
         /* pick the sensor phase and desired direction */
-        motionProfileTalon.setSensorPhase(true);
-		motionProfileTalon.setInverted(false);
+        motionProfileTalonA.setSensorPhase(true);
+		motionProfileTalonA.setInverted(false);
     	
     	//motionProfileTalon.setInverted(true);
     	
-    	//motionProfileTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		//motionProfileTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		
+		motionProfileTalonB = new TalonSRX(13);
+
+		motionProfileTalonB.configAllSettings(config);
+
+        /* pick the sensor phase and desired direction */
+        motionProfileTalonB.setSensorPhase(true);
+		motionProfileTalonB.setInverted(false);
     	
     	// Servo Initilization
     	liftLocker = new Servo(0);
@@ -399,7 +412,10 @@ public class RobotMap {
     	pigeonHeading = new PigeonHeading();
     	
     	// Move Distance Initialization
-    	moveDistance = new MoveDistance();
+		moveDistance = new MoveDistance();
+		
+		// Testing Profiles Initialization
+		testProflies = new TestProfiles();
     	
 	}
 	
