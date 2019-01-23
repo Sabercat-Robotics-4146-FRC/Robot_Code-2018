@@ -19,8 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motion.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SampleRobot;
@@ -72,6 +71,8 @@ public class Robot extends SampleRobot {
 			//RobotMap.lifter.update(dt);
 			//profile.update();
 			RobotMap.testProflies.update();
+			SmartDashboard.putNumber("Motor A Encoder", RobotMap.motionProfileTalonA.getSensorCollection().getPulseWidthPosition());
+			SmartDashboard.putNumber("Motor B Encoder", RobotMap.motionProfileTalonB.getSensorCollection().getPulseWidthPosition());
 			
 			timer.update();
 		}

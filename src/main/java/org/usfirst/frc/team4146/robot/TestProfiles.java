@@ -25,11 +25,14 @@ public class TestProfiles {
 
         if (RobotMap.driveController.getButtonA()) {
             motorState = TestingMotorsEnum.MOTOR_A;
-        } else if (RobotMap.driveController.getButtonB()) {
+        }
+        if (RobotMap.driveController.getButtonB()) {
             motorState = TestingMotorsEnum.MOTOR_B;
-        } else if (RobotMap.driveController.getButtonX()) {
+        } 
+        if (RobotMap.driveController.getButtonX()) {
             motorState = TestingMotorsEnum.BOTH_MOTORS;
-        } else {
+        } 
+        if(!RobotMap.driveController.getButtonA() && !RobotMap.driveController.getButtonB() && !RobotMap.driveController.getButtonX()) {
             motorState = TestingMotorsEnum.DO_NOTHING;
         }
 
@@ -52,6 +55,10 @@ public class TestProfiles {
                 break;
 
             case BOTH_MOTORS:
+                motorAProfile.start();
+                motorBProfile.start();
+                motorAProfile.update();
+                motorBProfile.update();
                 break;
         }
 
