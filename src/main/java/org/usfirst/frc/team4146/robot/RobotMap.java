@@ -1,7 +1,9 @@
 package org.usfirst.frc.team4146.robot;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -51,7 +53,7 @@ public class RobotMap {
 	 * PID Gains may have to be adjusted based on the responsiveness of control loop
 	 * 	                                    			  kP   kI    kD     kF             Iz    PeakOut */
 	//public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 ); /* measured 6800 velocity units at full motor output */
-	public final static Gains kGains_MotProf = new Gains( 0.1, 0.0,  0.0, 0,  0,  0.20 ); /* measured 6800 velocity units at full motor output */
+	public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 ); /* measured 6800 velocity units at full motor output */
 
 	public final static int kPrimaryPIDSlot = 0; // any slot [0,3]
 
@@ -132,6 +134,7 @@ public class RobotMap {
 
 	public static TalonSRX motionProfileTalonA;
 	public static TalonSRX motionProfileTalonB;
+	public static TalonSRX motionProfileTalonB2;
 
 	/* talon configs */
 	public static TalonSRXConfiguration config; 
@@ -314,6 +317,10 @@ public class RobotMap {
         /* pick the sensor phase and desired direction */
         motionProfileTalonB.setSensorPhase(true);
 		motionProfileTalonB.setInverted(false);
+
+		motionProfileTalonB2 = new TalonSRX(14);
+		motionProfileTalonB2.configFactoryDefault();
+		//motionProfileTalonB2.follow(motionProfileTalonB, FollowerType.AuxOutput1);
     	
     	// Servo Initilization
     	liftLocker = new Servo(0);

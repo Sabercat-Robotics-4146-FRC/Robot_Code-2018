@@ -18,7 +18,7 @@ public class TestProfiles {
 
     public TestProfiles() {
         motorAProfile = new MotionProfile(RobotMap.motionProfileTalonA, GeneratedProfiles.motorA, GeneratedProfiles.kNumPointsMotorA);
-        motorBProfile = new MotionProfile(RobotMap.motionProfileTalonA, GeneratedProfiles.motorB, GeneratedProfiles.kNumPointsMotorB);
+        motorBProfile = new MotionProfile(RobotMap.motionProfileTalonB, GeneratedProfiles.motorB, GeneratedProfiles.kNumPointsMotorB);
     }
     
     public void update() {

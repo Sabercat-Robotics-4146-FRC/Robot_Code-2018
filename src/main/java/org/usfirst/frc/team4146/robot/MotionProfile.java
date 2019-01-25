@@ -2,7 +2,8 @@
 
  import com.ctre.phoenix.motion.*;
  import com.ctre.phoenix.motorcontrol.ControlMode;
- import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -51,6 +52,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 			// fire the MP, and stop calling set() since that will cancel the MP 
 			case FILL_BUFFER:
 				// wait for 10 points to buffer in firmware, then transition to MP 
+				RobotMap.motionProfileTalonB2.follow(RobotMap.motionProfileTalonB, FollowerType.AuxOutput1);
 				talon.startMotionProfile(bufferedStream, 10, ControlMode.MotionProfile);
 				MotionProfileState = MotionProfileEnum.RUN_PROFILE;
 				System.out.println("MP started");

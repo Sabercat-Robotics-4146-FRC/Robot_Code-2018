@@ -71,6 +71,7 @@ public class Robot extends SampleRobot {
 			//RobotMap.lifter.update(dt);
 			//profile.update();
 			RobotMap.testProflies.update();
+
 			SmartDashboard.putNumber("Motor A Encoder", RobotMap.motionProfileTalonA.getSensorCollection().getPulseWidthPosition());
 			SmartDashboard.putNumber("Motor B Encoder", RobotMap.motionProfileTalonB.getSensorCollection().getPulseWidthPosition());
 			
