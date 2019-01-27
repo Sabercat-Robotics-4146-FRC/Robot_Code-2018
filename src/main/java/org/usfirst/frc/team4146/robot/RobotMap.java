@@ -53,8 +53,8 @@ public class RobotMap {
 	 * PID Gains may have to be adjusted based on the responsiveness of control loop
 	 * 	                                    			  kP   kI    kD     kF             Iz    PeakOut */
 	//public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 ); /* measured 6800 velocity units at full motor output */
-	public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 ); /* measured 6800 velocity units at full motor output */
-
+	public final static Gains kGains_MotProfA = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 ); /* measured 6800 velocity units at full motor output */
+	public final static Gains kGains_MotProfB = new Gains( 0.3, 0.0,  0.0, 1023.0/10131.0,  400,  1.00 ); /* measured 10131 velocity units at full motor output */
 	public final static int kPrimaryPIDSlot = 0; // any slot [0,3]
 
 //	public static final double MOVE_P0 = 0.48;
@@ -137,7 +137,8 @@ public class RobotMap {
 	public static TalonSRX motionProfileTalonB2;
 
 	/* talon configs */
-	public static TalonSRXConfiguration config; 
+	public static TalonSRXConfiguration configA; 
+	public static TalonSRXConfiguration configB;
 	
 	public static Servo liftLocker;
 	public static Servo barRelease;
@@ -287,20 +288,20 @@ public class RobotMap {
     	
 		motionProfileTalonA = new TalonSRX(12);
 
-		config = new TalonSRXConfiguration(); // factory default settings
+		configA = new TalonSRXConfiguration(); // factory default settings
 		/* _config the master specific settings */
-        config.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
-    	config.neutralDeadband = kNeutralDeadband; /* 0.1 % super small for best low-speed control */
-        config.slot0.kF = kGains_MotProf.kF;
-        config.slot0.kP = kGains_MotProf.kP;
-        config.slot0.kI = kGains_MotProf.kI;
-        config.slot0.kD = kGains_MotProf.kD;
-        config.slot0.integralZone = (int) kGains_MotProf.kIzone;
-        config.slot0.closedLoopPeakOutput = kGains_MotProf.kPeakOutput;
+        configA.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
+    	configA.neutralDeadband = kNeutralDeadband; /* 0.1 % super small for best low-speed control */
+        configA.slot0.kF = kGains_MotProfA.kF;
+        configA.slot0.kP = kGains_MotProfA.kP;
+        configA.slot0.kI = kGains_MotProfA.kI;
+        configA.slot0.kD = kGains_MotProfA.kD;
+        configA.slot0.integralZone = (int) kGains_MotProfA.kIzone;
+        configA.slot0.closedLoopPeakOutput = kGains_MotProfA.kPeakOutput;
         // config.slot0.allowableClosedloopError // left default for this example
-        // config.slot0.maxIntegralAccumulator; // left default for this example
+		// config.slot0.maxIntegralAccumulator; // left default for this example
         // config.slot0.closedLoopPeriod; // left default for this example
-        motionProfileTalonA.configAllSettings(config);
+        motionProfileTalonA.configAllSettings(configA);
 
         /* pick the sensor phase and desired direction */
         motionProfileTalonA.setSensorPhase(true);
@@ -312,7 +313,20 @@ public class RobotMap {
 		
 		motionProfileTalonB = new TalonSRX(13);
 
-		motionProfileTalonB.configAllSettings(config);
+		configB = new TalonSRXConfiguration(); // factory default settings
+		/* _config the master specific settings */
+        configB.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
+    	configB.neutralDeadband = kNeutralDeadband; /* 0.1 % super small for best low-speed control */
+        configB.slot0.kF = kGains_MotProfB.kF;
+        configB.slot0.kP = kGains_MotProfB.kP;
+        configB.slot0.kI = kGains_MotProfB.kI;
+        configB.slot0.kD = kGains_MotProfB.kD;
+        configB.slot0.integralZone = (int) kGains_MotProfB.kIzone;
+        configB.slot0.closedLoopPeakOutput = kGains_MotProfB.kPeakOutput;
+        // config.slot0.allowableClosedloopError // left default for this example
+        // config.slot0.maxIntegralAccumulator; // left default for this example
+        // config.slot0.closedLoopPeriod; // left default for this example
+        motionProfileTalonB.configAllSettings(configB);
 
         /* pick the sensor phase and desired direction */
         motionProfileTalonB.setSensorPhase(true);
@@ -320,6 +334,7 @@ public class RobotMap {
 
 		motionProfileTalonB2 = new TalonSRX(14);
 		motionProfileTalonB2.configFactoryDefault();
+		motionProfileTalonB2.follow(motionProfileTalonB);
 		//motionProfileTalonB2.follow(motionProfileTalonB, FollowerType.AuxOutput1);
     	
     	// Servo Initilization
